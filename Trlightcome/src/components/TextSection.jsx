@@ -36,7 +36,7 @@ export const TextSection = ({ title, subtitle, image, sceneOpacity, ...props }) 
 
       {image && texture && (
         <mesh
-          scale={[3, 1, 1]}
+          scale={[3, 2, 2]}
           position={[0, 0, 0]}
         >
           <planeGeometry args={[1, 1]} />

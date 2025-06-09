@@ -8,7 +8,6 @@ import { usePlay } from "../contexts/Play";
 import { fadeOnBeforeCompile } from "../utils/fadeMaterial";
 import { Airplane } from "./Airplane";
 import { Background } from "./Background";
-import { Cloud } from "./Cloud";
 import { Speed } from "./Speed";
 import { TextSection } from "./TextSection";
 
@@ -57,7 +56,7 @@ export const Experience = () => {
           curvePoints[2].y,
           curvePoints[2].z
         ),
-        image: "/images/logo.png",
+        image: "/images/neopolis logo-01.png",
       },
       {
         cameraRailDist: -1,
@@ -68,17 +67,6 @@ export const Experience = () => {
         ),
         title: "Coming Soon",
         // subtitle: `Our flight attendants will help you have a great journey`,
-      },
-      {
-        cameraRailDist: 1.5,
-        position: new Vector3(
-          curvePoints[4].x + 3.5,
-          curvePoints[4].y,
-          curvePoints[4].z - 12
-        ),
-        subtitle: `Wish you had a great flight`,
-        title: undefined,
-        image: undefined,
       },
     ];
   }, []);
@@ -544,11 +532,6 @@ export const Experience = () => {
             />
           </mesh>
         </group>
-
-        {/* CLOUDS */}
-        {clouds.map((cloud, index) => (
-          <Cloud sceneOpacity={sceneOpacity} {...cloud} key={index} />
-        ))}
       </>
     ),
     []
