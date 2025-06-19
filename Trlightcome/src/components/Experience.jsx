@@ -259,7 +259,7 @@ export const Experience = () => {
   const scroll = useScroll();
   const lastScroll = useRef(0);
 
-  const { play, setHasScroll, end, setEnd } = usePlay();
+  const { play, setHasScroll, end, setEnd, setShowTimeline } = usePlay();
 
   useFrame((_state, delta) => {
     if (window.innerWidth > window.innerHeight) {
@@ -404,6 +404,7 @@ export const Experience = () => {
       curvePoints[curvePoints.length - 1].z + 100
     ) {
       setEnd(true);
+      setTimeout(() => setShowTimeline(true), 800); // 800ms delay for effect
       planeOutTl.current.play();
     }
   });

@@ -7,7 +7,7 @@ export const Timeline = ({ isVisible }) => {
   if (!isVisible) return null;
 
   return (
-    <div className="timeline-overlay">
+    <div className={`timeline-overlay${isVisible ? " timeline-overlay--visible" : ""}`}>
       <div className="timeline-content">
         <button 
           className="absolute top-4 right-4 text-white hover:text-teal-400 transition-colors"
