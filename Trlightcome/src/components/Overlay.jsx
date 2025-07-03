@@ -8,8 +8,7 @@ export const Overlay = () => {
   return (
     <>
       <div
-        className={`overlay ${play ? "overlay--disable" : ""}
-        ${hasScroll ? "overlay--scrolled" : ""}`}
+        className={`overlay${play && !end ? " overlay--disable" : ""}${hasScroll ? " overlay--scrolled" : ""}`}
       >
         <div
           className={`loader ${progress === 100 ? "loader--disappear" : ""}`}

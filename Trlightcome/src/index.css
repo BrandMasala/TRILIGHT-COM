@@ -209,7 +209,7 @@ body {
 }
 
 .outro__button:hover {
-  color: #000000;
+  color: #fff;
   background-color: #FFD700;
   box-shadow: 0 4px 24px rgba(255, 215, 0, 0.25);
   border-color: #FFD700;
