@@ -1,6 +1,5 @@
 import { useProgress } from "@react-three/drei";
 import { usePlay } from "../contexts/Play";
-import { Timeline } from "./Timeline";
 
 export const Overlay = () => {
   const { progress } = useProgress();
@@ -35,16 +34,13 @@ export const Overlay = () => {
           <button
             className="outro__button"
             onClick={() => {
-              setEnd(false);
-              setPlay(true);
-              setShowTimeline(true);
+              window.location.href = "https://trilight-combi-html.vercel.app/";
             }}
           >
-            Know about us more
+            Know More
           </button>
         </div>
       </div>
-      <Timeline isVisible={showTimeline} />
     </>
   );
 };
