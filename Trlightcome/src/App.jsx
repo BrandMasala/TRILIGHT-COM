@@ -5,8 +5,10 @@ import { useMemo } from "react";
 import { Experience } from "./components/Experience";
 import { Overlay } from "./components/Overlay";
 import { usePlay } from "./contexts/Play";
+import useShootingStarsCanvas from "./useShootingStarsCanvas";
 
 function App() {
+  useShootingStarsCanvas();
   const { play, end } = usePlay();
 
   const effects = useMemo(
@@ -20,8 +22,7 @@ function App() {
 
   return (
     <>
-      <Canvas>
-        <color attach="background" args={["#ececec"]} />
+      <Canvas gl={{ alpha: true }}>
         <ScrollControls
           pages={play && !end ? 20 : 0}
           damping={0.5}

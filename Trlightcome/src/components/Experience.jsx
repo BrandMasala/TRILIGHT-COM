@@ -43,11 +43,11 @@ export const Experience = () => {
         cameraRailDist: -1,
         position: new Vector3(
           curvePoints[1].x - 3,
-          curvePoints[1].y,
+          curvePoints[1].y - 5, // Lower the building so its base sits on the line
           curvePoints[1].z
         ),
-        image: "/images/logo.png",
-        
+        model: "/models/building/untitled.glb",
+        modelScale: [0.5, 0.5, 0.5],
       },
       {
         cameraRailDist: 1.5,
@@ -292,7 +292,7 @@ export const Experience = () => {
       );
     }
 
-    lineMaterialRef.current.opacity = sceneOpacity.current;
+    // lineMaterialRef.current.opacity = sceneOpacity.current;
 
     if (end) {
       return;
@@ -484,6 +484,7 @@ export const Experience = () => {
   return useMemo(
     () => (
       <>
+        <ambientLight intensity={1} />
         <directionalLight position={[0, 3, 1]} intensity={0.1} />
         <group ref={cameraGroup}>
           <Speed />
@@ -511,7 +512,7 @@ export const Experience = () => {
           <TextSection {...textSection} sceneOpacity={sceneOpacity} key={index} />
         ))}
 
-        {/* LINE */}
+        {/* LINE
         <group position-y={-2}>
           <mesh>
             <extrudeGeometry
@@ -532,7 +533,7 @@ export const Experience = () => {
               onBeforeCompile={fadeOnBeforeCompile}
             />
           </mesh>
-        </group>
+        </group> */}
       </>
     ),
     []

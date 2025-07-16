@@ -1,12 +1,15 @@
-import { Text } from "@react-three/drei";
+import { Text, useGLTF } from "@react-three/drei";
 import { fadeOnBeforeCompileFlat } from "../utils/fadeMaterial";
 import { useRef } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
 import * as THREE from "three";
 
-export const TextSection = ({ title, subtitle, image, sceneOpacity, ...props }) => {
+export const TextSection = ({ title, subtitle, image, sceneOpacity, model, modelScale, ...props }) => {
   const texture = image ? useLoader(THREE.TextureLoader, image) : null;
   const materialRef = useRef();
+  // Load the model if provided
+  const gltf = model ? useGLTF(model) : null;
+  const scale = modelScale || [0.5, 0.5, 0.5];
 
   useFrame(() => {
     if (materialRef.current) {
@@ -16,6 +19,10 @@ export const TextSection = ({ title, subtitle, image, sceneOpacity, ...props }) 
 
   return (
     <group {...props}>
+      {/* Render 3D model if provided */}
+      {gltf && (
+        <primitive object={gltf.scene} scale={scale} position={[0, 0, 0]} />
+      )}
       {!!title && (
         <Text
           color="white"
@@ -33,7 +40,6 @@ export const TextSection = ({ title, subtitle, image, sceneOpacity, ...props }) 
           />
         </Text>
       )}
-
       {image && texture && (
         <mesh
           scale={[3, 2, 2]}
@@ -49,7 +55,6 @@ export const TextSection = ({ title, subtitle, image, sceneOpacity, ...props }) 
           />
         </mesh>
       )}
-
       {!!subtitle && (
         <Text
           color="white"
@@ -69,3 +74,5 @@ export const TextSection = ({ title, subtitle, image, sceneOpacity, ...props }) 
     </group>
   );
 };
+
+// Drei's useGLTF caches models, so no need for preloading here.

@@ -16,11 +16,11 @@ export function Airplane(props) {
   const { hasScroll } = usePlay();
   
   const star1 = useRef();
-  const star2 = useRef();
-  const star3 = useRef();
+  // const star2 = useRef();
+  // const star3 = useRef();
 
   // New: target positions for smooth floating
-  const targets = [useRef(), useRef(), useRef()];
+  const targets = [useRef()];
   const bounds = 1; // Reduced bounds for more controlled movement
   const lerpSpeed = 0.03; // Reduced for smoother movement
   const rotationSpeed = 0.5; // Slower rotation for more elegance
@@ -42,7 +42,7 @@ export function Airplane(props) {
 
   // Trail history for each star
   const trailLength = 12; // Reduced trail length for tighter trails
-  const trails = [useRef([]), useRef([]), useRef([])];
+  const trails = [useRef([])];
 
   // Helper to get spiral position
   function getSpiralPosition(time, phase) {
@@ -70,7 +70,8 @@ export function Airplane(props) {
   }, []);
 
   useFrame((_state, delta) => {
-    const stars = [star1, star2, star3];
+    // const stars = [star1, star2, star3];
+    const stars =[star1];
     if (!hasScroll) {
       // Set stars to rest positions
       stars.forEach((star, i) => {
@@ -102,16 +103,16 @@ export function Airplane(props) {
       star.current.rotation.z = Math.cos(time + i * phaseOffset) * 0.5;
       star.current.rotation.y += delta * rotationSpeed;
       
-      // Update trail with smoother transitions
-      const pos = star.current.position.clone();
-      if (!trails[i].current.length) {
-        trails[i].current = Array(trailLength).fill(pos);
-      } else {
-        trails[i].current.push(pos);
-        if (trails[i].current.length > trailLength) {
-          trails[i].current.shift();
-        }
-      }
+      // // Update trail with smoother transitions
+      // const pos = star.current.position.clone();
+      // if (!trails[i].current.length) {
+      //   trails[i].current = Array(trailLength).fill(pos);
+      // } else {
+      //   trails[i].current.push(pos);
+      //   if (trails[i].current.length > trailLength) {
+      //     trails[i].current.shift();
+      //   }
+      // }
     });
   });
 
@@ -135,7 +136,7 @@ export function Airplane(props) {
         />
       </mesh>
       {/* Trail for Star 1 */}
-      <line>
+      {/* <line>
         <bufferGeometry attach="geometry">
           <bufferAttribute
             attach="attributes-position"
@@ -145,9 +146,9 @@ export function Airplane(props) {
           />
         </bufferGeometry>
         <lineBasicMaterial attach="material" color="white" transparent opacity={0.25} linewidth={1} />
-      </line>
+      </line> */}
       {/* Star 2 - Bottom Left of Triangle */}
-      <mesh
+      {/* <mesh
         ref={star2}
         geometry={nodes.pCylinder3001.geometry}
         material={materials['blinn2SG.001']}
@@ -163,8 +164,8 @@ export function Airplane(props) {
           emissiveIntensity={0.5}
         />
       </mesh>
-      {/* Trail for Star 2 */}
-      <line>
+      Trail for Star 2 */}
+      {/* <line>
         <bufferGeometry attach="geometry">
           <bufferAttribute
             attach="attributes-position"
@@ -174,9 +175,9 @@ export function Airplane(props) {
           />
         </bufferGeometry>
         <lineBasicMaterial attach="material" color="white" transparent opacity={0.25} linewidth={1} />
-      </line>
+      </line> */}
       {/* Star 3 - Top Right of Triangle */}
-      <mesh
+      {/* <mesh
         ref={star3}
         geometry={nodes.pCylinder3001.geometry}
         material={materials['blinn2SG.001']}
@@ -191,9 +192,9 @@ export function Airplane(props) {
           emissive="white"
           emissiveIntensity={0.5}
         />
-      </mesh>
+      </mesh> */}
       {/* Trail for Star 3 */}
-      <line>
+      {/* <line>
         <bufferGeometry attach="geometry">
           <bufferAttribute
             attach="attributes-position"
@@ -203,7 +204,7 @@ export function Airplane(props) {
           />
         </bufferGeometry>
         <lineBasicMaterial attach="material" color="white" transparent opacity={0.25} linewidth={1} />
-      </line>
+      </line> */}
     </group>
   );
 }
