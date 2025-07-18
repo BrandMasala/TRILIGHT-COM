@@ -12,13 +12,13 @@ import { Speed } from "./Speed";
 import { TextSection } from "./TextSection";
 
 const LINE_NB_POINTS = 1000;
-const CURVE_DISTANCE = 250;
+const CURVE_DISTANCE = 155;
 const CURVE_AHEAD_CAMERA = 0.008;
 const CURVE_AHEAD_AIRPLANE = 0.02;
 const AIRPLANE_MAX_ANGLE = 35;
 const FRICTION_DISTANCE = 42;
 
-export const Experience = () => {
+export const Experience = ({ onModelVisibleChange }) => {
   const curvePoints = useMemo(
     () => [
       new THREE.Vector3(0, 0, 0),
@@ -47,16 +47,19 @@ export const Experience = () => {
           curvePoints[1].z
         ),
         model: "/models/building/untitled.glb",
-        modelScale: [0.5, 0.5, 0.5],
+        modelScale: [0.10, 0.10, 0.10],
+          
       },
       {
         cameraRailDist: 1.5,
         position: new Vector3(
           curvePoints[2].x + 2,
-          curvePoints[2].y,
+          curvePoints[2].y - 1,
           curvePoints[2].z
         ),
-        image: "/images/neopolis logo-01.png",
+        model: "/models/building/9 neo.glb",   
+        modelScale: [0.10, 0.10, 0.10],   
+        rotation: [0, -Math.PI / 5, 0],
       },
       {
         cameraRailDist: -1,
@@ -159,88 +162,7 @@ export const Experience = () => {
         ),
         rotation: new Euler(Math.PI / 4, 0, Math.PI / 3),
       },
-      // // THIRD POINT
-      // {
-      //   scale: new Vector3(3, 3, 3),
-      //   position: new Vector3(
-      //     curvePoints[3].x + 3,
-      //     curvePoints[3].y - 10,
-      //     curvePoints[3].z + 50
-      //   ),
-      // },
-      // {
-      //   scale: new Vector3(3, 3, 3),
-      //   position: new Vector3(
-      //     curvePoints[3].x - 10,
-      //     curvePoints[3].y,
-      //     curvePoints[3].z + 30
-      //   ),
-      //   rotation: new Euler(Math.PI / 4, 0, Math.PI / 5),
-      // },
-      // {
-      //   scale: new Vector3(4, 4, 4),
-      //   position: new Vector3(
-      //     curvePoints[3].x - 20,
-      //     curvePoints[3].y - 5,
-      //     curvePoints[3].z - 8
-      //   ),
-      //   rotation: new Euler(Math.PI, 0, Math.PI / 5),
-      // },
-      // {
-      //   scale: new Vector3(5, 5, 5),
-      //   position: new Vector3(
-      //     curvePoints[3].x + 0,
-      //     curvePoints[3].y - 5,
-      //     curvePoints[3].z - 98
-      //   ),
-      //   rotation: new Euler(0, Math.PI / 3, 0),
-      // },
-      // // FOURTH POINT
-      // {
-      //   scale: new Vector3(2, 2, 2),
-      //   position: new Vector3(
-      //     curvePoints[4].x + 3,
-      //     curvePoints[4].y - 10,
-      //     curvePoints[4].z + 2
-      //   ),
-      // },
-      // {
-      //   scale: new Vector3(3, 3, 3),
-      //   position: new Vector3(
-      //     curvePoints[4].x + 24,
-      //     curvePoints[4].y - 6,
-      //     curvePoints[4].z - 42
-      //   ),
-      //   rotation: new Euler(Math.PI / 4, 0, Math.PI / 5),
-      // },
-      // {
-      //   scale: new Vector3(3, 3, 3),
-      //   position: new Vector3(
-      //     curvePoints[4].x - 4,
-      //     curvePoints[4].y + 9,
-      //     curvePoints[4].z - 62
-      //   ),
-      //   rotation: new Euler(Math.PI / 3, 0, Math.PI / 3),
-      // },
-      // // FINAL
-      // {
-      //   scale: new Vector3(3, 3, 3),
-      //   position: new Vector3(
-      //     curvePoints[7].x + 12,
-      //     curvePoints[7].y - 5,
-      //     curvePoints[7].z + 60
-      //   ),
-      //   rotation: new Euler(-Math.PI / 4, -Math.PI / 6, 0),
-      // },
-      // {
-      //   scale: new Vector3(3, 3, 3),
-      //   position: new Vector3(
-      //     curvePoints[7].x - 12,
-      //     curvePoints[7].y + 5,
-      //     curvePoints[7].z + 120
-      //   ),
-      //   rotation: new Euler(Math.PI / 4, Math.PI / 6, 0),
-      // },
+      
     ],
     []
   );
@@ -259,7 +181,7 @@ export const Experience = () => {
   const scroll = useScroll();
   const lastScroll = useRef(0);
 
-  const { play, setHasScroll, end, setEnd, setShowTimeline } = usePlay();
+  const { play, setHasScroll, end, setEnd, setShowTimeline, showLogoAtEnd, setShowLogoAtEnd } = usePlay();
 
   useFrame((_state, delta) => {
     if (window.innerWidth > window.innerHeight) {
@@ -340,7 +262,7 @@ export const Experience = () => {
     const curPoint = curve.getPoint(lerpedScrollOffset);
 
     // Follow the curve points
-    cameraGroup.current.position.lerp(curPoint, delta * 24);
+    cameraGroup.current.position.lerp(curPoint, delta * 24); // Lower value for smoother camera movement
 
     // Make the group look ahead on the curve
 
@@ -404,9 +326,20 @@ export const Experience = () => {
       curvePoints[curvePoints.length - 1].z + 100
     ) {
       setEnd(true);
+      setShowLogoAtEnd(true);
       setTimeout(() => setShowTimeline(true), 800); // 800ms delay for effect
       planeOutTl.current.play();
     }
+
+    // Notify parent if model visibility changes
+    shouldShowArr.forEach((visible, idx) => {
+      if (modelSectionIndices.includes(idx)) {
+        if (prevShouldShowRef.current[idx] !== visible) {
+          if (onModelVisibleChange) onModelVisibleChange(idx, visible);
+          prevShouldShowRef.current[idx] = visible;
+        }
+      }
+    });
   });
 
   const airplane = useRef();
@@ -478,8 +411,29 @@ export const Experience = () => {
   useEffect(() => {
     if (play) {
       planeInTl.current.play();
+      setShowLogoAtEnd(false); // Hide logo at end when play restarts
     }
   }, [play]);
+
+  // Get camera position
+  let cameraPos = new THREE.Vector3(0, 0, 0);
+  if (cameraGroup && cameraGroup.current) {
+    cameraPos = cameraGroup.current.position;
+  }
+  // Calculate distances to each model section
+  const SHOW_DISTANCE = 15; // Adjust as needed for when the model should appear
+  const modelSectionIndices = textSections
+    .map((section, idx) => (section.model ? idx : null))
+    .filter(idx => idx !== null);
+  const shouldShowArr = textSections.map((section, idx) => {
+    if (section.model) {
+      return section.position.distanceTo(cameraPos) < SHOW_DISTANCE;
+    }
+    return true; // Always show non-model sections
+  });
+
+  // Track previous visibility to only notify on change
+  const prevShouldShowRef = useRef([]);
 
   return useMemo(
     () => (
@@ -509,7 +463,7 @@ export const Experience = () => {
         </group>
         {/* TEXT */}
         {textSections.map((textSection, index) => (
-          <TextSection {...textSection} sceneOpacity={sceneOpacity} key={index} />
+          <TextSection {...textSection} sceneOpacity={sceneOpacity} key={index} shouldShow={shouldShowArr[index]} />
         ))}
 
         {/* LINE

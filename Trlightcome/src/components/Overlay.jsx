@@ -3,7 +3,7 @@ import { usePlay } from "../contexts/Play";
 
 export const Overlay = () => {
   const { progress } = useProgress();
-  const { play, end, setPlay, setEnd, hasScroll, showTimeline, setShowTimeline } = usePlay();
+  const { play, end, setPlay, setEnd, hasScroll, showTimeline, setShowTimeline, showLogoAtEnd, setShowLogoAtEnd } = usePlay();
   
   return (
     <>
@@ -14,9 +14,10 @@ export const Overlay = () => {
           className={`loader ${progress === 100 ? "loader--disappear" : ""}`}
         />
         {progress === 100 && (
-          <div className={`intro ${play ? "intro--disappear" : ""}`}>
+          <div className={`intro ${(play && !showLogoAtEnd) ? "intro--disappear" : ""}`}>
             <div className="logo-image" />
-            <p className="intro__scroll">Scroll to begin the journey</p>
+            {!showLogoAtEnd && <p className="intro__scroll">Scroll to begin the journey</p>}
+            {!showLogoAtEnd && (
             <button
               className="explore"
               onClick={() => {
@@ -25,9 +26,10 @@ export const Overlay = () => {
             >
               Explore
             </button>
+            )}
           </div>
         )}
-        <div className={`outro ${end ? "outro--appear" : ""}`}>
+        {/* <div className={`outro ${end ? "outro--appear" : ""}`}>
           <p className="outro__text">Wish you had a great journey with us...</p>
         
           <button
@@ -38,7 +40,7 @@ export const Overlay = () => {
           >
             Know More
           </button>
-        </div>
+        </div> */}
       </div>
     </>
   );

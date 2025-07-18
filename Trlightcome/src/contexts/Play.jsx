@@ -7,6 +7,7 @@ export const PlayProvider = ({ children }) => {
   const [end, setEnd] = useState(false);
   const [hasScroll, setHasScroll] = useState(false);
   const [showTimeline, setShowTimeline] = useState(false);
+  const [showLogoAtEnd, setShowLogoAtEnd] = useState(false);
 
   return (
     <Context.Provider
@@ -19,6 +20,8 @@ export const PlayProvider = ({ children }) => {
         setHasScroll,
         showTimeline,
         setShowTimeline,
+        showLogoAtEnd,
+        setShowLogoAtEnd,
       }}
     >
       {children}

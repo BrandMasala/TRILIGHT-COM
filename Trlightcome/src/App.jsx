@@ -1,7 +1,7 @@
 import { ScrollControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { EffectComposer, Noise } from "@react-three/postprocessing";
-import { useMemo } from "react";
+import { useMemo, useState, useCallback } from "react";
 import { Experience } from "./components/Experience";
 import { Overlay } from "./components/Overlay";
 import { usePlay } from "./contexts/Play";
@@ -10,6 +10,10 @@ import useShootingStarsCanvas from "./useShootingStarsCanvas";
 function App() {
   useShootingStarsCanvas();
   const { play, end } = usePlay();
+  const [firstModelVisible, setFirstModelVisible] = useState(false);
+  const handleModelVisibleChange = useCallback((idx, visible) => {
+    if (idx === 0) setFirstModelVisible(visible);
+  }, []);
 
   const effects = useMemo(
     () => (
@@ -37,11 +41,25 @@ function App() {
             opacity: 0,
           }}
         >
-          <Experience />
+          <Experience onModelVisibleChange={handleModelVisibleChange} />
         </ScrollControls>
         {effects}
       </Canvas>
       <Overlay />
+      {firstModelVisible && (
+        <button
+          className="model-action-btn"
+          style={{
+            position: 'fixed',
+            top: '50%',
+            left: 40,
+            transform: 'translateY(-50%)',
+            zIndex: 10000
+          }}
+        >
+          Learn More
+        </button>
+      )}
     </>
   );
 }
