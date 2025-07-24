@@ -193,18 +193,7 @@ export function Airplane(props) {
           emissiveIntensity={0.5}
         />
       </mesh> */}
-      {/* Trail for Star 3 */}
-      {/* <line>
-        <bufferGeometry attach="geometry">
-          <bufferAttribute
-            attach="attributes-position"
-            count={trails[2].current.length}
-            array={new Float32Array(trails[2].current.flatMap(v => v.toArray()))}
-            itemSize={3}
-          />
-        </bufferGeometry>
-        <lineBasicMaterial attach="material" color="white" transparent opacity={0.25} linewidth={1} />
-      </line> */}
+      
     </group>
   );
 }
