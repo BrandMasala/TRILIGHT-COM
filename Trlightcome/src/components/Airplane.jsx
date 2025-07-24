@@ -11,7 +11,7 @@ import { usePlay } from "../contexts/Play";
 const HELIX_SPEED = 6;
 
 export function Airplane(props) {
-  const { nodes, materials } = useGLTF("./models/airplane/Star.glb");
+  const { nodes, materials } = useGLTF("/models/airplane/Star.glb");
   const scroll = useScroll();
   const { hasScroll } = usePlay();
   
@@ -209,4 +209,4 @@ export function Airplane(props) {
   );
 }
 
-useGLTF.preload("./models/airplane/Star.glb");
+useGLTF.preload("/models/airplane/Star.glb");
