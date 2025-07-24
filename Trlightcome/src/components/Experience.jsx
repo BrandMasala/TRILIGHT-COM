@@ -57,7 +57,7 @@ export const Experience = ({ onModelVisibleChange }) => {
           curvePoints[2].y - 1,
           curvePoints[2].z
         ),
-        model: "/models/building/9 neo.glb",   
+        model: "https://trilight-com.vercel.app/models/building/9%20neo.glb",   
         modelScale: [0.10, 0.10, 0.10],   
         rotation: [0, -Math.PI / 5, 0],
       },
