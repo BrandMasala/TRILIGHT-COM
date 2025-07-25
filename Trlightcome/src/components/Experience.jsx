@@ -46,7 +46,7 @@ export const Experience = ({ onModelVisibleChange }) => {
           curvePoints[1].y - 5, // Lower the building so its base sits on the line
           curvePoints[1].z
         ),
-        model: "/models/building/untitled.glb",
+        model: "/models/building/Trilight.glb",
         modelScale: [0.10, 0.10, 0.10],
           
       },
