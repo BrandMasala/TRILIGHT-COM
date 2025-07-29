@@ -40,6 +40,7 @@ export const Experience = ({ onModelVisibleChange }) => {
   const textSections = useMemo(() => {
     return [
       {
+        name: "BuildingA",
         cameraRailDist: -1,
         position: new Vector3(
           curvePoints[1].x - 3,
@@ -51,6 +52,7 @@ export const Experience = ({ onModelVisibleChange }) => {
           
       },
       {
+        name: "BuildingB",
         cameraRailDist: 1.5,
         position: new Vector3(
           curvePoints[2].x + 2,
@@ -62,6 +64,7 @@ export const Experience = ({ onModelVisibleChange }) => {
         rotation: [0, -Math.PI / 5, 0],
       },
       {
+        name: "BuildingC",
         cameraRailDist: -1,
         position: new Vector3(
           curvePoints[3].x - 3,

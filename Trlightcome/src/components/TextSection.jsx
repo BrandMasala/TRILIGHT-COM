@@ -51,7 +51,18 @@ export const TextSection = ({ title, subtitle, image, sceneOpacity, model, model
       gltf.scene.traverse(child => {
         if (child.isMesh) {
           child.cursor = 'pointer';
-          child.onPointerDown = () => window.location.href = "https://youtube.com";
+          child.onPointerDown = () => {
+            switch (child.name) {
+              case "BuildingA":
+                window.location.href = "https://youtube.com";
+                break;
+              case "BuildingB":
+                window.location.href = "https://example.com/building-b";
+                break;
+              default:
+                window.location.href = "https://youtube.com";
+            }
+          };
           child.onPointerOver = () => { document.body.style.cursor = 'pointer'; };
           child.onPointerOut = () => { document.body.style.cursor = 'default'; };
         }
@@ -68,24 +79,10 @@ export const TextSection = ({ title, subtitle, image, sceneOpacity, model, model
           scale={scale}
           position={[0, 0, 0]}
           rotation={props.rotation}
-          onPointerDown={shouldShow ? () => window.location.href = "https://youtube.com" : undefined}
-          onPointerOver={shouldShow ? () => { document.body.style.cursor = 'pointer'; } : undefined}
-          onPointerOut={shouldShow ? () => { document.body.style.cursor = 'default'; } : undefined}
+          
         />
       )}
-      {/* Debug: Add clickable 3D text in the middle of the building */}
-      <Text
-        position={[0, 10, 0]}
-        fontSize={2}
-        color="orange"
-        anchorX="center"
-        anchorY="middle"
-        onPointerDown={() => window.location.href = "https://youtube.com"}
-        onPointerOver={() => { document.body.style.cursor = 'pointer'; }}
-        onPointerOut={() => { document.body.style.cursor = 'default'; }}
-      >
-        Learn More
-      </Text>
+      
       {gltf && shouldShow && (
         <Html position={[0, 2, 5]} center occlude={false}>
           <div style={{background: 'red', color: 'white', padding: 20, fontSize: 24}}>TEST</div>

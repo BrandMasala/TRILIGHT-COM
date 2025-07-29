@@ -46,20 +46,7 @@ function App() {
         {effects}
       </Canvas>
       <Overlay />
-      {firstModelVisible && (
-        <button
-          className="model-action-btn"
-          style={{
-            position: 'fixed',
-            top: '50%',
-            left: 40,
-            transform: 'translateY(-50%)',
-            zIndex: 10000
-          }}
-        >
-          Learn More
-        </button>
-      )}
+      
     </>
   );
 }
