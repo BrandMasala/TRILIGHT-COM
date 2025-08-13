@@ -9,7 +9,7 @@ import useShootingStarsCanvas from "./useShootingStarsCanvas";
 
 function App() {
   useShootingStarsCanvas();
-  const { play, end } = usePlay();
+  const { play, end, scrollEnabled } = usePlay();
   const [firstModelVisible, setFirstModelVisible] = useState(false);
   const handleModelVisibleChange = useCallback((idx, visible) => {
     if (idx === 0) setFirstModelVisible(visible);
@@ -28,8 +28,9 @@ function App() {
     <>
       <Canvas gl={{ alpha: true }}>
         <ScrollControls
-          pages={play && !end ? 20 : 0}
+          pages={play && !end && scrollEnabled ? 20 : 0}
           damping={0.5}
+          enabled={scrollEnabled}
           style={{
             top: "10px",
             left: "0px",

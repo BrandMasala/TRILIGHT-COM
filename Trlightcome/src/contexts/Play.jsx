@@ -8,6 +8,7 @@ export const PlayProvider = ({ children }) => {
   const [hasScroll, setHasScroll] = useState(false);
   const [showTimeline, setShowTimeline] = useState(false);
   const [showLogoAtEnd, setShowLogoAtEnd] = useState(false);
+  const [scrollEnabled, setScrollEnabled] = useState(true); // New state to control scroll behavior
 
   return (
     <Context.Provider
@@ -22,6 +23,8 @@ export const PlayProvider = ({ children }) => {
         setShowTimeline,
         showLogoAtEnd,
         setShowLogoAtEnd,
+        scrollEnabled,
+        setScrollEnabled,
       }}
     >
       {children}

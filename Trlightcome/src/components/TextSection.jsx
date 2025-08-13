@@ -6,6 +6,7 @@ import { useFrame, useLoader } from "@react-three/fiber";
 import * as THREE from "three";
 import ReactDOM from 'react-dom';
 import { useThree } from "@react-three/fiber";
+import { usePlay } from "../contexts/Play";
 
 export const TextSection = ({ title, subtitle, image, sceneOpacity, model, modelScale, shouldShow, ...props }) => {
   const texture = image ? useLoader(THREE.TextureLoader, image) : null;
@@ -13,6 +14,9 @@ export const TextSection = ({ title, subtitle, image, sceneOpacity, model, model
   // Load the model if provided
   const gltf = model ? useGLTF(model) : null;
   const scale = modelScale || [0.5, 0.5, 0.5];
+  
+  // Get scroll control functions from Play context
+  const { setScrollEnabled } = usePlay();
 
   // Ref to store all mesh materials in the model
   const modelMaterialsRef = useRef([]);
@@ -31,6 +35,45 @@ export const TextSection = ({ title, subtitle, image, sceneOpacity, model, model
       modelMaterialsRef.current = materials;
     }
   }, [gltf, sceneOpacity]);
+  
+  // Add window focus and blur event listeners to handle scrolling
+  useEffect(() => {
+    const handleWindowFocus = () => {
+      // Re-enable scrolling when window regains focus
+      setScrollEnabled(true);
+      document.body.style.overflow = '';
+      console.log('Window focus: re-enabling scroll');
+    };
+    
+    const handleWindowBlur = () => {
+      // When window loses focus (user clicks on BuildingB and goes to external site)
+      console.log('Window blur event');
+      // We don't disable scrolling here as it's already handled in the click handlers
+    };
+    
+    // Set a timeout to re-enable scrolling even if the user doesn't come back
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        // User has switched tabs or apps
+        // Set a timeout to re-enable scrolling after a delay
+        setTimeout(() => {
+          setScrollEnabled(true);
+          document.body.style.overflow = '';
+          console.log('Re-enabling scroll after visibility change timeout');
+        }, 5000); // 5 second delay
+      }
+    };
+    
+    window.addEventListener('focus', handleWindowFocus);
+    window.addEventListener('blur', handleWindowBlur);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    return () => {
+      window.removeEventListener('focus', handleWindowFocus);
+      window.removeEventListener('blur', handleWindowBlur);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [setScrollEnabled]);
 
   useFrame(() => {
     if (materialRef.current && materialRef.current.opacity !== sceneOpacity.current) {
@@ -92,6 +135,7 @@ useEffect(() => {
 
       if (tag.trilight) {
         document.body.style.overflow = 'hidden';
+        setScrollEnabled(false); // Disable scrolling
         window.scrollTo(0, 0);
         gl.setAnimationLoop(null);
         setTimeout(() => {
@@ -99,6 +143,7 @@ useEffect(() => {
         }, 500);
       } else if (tag.neopolis) {
         document.body.style.overflow = 'hidden';
+        setScrollEnabled(false); // Disable scrolling
         window.scrollTo(0, 0);
         gl.setAnimationLoop(null);
         setTimeout(() => {
@@ -134,9 +179,13 @@ useEffect(() => {
               name.startsWith("Plane005") ||
               name.startsWith("Plane006")
             ) {
+              document.body.style.overflow = 'hidden';
+              setScrollEnabled(false); // Disable scrolling
               window.open("https://thetrilight.com", "_blank");
             } else if (name.startsWith("NEOPOLIS")) {
-              window.open("https://youtube.com", "_blank");
+              document.body.style.overflow = 'hidden';
+              setScrollEnabled(false); // Disable scrolling
+              window.open("https://neopolis-risewith9.com", "_blank");
             } else {
               console.log("Clicked something else:", name);
             }
