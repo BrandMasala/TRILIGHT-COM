@@ -1,0 +1,132 @@
+.clubhouses {
+  padding: 80px 60px;
+  background: white;
+}
+
+.clubhouses-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.clubhouses-subtitle {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  margin: 0 0 40px 0;
+  letter-spacing: 0.5px;
+}
+
+.clubhouses-titles {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.clubhouses-title {
+  font-size: 48px;
+  font-weight: 300;
+  color: #e8e8e8;
+  margin: 8px 0;
+  letter-spacing: 2px;
+}
+
+.clubhouses-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+.clubhouses-amenities {
+  background: #d4a961;
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 280px;
+}
+
+.amenities-text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: white;
+  margin: 0 0 30px 0;
+}
+
+.amenities-badge {
+  margin-top: auto;
+}
+
+.amenities-badge span {
+  display: inline-block;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #d4a961;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.clubhouses-empty-panels {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.panel {
+  background: #e8e8e8;
+  min-height: 280px;
+  border-radius: 4px;
+}
+
+.walkthrough-video {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.walkthrough-btn {
+  padding: 12px 40px;
+  background: transparent;
+  border: 2px solid #d4a961;
+  color: #d4a961;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.walkthrough-btn:hover {
+  background: #d4a961;
+  color: white;
+}
+
+@media (max-width: 1024px) {
+  .clubhouses-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .clubhouses-empty-panels {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .clubhouses-title {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 768px) {
+  .clubhouses {
+    padding: 60px 30px;
+  }
+
+  .clubhouses-title {
+    font-size: 28px;
+  }
+
+  .clubhouses-empty-panels {
+    grid-template-columns: 1fr;
+  }
+}

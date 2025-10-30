@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0e0e0e"/>
+      <stop offset="1" stop-color="#2a2a2a"/>
+    </linearGradient>
+  </defs>
+  <rect fill="url(#g)" width="1600" height="900"/>
+  <circle cx="1300" cy="300" r="240" fill="#202020"/>
+  <rect x="180" y="280" width="260" height="420" fill="#1c1c1c"/>
+  <rect x="480" y="240" width="320" height="460" fill="#1a1a1a"/>
+  <rect x="840" y="340" width="220" height="360" fill="#1d1d1d"/>
+  <text x="48" y="60" fill="#ffffff" font-size="42" font-family="system-ui" letter-spacing="6">BRANDED LUXURY COLLECTION</text>
+  <text x="48" y="120" fill="#ffffff" font-size="88" font-family="system-ui" font-weight="700">Bugatti Residences</text>
+  <text x="48" y="180" fill="#bbbbbb" font-size="40" font-family="system-ui">Business Bay</text>
+</svg>
