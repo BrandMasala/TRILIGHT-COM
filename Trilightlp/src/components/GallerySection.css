@@ -1,5 +1,5 @@
 /* Section container */
-.gallery { background: #000; color: #fff; padding: 80px 0; }
+.gallery { background: var(--color-text-dark); color: var(--color-text-light); padding: 80px 0; }
 .gallery__header { display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
 .gallery__title { font-size: clamp(1rem, 1.6vw, 1.3rem); letter-spacing: .3em; text-transform: uppercase; opacity: .85; }
 

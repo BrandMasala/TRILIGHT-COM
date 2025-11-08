@@ -1,9 +1,9 @@
 .footer {
-  background: white;
+  background: var(--color-surface);
 }
 
 .footer-cta {
-  background: #e8e8e8;
+  background: var(--color-panel);
   padding: 60px 60px;
 }
 
@@ -16,7 +16,7 @@
   text-align: center;
   font-size: 18px;
   font-weight: 400;
-  color: #333;
+  color: var(--color-text-dark);
   margin: 0 0 40px 0;
 }
 
@@ -45,17 +45,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #666;
+  color: var(--color-text-muted);
 }
 
 .download-label {
   font-size: 14px;
-  color: #666;
+  color: var(--color-text-muted);
   font-weight: 500;
 }
 
 .footer-main {
-  background: #1a3a52;
+  background: var(--color-brand-dark);
   padding: 80px 60px;
 }
 
@@ -90,16 +90,16 @@
   background: white;
   border: none;
   font-size: 14px;
-  color: #333;
+  color: var(--color-text-dark);
 }
 
 .footer-input::placeholder {
-  color: #999;
+  color: var(--color-text-soft);
 }
 
 .footer-submit-btn {
   padding: 14px 40px;
-  background: #d4a961;
+  background: var(--color-primary);
   color: white;
   border: none;
   font-size: 14px;
@@ -110,7 +110,7 @@
 }
 
 .footer-submit-btn:hover {
-  background: #c49951;
+  background: color-mix(in oklab, var(--color-primary) 85%, white);
 }
 
 .footer-info {
@@ -164,11 +164,11 @@
 }
 
 .social-link:hover {
-  color: #d4a961;
+  color: var(--color-primary);
 }
 
 .footer-bottom {
-  background: #0f2838;
+  background: var(--color-brand-dark-2);
   padding: 20px 60px;
   text-align: center;
 }

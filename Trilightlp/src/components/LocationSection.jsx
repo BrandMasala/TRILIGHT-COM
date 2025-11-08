@@ -13,7 +13,7 @@ function LocationSection() {
   ]
 
   return (
-    <section className="location-section">
+    <section id="location" className="location-section">
       <div className="location-container">
         <h2 className="location-title">The Best Part Of Location</h2>
         

@@ -46,7 +46,7 @@ function GalleryTile({ item }) {
 
 export default function GallerySection({ title = 'Gallery', items = [] }) {
   return (
-    <section className="gallery">
+    <section id="gallery" className="gallery">
       <div className="gallery__header">
         <h2 className="gallery__title">{title}</h2>
       </div>

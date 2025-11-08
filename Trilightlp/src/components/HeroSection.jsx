@@ -2,7 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import './HeroSection.css'
 
 export default function HeroSection({
-  title = 'TRILIGHT',
+  title = 'THE TRILIGHT',
+  subtitle = 'EXPLORE A TRUE FORM OF MODERN ART',
+  description = 'Welcome to THE TRILIGHT, a whole new culture in concept living where you will re-write your lifestyle, re-imagine how you would like to live, rejuvenate and make meaningful memories with a precisely curated and exclusive experience.',
+  onOpenNav,
 }) {
   const [scroll, setScroll] = useState(0)
   const sectionRef = useRef(null)
@@ -36,7 +39,7 @@ export default function HeroSection({
   }
 
   return (
-    <section className="hero" ref={sectionRef}>
+    <section id="home" className="hero" ref={sectionRef}>
       <header className="hero__header" ref={headerRef}>
         <div className="brand">
           <span className="brand__logo" aria-hidden>
@@ -54,7 +57,7 @@ export default function HeroSection({
               <path d="M20 20L17 17" stroke="white" strokeWidth="2" strokeLinecap="round"/>
             </svg>
           </button>
-          <button className="icon-btn" aria-label="Menu">
+          <button className="icon-btn" aria-label="Menu" onClick={onOpenNav}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M4 6H20M4 12H20M4 18H20" stroke="white" strokeWidth="2" strokeLinecap="round"/>
             </svg>
@@ -68,9 +71,15 @@ export default function HeroSection({
       </div>
 
       <div className="hero__content">
+        <h2 className="hero__subtitle">{subtitle}</h2>
         <h1 className="hero__title" style={parallaxTitleStyle} ref={titleRef}>
           {title}
         </h1>
+        <p className="hero__description">{description}</p>
+        <div className="hero__cta">
+          <button className="btn btn--primary">Explore Residences</button>
+          <button className="btn btn--secondary">View Floor Plans</button>
+        </div>
         <div className="scroll-indicator">
           <span className="scroll-indicator__line" />
         </div>

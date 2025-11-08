@@ -1,6 +1,6 @@
 .location-section {
   padding: 80px 60px;
-  background: white;
+  background: var(--color-surface);
 }
 
 .location-container {
@@ -12,7 +12,7 @@
   text-align: center;
   font-size: 36px;
   font-weight: 300;
-  color: #d4a961;
+  color: var(--color-primary);
   margin: 0 0 60px 0;
   letter-spacing: 1px;
 }
@@ -38,13 +38,13 @@
 
 .location-name {
   font-size: 14px;
-  color: #666;
+  color: var(--color-text-muted);
   font-weight: 400;
 }
 
 .location-time {
   font-size: 16px;
-  color: #d4a961;
+  color: var(--color-primary);
   font-weight: 500;
 }
 
@@ -59,9 +59,9 @@
 .map-placeholder {
   width: 100%;
   height: 100%;
-  background: #f5f5f5;
+  background: var(--color-panel);
   border-radius: 8px;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border);
 }
 
 @media (max-width: 1024px) {

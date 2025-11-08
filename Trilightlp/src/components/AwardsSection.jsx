@@ -4,7 +4,7 @@ export default function AwardsSection({ title = 'Awards & Recognitions', awards 
   const repeatedLogos = [...logos, ...logos]
 
   return (
-    <section className="awards">
+    <section id="awards" className="awards">
       <div className="awards__header">
         <h2 className="awards__title">{title}</h2>
       </div>

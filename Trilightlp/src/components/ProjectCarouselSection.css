@@ -1,5 +1,5 @@
 /* Section styles resembling Binghatti's dark slider */
-.projects { background: #0b0b0b; color: #fff; padding: 80px 0 64px; }
+.projects { background: var(--color-text-dark); color: var(--color-text-light); padding: 80px 0 64px; }
 .projects__header { display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
 .projects__title { font-size: clamp(1rem, 1.6vw, 1.3rem); letter-spacing: 0.3em; text-transform: uppercase; opacity: 0.85; }
 
@@ -27,7 +27,7 @@
 /* Dots */
 .carousel__dots { display: flex; gap: 10px; justify-content: center; margin-top: 18px; }
 .dot { width: 6px; height: 6px; border-radius: 999px; background: rgba(255,255,255,.3); border: none; cursor: pointer; }
-.dot.is-active { background: #fff; }
+.dot.is-active { background: var(--color-text-light); }
 
 @media (max-width: 900px) {
   .carousel__ctrl.left { left: 8px; }

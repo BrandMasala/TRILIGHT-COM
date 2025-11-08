@@ -2,7 +2,7 @@ import './Footer.css'
 
 function Footer() {
   return (
-    <footer className="footer">
+    <footer id="contact" className="footer">
       <div className="footer-cta">
         <div className="footer-cta-container">
           <h3 className="footer-cta-title">Click what you Prefer</h3>
