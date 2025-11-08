@@ -1,0 +1,17 @@
+.promoters { background: var(--color-surface); padding: 90px 24px; }
+.promoters__container { max-width: 1100px; margin: 0 auto; }
+.promoters__header { text-align: center; margin-bottom: 28px; }
+.promoters__title { font-size: clamp(2rem, 3.2vw, 3rem); font-weight: 600; color: var(--color-text-dark); text-transform: uppercase; letter-spacing: .08em; }
+.promoters__subtitle { color: var(--color-text-muted); }
+
+.promoter-block { margin: 36px 0 22px; }
+.promoter-block__head { text-align: center; margin-bottom: 18px; }
+.promoter-block__name { font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-primary); }
+.promoter-block__tagline { color: var(--color-primary); margin-top: 4px; letter-spacing: .08em; text-transform: uppercase; font-size: .9rem; }
+.promoter-block__rule { width: 120px; height: 2px; background: var(--color-border); margin: 10px auto 0; }
+
+.promoter-block__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+.promoter-col { color: var(--color-text-dark); display: grid; gap: 12px; line-height: 1.7; }
+
+@media (max-width: 900px) { .promoter-block__grid { grid-template-columns: 1fr; } }
+@media (max-width: 768px) { .promoters { padding: 60px 18px; } }

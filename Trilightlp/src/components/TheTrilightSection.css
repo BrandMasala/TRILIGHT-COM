@@ -1,0 +1,11 @@
+.the-trilight { background: var(--color-surface); padding: 80px 24px; }
+.the-trilight__container { max-width: 1100px; margin: 0 auto; }
+.the-trilight__header { text-align: center; margin-bottom: 28px; }
+.the-trilight__title { font-size: clamp(2rem, 3.2vw, 3rem); font-weight: 600; color: var(--color-text-dark); letter-spacing: .02em; text-transform: uppercase; }
+.the-trilight__subtitle { color: var(--color-text-muted); }
+.the-trilight__content { display: grid; gap: 14px; font-size: 1.05rem; color: var(--color-text-dark); line-height: 1.7; }
+.the-trilight__facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 28px; }
+.fact { background: var(--color-panel); border: 1px solid var(--color-border); border-radius: 10px; padding: 16px; }
+.fact__label { font-size: .85rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+.fact__value { font-weight: 700; color: var(--color-text-dark); }
+@media (max-width: 768px) { .the-trilight { padding: 60px 18px; } }

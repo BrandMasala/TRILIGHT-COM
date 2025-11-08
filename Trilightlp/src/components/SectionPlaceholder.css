@@ -1,0 +1,4 @@
+.section-placeholder { padding: 80px 24px; background: var(--color-surface); border-top: 1px solid var(--color-border); }
+.section-placeholder__container { max-width: 980px; margin: 0 auto; }
+.section-placeholder__title { font-size: clamp(1.8rem, 3vw, 2.4rem); color: var(--color-text-dark); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 10px; }
+.section-placeholder__body { color: var(--color-text-muted); }

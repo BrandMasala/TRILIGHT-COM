@@ -1,0 +1,20 @@
+.newsletter { padding: 80px 24px; background: var(--color-surface); }
+.newsletter__container { max-width: 1080px; margin: 0 auto; }
+
+.newsletter__header { text-align: center; margin-bottom: 36px; }
+.newsletter__title { font-size: clamp(1.6rem, 3vw, 2.3rem); letter-spacing: .12em; text-transform: uppercase; color: var(--color-text-dark); }
+.newsletter__divider { width: 120px; height: 1px; margin: 14px auto; background: var(--color-primary); opacity: .8; }
+.newsletter__tagline { color: var(--color-text-muted); font-size: 1rem; max-width: 760px; margin: 0 auto; }
+
+.newsletter__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 24px; }
+.newsletter-card { border: 1px solid var(--color-border); border-radius: 12px; padding: 18px; background: linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.01)); }
+.newsletter-card__title { font-size: 1.05rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-text-dark); margin: 0 0 8px; }
+.newsletter-card__excerpt { color: var(--color-text-soft); font-size: .98rem; margin: 0 0 12px; }
+.newsletter-card__link { display: inline-block; color: var(--color-primary); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; border-bottom: 1px solid color-mix(in oklab, var(--color-primary) 60%, transparent); padding-bottom: 2px; }
+.newsletter-card__link:hover { color: color-mix(in oklab, var(--color-primary) 88%, white 12%); }
+
+.newsletter__cta { display: flex; justify-content: center; margin-top: 28px; }
+.newsletter__btn { display: inline-block; padding: 12px 20px; border-radius: 10px; background: var(--color-primary); color: var(--color-text-light); text-decoration: none; font-size: .95rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.newsletter__btn:hover { background: color-mix(in oklab, var(--color-primary) 92%, white 8%); box-shadow: 0 8px 20px color-mix(in oklab, var(--color-primary) 26%, transparent); }
+
+@media (max-width: 820px) { .newsletter__grid { grid-template-columns: 1fr; } }

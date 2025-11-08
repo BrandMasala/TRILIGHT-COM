@@ -1,0 +1,17 @@
+.download { background: var(--color-surface); color: var(--color-text-dark); padding: 80px 0; }
+.download__container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+.download__header { text-align: center; margin-bottom: 24px; }
+.download__title { font-size: clamp(1.2rem, 2.4vw, 1.6rem); font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--color-text-dark); }
+
+.download__form { margin: 0 auto; max-width: 900px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 12px; padding: 24px; display: grid; gap: 16px; }
+.download__phone-row { display: grid; grid-template-columns: 140px 1fr; gap: 10px; align-items: center; }
+.download__cc { width: 100%; padding: 12px 14px; border: 1px solid var(--color-primary); border-radius: 6px; font-size: 14px; color: var(--color-text-dark); background: var(--color-surface); }
+.download__cc:focus { outline: none; border-color: color-mix(in oklab, var(--color-primary) 85%, white); box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-primary) 20%, transparent); }
+.download__input, .download__textarea { width: 100%; padding: 12px 14px; border: 1px solid var(--color-primary); border-radius: 6px; font-size: 14px; color: var(--color-text-dark); background: var(--color-surface); }
+.download__input::placeholder, .download__textarea::placeholder { color: color-mix(in oklab, var(--color-primary) 20%, var(--color-text-muted)); }
+.download__input:focus, .download__textarea:focus { outline: none; border-color: color-mix(in oklab, var(--color-primary) 85%, white); box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-primary) 20%, transparent); }
+.download__submit { justify-self: start; padding: 12px 18px; border-radius: 8px; background: var(--color-primary); color: var(--color-text-light); border: 1px solid color-mix(in oklab, var(--color-primary) 60%, transparent); cursor: pointer; }
+.download__submit:hover { background: color-mix(in oklab, var(--color-primary) 85%, white); }
+.visually-hidden { position: absolute !important; height: 1px; width: 1px; overflow: hidden; clip: rect(1px, 1px, 1px, 1px); white-space: nowrap; }
+
+@media (max-width: 768px) { .download { padding: 60px 0; } .download__container { padding: 0 18px; } }

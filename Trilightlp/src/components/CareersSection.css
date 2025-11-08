@@ -1,0 +1,43 @@
+/* Container */
+.careers { background: var(--color-surface); color: var(--color-text-dark); padding: 80px 0; }
+.careers__container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+/* Panel */
+.careers__panel { display: grid; grid-template-columns: 1fr 1.4fr; gap: 0; border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; background: linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.00)); }
+.careers__contact { padding: 24px; border-right: 1px solid var(--color-border); }
+.careers__form-wrap { padding: 24px; }
+
+/* Contact */
+.careers__contact-title { font-size: clamp(1rem, 1.6vw, 1.3rem); letter-spacing: .1em; color: var(--color-brand-dark); margin: 4px 0 16px; }
+.careers__contact-item { display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: center; margin-bottom: 14px; }
+.careers__icon { display: inline-flex; align-items: center; justify-content: center; color: var(--color-primary); }
+.careers__label { font-weight: 600; color: var(--color-brand-dark); }
+.careers__value { color: var(--color-text-dark); }
+
+/* Form */
+.careers__form-title { font-size: clamp(1rem, 1.6vw, 1.3rem); letter-spacing: .1em; color: var(--color-brand-dark); margin: 4px 0 16px; text-align: left; }
+.careers__form { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.careers__input, .careers__textarea, .careers__upload-btn { width: 100%; padding: 12px 14px; border: 1px solid var(--color-primary); border-radius: 6px; font-size: 14px; color: var(--color-text-dark); background: var(--color-surface); }
+.careers__input:focus, .careers__textarea:focus { outline: none; border-color: color-mix(in oklab, var(--color-primary) 85%, white); box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-primary) 20%, transparent); }
+.careers__textarea { grid-column: 1 / -1; }
+.careers__file { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: center; }
+.careers__file-input { display: none; }
+.careers__upload-btn { background: var(--color-primary); color: var(--color-text-light); border: 1px solid color-mix(in oklab, var(--color-primary) 60%, transparent); cursor: pointer; }
+.careers__upload-btn:hover { background: color-mix(in oklab, var(--color-primary) 85%, white); }
+.careers__file-name { font-size: 13px; color: var(--color-text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.careers__submit { justify-self: start; grid-column: 1 / -1; padding: 12px 18px; border-radius: 8px; background: var(--color-primary); color: var(--color-text-light); border: 1px solid color-mix(in oklab, var(--color-primary) 60%, transparent); cursor: pointer; }
+.careers__submit:hover { background: color-mix(in oklab, var(--color-primary) 85%, white); }
+
+/* Success */
+.careers__success { border: 1px solid var(--color-border); border-radius: 8px; padding: 18px; background: #f6f6f6; color: var(--color-text-dark); }
+.careers__success-links { margin-top: 8px; }
+.careers__success-links a { color: var(--color-primary); }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .careers__panel { grid-template-columns: 1fr; }
+  .careers__contact { border-right: none; border-bottom: 1px solid var(--color-border); }
+}
+@media (max-width: 640px) {
+  .careers__form { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,38 @@
+.floor-plans { background: var(--color-surface); padding: 100px 60px; }
+.floor-plans__container { max-width: 1200px; margin: 0 auto; }
+
+.floor-plans__header { text-align: center; margin-bottom: 60px; }
+.floor-plans__title { font-size: clamp(2rem, 3.2vw, 3rem); font-weight: 300; color: var(--color-text-dark); letter-spacing: .02em; margin-bottom: 12px; }
+.floor-plans__subtitle { font-size: 1.1rem; color: var(--color-text-muted); }
+
+.floor-plans__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+@media (max-width: 1024px) { .floor-plans__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 720px) { .floor-plans__grid { grid-template-columns: 1fr; } }
+
+.plan { position: relative; background: var(--color-surface); border-radius: 16px; padding: 24px; box-shadow: 0 10px 24px var(--color-elev-1); border: 1px solid rgba(26,26,26,.08); transition: transform .2s ease, box-shadow .2s ease; }
+.plan:hover { transform: translateY(-4px); box-shadow: 0 18px 36px var(--color-elev-2); }
+
+.plan__badge { position: absolute; top: 16px; right: 16px; background: var(--color-primary); color: var(--color-text-light); font-size: .8rem; font-weight: 600; padding: 6px 10px; border-radius: 999px; letter-spacing: .06em; text-transform: uppercase; }
+
+.plan__header { margin-bottom: 14px; }
+.plan__type { font-size: 1.4rem; font-weight: 700; letter-spacing: .02em; color: var(--color-text-dark); margin: 0 0 6px; }
+.plan__area { font-size: 1rem; color: var(--color-primary); font-weight: 600; }
+
+.plan__features { list-style: none; padding: 0; margin: 18px 0 22px; }
+.plan__feature { display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: .98rem; color: var(--color-text-dark); border-bottom: 1px solid var(--color-border); }
+.plan__feature:last-child { border-bottom: none; }
+.plan__check { color: var(--color-primary); font-weight: 700; }
+
+.plan__cta { display: flex; gap: 12px; flex-wrap: wrap; }
+.plan__btn { padding: 12px 18px; border-radius: 10px; font-size: .95rem; font-weight: 600; cursor: pointer; transition: all .2s ease; text-transform: uppercase; letter-spacing: .06em; }
+.plan__btn--primary { background: var(--color-primary); color: var(--color-text-light); border: none; }
+.plan__btn--primary:hover { background: color-mix(in oklab, var(--color-primary) 92%, white 8%); box-shadow: 0 8px 20px color-mix(in oklab, var(--color-primary) 30%, transparent); transform: translateY(-2px); }
+.plan__btn--secondary { background: transparent; color: var(--color-text-dark); border: 2px solid var(--color-text-dark); }
+.plan__btn--secondary:hover { background: var(--color-text-dark); color: var(--color-text-light); transform: translateY(-2px); }
+
+.floor-plans__note { text-align: center; margin-top: 26px; color: var(--color-text-muted); font-size: .95rem; }
+
+@media (max-width: 768px) {
+  .floor-plans { padding: 60px 24px; }
+  .plan { padding: 20px; }
+}

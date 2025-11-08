@@ -1,0 +1,20 @@
+.residences { background: var(--color-surface); padding: 90px 24px; }
+.residences__container { max-width: 1100px; margin: 0 auto; }
+.residences__header { text-align: center; margin-bottom: 24px; }
+.residences__title { font-size: clamp(2rem, 3.2vw, 3rem); font-weight: 600; color: var(--color-text-dark); text-transform: uppercase; letter-spacing: .08em; }
+.residences__subtitle { color: var(--color-text-muted); }
+.residences__intro { display: grid; gap: 12px; color: var(--color-text-dark); line-height: 1.7; margin: 10px 0 22px; }
+
+.residences__facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 18px 0 28px; }
+.res-fact { background: var(--color-panel); border: 1px solid var(--color-border); border-radius: 10px; padding: 14px; }
+.res-fact__label { font-size: .86rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+.res-fact__value { font-weight: 700; color: var(--color-text-dark); }
+
+.residences__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+.res-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 12px; padding: 18px; box-shadow: 0 10px 24px var(--color-elev-1); }
+.res-card__title { font-size: 1.2rem; font-weight: 700; color: var(--color-text-dark); margin: 0 0 8px; }
+.res-card__body { color: var(--color-text-muted); }
+
+.residences__note { text-align: center; margin-top: 26px; color: var(--color-text-muted); }
+
+@media (max-width: 768px) { .residences { padding: 60px 18px; } }
