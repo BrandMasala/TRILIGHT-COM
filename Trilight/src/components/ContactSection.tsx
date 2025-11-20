@@ -39,6 +39,7 @@ const ContactSection = () => {
   const [coverStage, setCoverStage] = useState<0 | 1 | 2>(0);
   const [showCover, setShowCover] = useState(true);
   const startedRef = useRef(false);
+  const timersRef = useRef<number[]>([]);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -58,20 +59,31 @@ const ContactSection = () => {
   }, []);
 
   useEffect(() => {
-    if (progress >= 0.05 && !startedRef.current) {
+    const startSequence = () => {
+      if (startedRef.current) return;
       startedRef.current = true;
       setCoverStage(1);
-      const tOut = setTimeout(() => setCoverStage(2), 3600);
-      const tForm = setTimeout(() => {
-        setRevealForm(true);
-        setShowCover(false);
-      }, 4600);
-      return () => {
-        clearTimeout(tOut);
-        clearTimeout(tForm);
-      };
-    }
-  }, [progress]);
+      timersRef.current.push(window.setTimeout(() => setRevealForm(true), 1800));
+      timersRef.current.push(
+        window.setTimeout(() => {
+          setCoverStage(2);
+          setShowCover(false);
+        }, 3600)
+      );
+    };
+
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver((entries) => {
+      const entry = entries[0];
+      if (entry.isIntersecting) startSequence();
+    }, { threshold: 0.2 });
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      timersRef.current.forEach((id) => clearTimeout(id));
+    };
+  }, []);
 
   const headlineOpacity = 1;
   const panelOpacity = revealForm ? 1 : 0;

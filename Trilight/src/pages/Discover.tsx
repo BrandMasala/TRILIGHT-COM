@@ -10,6 +10,11 @@ const Discover = () => {
   const [progress, setProgress] = useState(0);
   const targetRef = useRef(0);
   const rafRef = useRef<number | null>(null);
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    setProgress(0);
+    targetRef.current = 0;
+  }, []);
   const tickingRef = useRef(false);
 
   useEffect(() => {

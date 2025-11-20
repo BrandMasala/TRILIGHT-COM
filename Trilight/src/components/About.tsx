@@ -83,7 +83,7 @@ export default function TrilightLanding() {
   }, []);
 
   return (
-    <div ref={root} style={{ background: "#fff", minHeight: "100vh" }}>
+    <div ref={root} style={{ background: "#fff" }}>
       {/* HERO */}
       <section
         style={{
@@ -162,8 +162,8 @@ export default function TrilightLanding() {
           >
             Live where the sky feels like home
           </p>
-          <a
-            href="#detail"
+          <Link
+            to="/discover"
             style={{
               display: "inline-block",
               padding: "12px 22px",
@@ -176,7 +176,7 @@ export default function TrilightLanding() {
             }}
           >
             Discover
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -186,8 +186,8 @@ export default function TrilightLanding() {
         ref={card}
         style={{
           position: "relative",
-          margin: "-80px auto 0",
-          width: "min(1600px, 98vw)",
+          margin: "-120px auto 0",
+          width: "min(1200px, 94vw)",
           background: "#fff",
           borderRadius: 36,
           boxShadow: "0 30px 60px rgba(0,0,0,.08)",
@@ -195,7 +195,6 @@ export default function TrilightLanding() {
           willChange: "transform, opacity",
           transformOrigin: "center center",
           clipPath: "circle(6% at 50% 50%)",
-          minHeight: "80vh",
         }}
       >
         <div
