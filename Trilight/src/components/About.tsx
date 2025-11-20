@@ -143,40 +143,9 @@ export default function TrilightLanding() {
           >
             Trilight
           </div>
-          <h1
-            style={{
-              margin: "10px 0 8px",
-              fontWeight: 600,
-              fontSize: "clamp(28px,5vw,64px)",
-            }}
-          >
-            Rise With 9
-          </h1>
-          <p
-            style={{
-              margin: "0 0 22px",
-              fontWeight: 300,
-              fontSize: "clamp(14px,2vw,18px)",
-              opacity: 0.9,
-            }}
-          >
-            Live where the sky feels like home
-          </p>
-          <Link
-            to="/discover"
-            style={{
-              display: "inline-block",
-              padding: "12px 22px",
-              background: "rgba(255,255,255,.1)",
-              border: "1px solid rgba(255,255,255,.35)",
-              borderRadius: 999,
-              color: "#fff",
-              textDecoration: "none",
-              backdropFilter: "blur(6px)",
-            }}
-          >
-            Discover
-          </Link>
+          
+          
+          
         </div>
       </section>
 
