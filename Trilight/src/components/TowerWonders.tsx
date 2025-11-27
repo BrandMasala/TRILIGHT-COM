@@ -9,15 +9,15 @@ const TowerWonders = () => {
   
 
   return (
-    <section className="py-24 bg-neutral-cream relative overflow-hidden">
+    <section id="design-ethos" className="py-24 bg-neutral-cream relative overflow-hidden">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="font-heading text-5xl md:text-6xl text-dark-elegant mb-6 animate-fade-up">
-            The <span className="text-gradient">TRILIGHT</span> Legacy
+            The <span className="text-gradient">Design</span> Ethos
           </h2>
-          <p className="font-body text-2xl text-dark-elegant mb-8 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+          {/* <p className="font-body text-2xl text-dark-elegant mb-8 animate-fade-up" style={{ animationDelay: '0.2s' }}>
             From Vision to Masterpiece: Defining Our Pillars.        
-          </p>
+          </p> */}
         </div>
 
         {/* Combined columns: image + caption + text for perfect alignment */}
@@ -34,13 +34,13 @@ const TowerWonders = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
               </div>
               <figcaption className="mt-4 text-center">
-                <h3 className="font-heading text-2xl text-dark-elegant">Craftsmanship</h3>
-                <p className="font-body text-muted-foreground">Timeless detail and precision</p>
+                <h3 className="font-heading text-2xl text-dark-elegant">Constellations of Clarity</h3>
+                {/* <p className="font-body text-muted-foreground">Timeless detail and precision</p> */}
               </figcaption>
             </figure>
             <div className="mt-6 md:pr-10 md:border-r md:border-neutral-300 transition-transform duration-500 md:-translate-y-10 text-center">
               <p className="font-body text-dark-elegant/80 leading-relaxed">
-                When building a house, attention to detail is essential. We recognise this, and pay attention to every detail, whether it’s the quality of the materials, textures and finishes, door hinges, doors, floor tiling, bathroom flooring, fittings or window size. A true craftsman for a harmonious life.
+              Craftsmanship at Trilight is rooted in quiet precision. Every detail is considered: materials, textures, finishes, hinges, tiling, fittings, and proportions. Nothing is overlooked.
               </p>
             </div>
           </div>
@@ -57,14 +57,13 @@ const TowerWonders = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
               </div>
               <figcaption className="mt-4 text-center">
-                <h3 className="font-heading text-2xl text-dark-elegant">Thoughtful Design</h3>
-                <p className="font-body text-muted-foreground">Ideas shaped into form</p>
+                <h3 className="font-heading text-2xl text-dark-elegant">Constellations of Flow</h3>
+                {/* <p className="font-body text-muted-foreground">Ideas shaped into form</p> */}
               </figcaption>
             </figure>
             <div className="mt-6 md:px-10 md:border-r md:border-neutral-300 transition-transform duration-500 md:translate-y-2 text-center">
               <p className="font-body text-dark-elegant/80 leading-relaxed">
-                Home design is not just a structure; it’s a beautiful piece of art. Homes are spacious with well‑utilised spaces. The design is carefully considered and subjected to quality inspections. We consider every stage of construction to ensure a thoughtful design.
-              </p>
+                Every Trilight space is shaped for effortless movement. With meticulous planning and strict quality checks, ideas become spacious, well-utilised homes that move in rhythm with everyday life.              </p>
             </div>
           </div>
 
@@ -80,14 +79,13 @@ const TowerWonders = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
               </div>
               <figcaption className="mt-4 text-center">
-                <h3 className="font-heading text-2xl text-dark-elegant">Signature Quality</h3>
-                <p className="font-body text-muted-foreground">Elevated standards, every day</p>
+                <h3 className="font-heading text-2xl text-dark-elegant">Constellations of Belonging</h3>
+                {/* <p className="font-body text-muted-foreground">Elevated standards, every day</p> */}
               </figcaption>
             </figure>
             <div className="mt-6 md:pl-10 transition-transform duration-500 md:translate-y-10 text-center">
               <p className="font-body text-dark-elegant/80 leading-relaxed">
-                We are involved in every stage of the process, from material sourcing to building homes. Every home we build is subjected to material quality inspection. Items used in construction are manufactured by us, allowing complete control over the quality of the products utilised.
-              </p>
+                Belonging emerges through c rafted social spaces that spark everday connection & with full material control & strict inspections, every space is built with uncompromising quality.</p>
             </div>
           </div>
         </div>

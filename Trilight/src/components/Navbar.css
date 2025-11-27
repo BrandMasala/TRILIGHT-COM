@@ -1,0 +1,283 @@
+/* Top Logo Styles */
+.sobha-logo {
+  height: 110px;
+  width: auto;
+  max-width: 500px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  
+}
+
+/* Responsive Design for Logo */
+@media (max-width: 768px) {
+  .sobha-logo {
+    height: 6.75rem; /* ~44px */
+    max-width: 160px;
+  }
+  
+  .top-logo {
+    top: 1.5rem;
+    height: 4.5rem; /* keep container height for layout consistency */
+  }
+  
+  .menu-button {
+    top: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sobha-logo {
+    height: 5.5rem; /* ~40px */
+    max-width: 140px;
+  }
+  
+  .top-logo {
+    top: 2rem;
+    height: 9rem; /* keep existing container height to avoid menu-button rework */
+    padding: 0;
+  }
+  
+  .menu-button {
+    /* Vertically center relative to the 9rem tall top-logo starting at 2rem */
+    top: calc(2rem + 4.5rem + 10px);
+    transform: translateY(-50%);
+  }
+}
+
+/* Menu Button Base Styles - see enhanced styles below */
+
+/* Full Background Blur Backdrop */
+.navbar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* F9 navbar styles removed */
+
+/* Enhanced Logo and Menu Button Styles for Full Blur */
+.top-logo {
+  position: fixed;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 4rem;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+.menu-button {
+  position: fixed;
+  top: 2rem;
+  left: 2rem;
+  z-index: 1001;
+  
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.sobha-logo {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3)) brightness(1.1);
+}
+
+.hamburger-image {
+  filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Hamburger Image Styles */
+.hamburger-image {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  transition: all 0.3s ease;
+  filter: brightness(0) invert(1); /* Makes the image white */
+}
+
+/* Sidebar Styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 280px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  z-index: 1000;
+  border-right: 1px solid rgba(206, 177, 115, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* Navigation Styles */
+.sidebar-nav {
+  flex: 1;
+  padding: 5rem 0 1rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar-nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav-list li {
+  margin-bottom: 1rem;
+}
+
+.sidebar-nav-link {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+  position: relative;
+}
+
+.sidebar-nav-link:hover {
+  color: #ceb173;
+  background: rgba(206, 177, 115, 0.1);
+  border-left-color: #ceb173;
+}
+
+.sidebar-nav-link:hover::before {
+  opacity: 1;
+}
+
+.sidebar-nav-link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #ceb173;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Navigation Text */
+.nav-text {
+  transition: opacity 0.3s ease;
+}
+
+/* Social Media Icons */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+  border-top: 1px solid rgba(206, 177, 115, 0.25);
+  /* Gold tint that visually fills downward */
+  background: linear-gradient(
+    to bottom,
+    rgba(206, 177, 115, 0.15) 0%,
+    rgba(206, 177, 115, 0.06) 100%
+  );
+}
+
+.social-icon {
+  color: #fff;
+  transition: all 0.3s ease;
+  opacity: 0.9;
+  padding: 0.4rem; /* slightly smaller to match reduced icon */
+  border-radius: 50%;
+}
+
+/* Make SVGs respect current text color and appear stronger */
+.social-icon svg {
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+}
+
+.social-icon:hover {
+  color: #ceb173;
+  opacity: 1;
+  transform: translateY(-2px);
+  background: rgba(206, 177, 115, 0.18);
+}
+
+@media (max-width: 768px) {
+  .social-icons {
+    padding: 1.5rem;
+    gap: 2.5rem;
+  }
+}
+
+/* Responsive Design for Menu Button */
+@media (max-width: 768px) {
+  .menu-button {
+    top: 1.5rem;
+    left: 1.5rem;
+    padding: 0.6rem 0.8rem;
+  }
+  
+  .hamburger-image {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .sidebar {
+    width: 100%;
+  }
+
+  .social-icons {
+    padding: 1rem;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-button {
+    top: 1rem;
+    left: 1rem;
+    padding: 0.5rem 0.7rem;
+  }
+  
+  .hamburger-image {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Reset body margins */
+body {
+  margin: 0;
+  padding: 0;
+}

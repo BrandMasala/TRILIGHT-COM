@@ -20,8 +20,8 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				heading: ['AktivGrotesk', 'sans-serif'],
-				body: ['AktivGrotesk', 'sans-serif'],
+				heading: ['"Granjon LT"', 'serif'],
+				body: ['"Granjon LT"', 'serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
+import PhilosophySection from '@/components/TrilightMeaning';
 
 gsap.registerPlugin(ScrollTrigger);
 console.log("GSAP loaded:", gsap);
@@ -86,6 +87,7 @@ export default function TrilightLanding() {
     <div ref={root} style={{ background: "#fff" }}>
       {/* HERO */}
       <section
+        id="hero"
         style={{
           position: "relative",
           minHeight: "100vh",
@@ -146,8 +148,8 @@ export default function TrilightLanding() {
           
           
           
-        </div>
-      </section>
+        </div>  
+        </section>
 
       {/* CURVED REVEAL CARD */}
       <section
@@ -155,8 +157,8 @@ export default function TrilightLanding() {
         ref={card}
         style={{
           position: "relative",
-          margin: "-120px auto 0",
-          width: "min(1200px, 94vw)",
+          margin: "-90px auto 0",
+          width: "min(1900px,100vw)",
           background: "#fff",
           borderRadius: 36,
           boxShadow: "0 30px 60px rgba(0,0,0,.08)",
@@ -169,34 +171,49 @@ export default function TrilightLanding() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1.2fr 1fr",
+            gridTemplateColumns: "1fr 1.2fr",
             gap: "min(5vw, 48px)",
             padding: "clamp(28px, 5vw, 64px)",
             alignItems: "center",
           }}
         >
-          <div ref={textBlock}>
+          <div
+            ref={imageBlock}
+            style={{
+              gridColumn: 1,
+              textAlign: "left",
+            }}
+          >
             <h2
               style={{
-                fontSize: "clamp(22px,3.6vw,40px)",
+                fontSize: "clamp(52px,4.6vw,60px)",
                 margin: "0 0 16px",
                 color: "#111",
                 letterSpacing: "-0.02em",
                 fontWeight: 600,
               }}
             >
-              <span style={{ fontStyle: "italic" }}>The Art</span> of Detail
+              <span>Our</span> <br/>Philosophy
             </h2>
+          </div>
+          <div
+            ref={textBlock}
+            style={{
+              gridColumn: 2,
+              textAlign: "right",
+            }}
+          >
             <p style={{ color: "#333", lineHeight: 1.7, margin: "0 0 18px" }}>
-              True excellence lives in the finish. Precision, proportion, and
-              light, tuned for life above the city.
+              "Constellations are stories between stars.
+              Homes are stories between moments."
             </p>
             <p style={{ color: "#333", lineHeight: 1.7, margin: "0 0 18px" }}>
-              Double-height living. Sky amenities. Two homes per floor.
-              White-glove services.
+              At Trilight, we turn those moments into a constellation of living that tollows human rhythm
+
             </p>
             <Link
               to="/discover"
+              target="_blank"
               style={{
                 display: "inline-block",
                 padding: "12px 18px",
@@ -210,17 +227,7 @@ export default function TrilightLanding() {
             </Link>
           </div>
 
-          <div
-            ref={imageBlock}
-            style={{
-              position: "relative",
-              aspectRatio: "4 / 3",
-              borderRadius: 20,
-              overflow: "hidden",
-              background: "center/cover no-repeat url(/craftsmanship.jpg)",
-              boxShadow: "0 20px 40px rgba(0,0,0,.08)",
-            }}
-          />
+         
         </div>
       </section>
       {/* removed extra spacer to avoid large bottom whitespace */}

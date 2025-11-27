@@ -32,7 +32,18 @@ const SkyClub = () => {
     },
     {
       title: "TRISE",
-      subtitle: "Timeless Interiors",
+      subtitle: "Coming soon",
+      image: luxuryInteriorImage,
+      features: [
+        { label: "Infinity Swimming Pool", icon: Waves },
+        { label: "Children's Play Areas", icon: Puzzle },
+        { label: "Landscaped Courtyards", icon: Leaf },
+        { label: "Yacht Club", icon: Sailboat },
+      ],
+    },
+    {
+      title: "Kompally",
+      subtitle: "Coming soon",
       image: luxuryInteriorImage,
       features: [
         { label: "Infinity Swimming Pool", icon: Waves },
@@ -51,11 +62,11 @@ const SkyClub = () => {
   
 
   return (
-    <section className="pt-24 pb-0 bg-gradient-elegant">
+    <section id="stories" className="pt-24 pb-0 bg-gradient-elegant">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="font-heading text-5xl md:text-6xl text-glass-white mb-6 animate-fade-up">
-            The Sky Club <span className="text-gradient">Trilogy</span>
+            Stories We’ve <span className="text-gradient">Built</span>
           </h2>
           <p className="font-body text-xl text-neutral-cream max-w-3xl mx-auto animate-fade-up" style={{ animationDelay: '0.2s' }}>
             Three levels of extraordinary experiences, each crafted for different moments of your life
@@ -82,6 +93,7 @@ const SkyClub = () => {
             const imgOpacity = baseOpacity + (1 - baseOpacity) * ease;
             const panelOpacity = baseOpacity + (1 - baseOpacity) * ease;
             const panelTranslateY = 24 * (1 - ease);
+            const isComingSoon = /coming/i.test(project.subtitle);
 
             return (
             <div key={project.title} className="relative min-h-screen w-screen flex-shrink-0">
@@ -92,34 +104,44 @@ const SkyClub = () => {
                 style={{ opacity: imgOpacity, transform: `scale(${imgScale})` }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-dark-elegant/60 to-transparent" style={{ opacity: ease }} />
-              <div className="absolute bottom-8 left-1/2 w-[95%] md:w-[85%] glass rounded-2xl p-6 md:p-8 backdrop-blur-xl"
-                   style={{ opacity: panelOpacity, transform: `translate(-50%, ${panelTranslateY}px)` }}>
-                <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-                  <div className="text-center md:text-left">
-                    <h3 className="font-heading text-2xl md:text-3xl text-glass-white">{project.title}</h3>
-                    <p className="font-body text-glass-white/80">{project.subtitle}</p>
-                  </div>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full md:w-auto">
-                    {project.features.map((feature, i) => {
-                      const Icon = feature.icon;
-                      const withBorders = i === 1 || i === 2 ? 'md:border-x md:border-white/20' : '';
-                      return (
-                        <div key={feature.label} className={`flex items-center gap-3 px-3 ${withBorders}`}>
-                          <div className="w-10 h-10 rounded-xl glass flex items-center justify-center">
-                            <Icon className="w-5 h-5 text-glass-white" />
-                          </div>
-                          <span className="font-body text-sm text-glass-white">{feature.label}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Button className="btn-luxury">Walkthrough</Button>
-                    <Button variant="outline" className="border-luxury-gold text-luxury-gold">Call Back</Button>
-                    <Button variant="outline" className="border-luxury-gold text-luxury-gold">WhatsApp</Button>
+              {isComingSoon && (
+                <div className="absolute inset-0 z-30 flex items-center justify-center">
+                  <div className="glass rounded-2xl px-6 py-5 text-center">
+                    <div className="font-heading text-2xl md:text-3xl text-glass-white">{project.title}</div>
+                    <div className="font-heading text-4xl md:text-6xl text-glass-white tracking-widest mt-2">COMING SOON</div>
                   </div>
                 </div>
-              </div>
+              )}
+              {!isComingSoon && (
+                <div className="absolute bottom-8 left-1/2 w-[95%] md:w-[85%] glass rounded-2xl p-6 md:p-8 backdrop-blur-xl"
+                     style={{ opacity: panelOpacity, transform: `translate(-50%, ${panelTranslateY}px)` }}>
+                  <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div className="text-center md:text-left">
+                      <h3 className="font-heading text-2xl md:text-3xl text-glass-white">{project.title}</h3>
+                      <p className="font-body text-glass-white/80">{project.subtitle}</p>
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full md:w-auto">
+                      {project.features.map((feature, i) => {
+                        const Icon = feature.icon;
+                        const withBorders = i === 1 || i === 2 ? 'md:border-x md:border-white/20' : '';
+                        return (
+                          <div key={feature.label} className={`flex items-center gap-3 px-3 ${withBorders}`}>
+                            <div className="w-10 h-10 rounded-xl glass flex items-center justify-center">
+                              <Icon className="w-5 h-5 text-glass-white" />
+                            </div>
+                            <span className="font-body text-sm text-glass-white">{feature.label}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Button className="btn-luxury">Walkthrough</Button>
+                      <Button variant="outline" className="border-luxury-gold text-luxury-gold">Call Back</Button>
+                      <Button variant="outline" className="border-luxury-gold text-luxury-gold">WhatsApp</Button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
             );
           })}

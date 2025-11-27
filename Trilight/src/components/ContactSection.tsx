@@ -36,6 +36,7 @@ const ContactSection = () => {
   const targetRef = useRef(0);
   const rafRef = useRef<number | null>(null);
   const [revealForm, setRevealForm] = useState(false);
+  const [revealInterest, setRevealInterest] = useState(false);
   const [coverStage, setCoverStage] = useState<0 | 1 | 2>(0);
   const [showCover, setShowCover] = useState(true);
   const startedRef = useRef(false);
@@ -63,12 +64,17 @@ const ContactSection = () => {
       if (startedRef.current) return;
       startedRef.current = true;
       setCoverStage(1);
-      timersRef.current.push(window.setTimeout(() => setRevealForm(true), 1800));
+      timersRef.current.push(
+        window.setTimeout(() => {
+          setRevealInterest(true);
+          setRevealForm(true);
+        }, 3000)
+      );
       timersRef.current.push(
         window.setTimeout(() => {
           setCoverStage(2);
           setShowCover(false);
-        }, 3600)
+        }, 3000)
       );
     };
 
@@ -86,19 +92,20 @@ const ContactSection = () => {
   }, []);
 
   const headlineOpacity = 1;
-  const panelOpacity = revealForm ? 1 : 0;
-  const panelTranslate = revealForm ? 0 : 30;
+  const leftOpacity = revealInterest ? 1 : 0;
+  const rightOpacity = revealForm ? 1 : 0;
+  const panelTranslate = (revealInterest || revealForm) ? 0 : 30;
   const overlayOpacity = 0.5 + 0.5 * progress;
 
   return (
-    <section ref={sectionRef} className="relative min-h-screen bg-background overflow-hidden">
+    <section id="contact" ref={sectionRef} className="relative min-h-screen bg-background overflow-hidden">
       <div className="sticky top-0 h-screen">
         <img src={heroImage} alt="Contact" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-black/10" style={{ opacity: overlayOpacity }} />
         <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
-          <div className="text-center" style={{ opacity: revealForm ? 0 : headlineOpacity, transition: 'opacity 600ms ease' }}>
+          <div className="text-center" style={{ opacity: showCover ? headlineOpacity : 0, transition: 'opacity 800ms ease' }}>
             <h2 className="font-heading text-6xl md:text-7xl text-glass-white mb-4">CONNECT WITH</h2>
-            <div className="font-heading text-6xl md:text-7xl text-glass-white">THE BRAND</div>
+            <div className="font-heading text-6xl md:text-7xl text-glass-white">TRILIGHT</div>
           </div>
         </div>
         <div className="absolute inset-y-0 right-0 z-20 pointer-events-none">
@@ -120,32 +127,33 @@ const ContactSection = () => {
             }}
           />
         </div>
-        <div className="absolute right-6 md:right-10 top-1/2 -translate-y-1/2 w-[92%] md:w-[42%] z-30">
-          <div className="glass rounded-2xl p-6 md:p-8" style={{ opacity: panelOpacity, transform: `translateY(${panelTranslate}px)`, transition: 'opacity 1500ms ease, transform 1200ms ease' }}>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Input name="name" placeholder="Name" value={formData.name} onChange={handleInputChange} className="h-12 bg-glass-white/40" required />
-                <Input name="phone" placeholder="Mobile" value={formData.phone} onChange={handleInputChange} className="h-12 bg-glass-white/40" required />
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 w-[92%] md:w-[80%]">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="glass rounded-2xl p-6 md:p-8 flex flex-col items-center justify-center text-center" style={{ opacity: leftOpacity, transform: `translateY(${panelTranslate}px)`, transition: 'opacity 2500ms ease, transform 3200ms ease' }}>
+              <div className="space-y-3 text-glass-white/90">
+                <div className="font-heading text-3xl md:text-4xl">EXPRESS YOUR INTEREST</div>
+                <div className="mt-6 grid grid-cols-2 gap-3 mx-auto">
+                  <Button variant="outline" className="glass border-luxury-gold text-luxury-gold"><Phone className="mr-2 w-4 h-4" /> Call Back</Button>
+                  <Button variant="outline" className="glass border-luxury-gold text-luxury-gold"><MessageCircle className="mr-2 w-4 h-4" /> WhatsApp</Button>
+                  <Button variant="outline" className="glass border-luxury-gold text-luxury-gold"><Download className="mr-2 w-4 h-4" /> Brochure</Button>
+                  <Button variant="outline" className="glass border-luxury-gold text-luxury-gold"><MapPin className="mr-2 w-4 h-4" /> Visit</Button>
+                </div>
               </div>
-              <Input name="email" type="email" placeholder="Email" value={formData.email} onChange={handleInputChange} className="h-12 bg-glass-white/40" required />
-              <Textarea name="message" placeholder="Message" value={formData.message} onChange={handleInputChange} rows={4} className="bg-glass-white/40 resize-none" />
-              <Button type="submit" size="lg" className="btn-luxury w-full py-4 text-lg">Meet Our Brand Ambassador</Button>
-            </form>
-          </div>
-        </div>
-        <div className="absolute left-6 md:left-10 bottom-8 md:bottom-12" style={{ opacity: revealForm ? 1 : 0, transform: `translateY(${revealForm ? 0 : 20}px)`, transition: 'opacity 800ms ease, transform 800ms ease' }}>
-          <div className="space-y-3 text-glass-white/90">
-            <div className="font-heading text-3xl">EXPRESS</div>
-            <div className="font-heading text-2xl">YOUR</div>
-            <div className="font-heading text-2xl">INTEREST</div>
-            <div className="mt-6 grid grid-cols-2 gap-3 max-w-md">
-              <Button variant="outline" className="glass border-luxury-gold text-luxury-gold"><Phone className="mr-2 w-4 h-4" /> Call Back</Button>
-              <Button variant="outline" className="glass border-luxury-gold text-luxury-gold"><MessageCircle className="mr-2 w-4 h-4" /> WhatsApp</Button>
-              <Button variant="outline" className="glass border-luxury-gold text-luxury-gold"><Download className="mr-2 w-4 h-4" /> Brochure</Button>
-              <Button variant="outline" className="glass border-luxury-gold text-luxury-gold"><MapPin className="mr-2 w-4 h-4" /> Visit</Button>
+            </div>
+            <div className="glass rounded-2xl p-6 md:p-8" style={{ opacity: rightOpacity, transform: `translateY(${panelTranslate}px)`, transition: 'opacity 2500ms ease, transform 5200ms ease' }}>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Input name="name" placeholder="Name" value={formData.name} onChange={handleInputChange} className="h-12 bg-glass-white/40" required />
+                  <Input name="phone" placeholder="Mobile" value={formData.phone} onChange={handleInputChange} className="h-12 bg-glass-white/40" required />
+                </div>
+                <Input name="email" type="email" placeholder="Email" value={formData.email} onChange={handleInputChange} className="h-12 bg-glass-white/40" required />
+                <Textarea name="message" placeholder="Message" value={formData.message} onChange={handleInputChange} rows={4} className="bg-glass-white/40 resize-none" />
+                <Button type="submit" size="lg" className="btn-luxury w-full py-4 text-lg">Meet TRILIGHT</Button>
+              </form>
             </div>
           </div>
         </div>
+        
       </div>
     </section>
   );

@@ -1,15 +1,8 @@
-import HeroSection from "@/components/HeroSection";
-import IntroStory from "@/components/IntroStory";
-import TrilightMeaning from "@/components/TrilightMeaning";
 import TowerWonders from "@/components/TowerWonders";
-import FeatureCards from "@/components/FeatureCards";
-import SignatureResidences from "@/components/SignatureResidences";
-import SkyClub from "@/components/SkyClub";
+import FeatureCards from "@/components/PressRelases";
+import SkyClub from "@/components/StoriesWehaveBuild";
 import ContactSection from "@/components/ContactSection";
-import MobileFooter from "@/components/MobileFooter";
 import TrilightLanding from "@/components/About";
-
-
 
 const Index = () => {
   return (
