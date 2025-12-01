@@ -58,10 +58,9 @@ export default function TrilightLanding() {
           ease: "none",
           scrollTrigger: {
             trigger: card.current!,
-            start: "top 85%",
-            end: "top 35%",
-            scrub: true,
-            // markers: true,
+            start: "top 90%",
+            end: "top 70%",
+            scrub: 0.2,
           },
         }
       );
@@ -69,13 +68,13 @@ export default function TrilightLanding() {
       // 4) inside card: text + image fade-in only (no translate)
       gsap.from([textBlock.current, imageBlock.current], {
         opacity: 0,
-        stagger: 0.15,
+        stagger: 0.1,
         ease: "power2.out",
         scrollTrigger: {
           trigger: card.current!,
-          start: "top 80%",
-          end: "top 50%",
-          scrub: true,
+          start: "top 85%",
+          end: "top 65%",
+          scrub: 0.2,
         },
       });
     }, root);
