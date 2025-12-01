@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import PhilosophySection from '@/components/TrilightMeaning';
@@ -15,8 +15,6 @@ export default function TrilightLanding() {
   const card = useRef<HTMLElement | null>(null);
   const textBlock = useRef<HTMLDivElement | null>(null);
   const imageBlock = useRef<HTMLDivElement | null>(null);
-  const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     // scope all selectors to this component only
@@ -60,9 +58,10 @@ export default function TrilightLanding() {
           ease: "none",
           scrollTrigger: {
             trigger: card.current!,
-            start: "top 90%",
-            end: "top 70%",
-            scrub: 0.2,
+            start: "top 85%",
+            end: "top 35%",
+            scrub: true,
+            // markers: true,
           },
         }
       );
@@ -70,13 +69,13 @@ export default function TrilightLanding() {
       // 4) inside card: text + image fade-in only (no translate)
       gsap.from([textBlock.current, imageBlock.current], {
         opacity: 0,
-        stagger: 0.1,
+        stagger: 0.15,
         ease: "power2.out",
         scrollTrigger: {
           trigger: card.current!,
-          start: "top 85%",
-          end: "top 65%",
-          scrub: 0.2,
+          start: "top 80%",
+          end: "top 50%",
+          scrub: true,
         },
       });
     }, root);
@@ -215,15 +214,6 @@ export default function TrilightLanding() {
             <Link
               to="/discover"
               target="_blank"
-              onClick={(e) => {
-                e.preventDefault();
-                if (location.pathname !== "/discover") {
-                  navigate("/discover");
-                } else {
-                  const el = document.getElementById("discover-hero");
-                  if (el) el.scrollIntoView({ behavior: "smooth" });
-                }
-              }}
               style={{
                 display: "inline-block",
                 padding: "12px 18px",
