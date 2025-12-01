@@ -214,6 +214,7 @@ export default function TrilightLanding() {
             <Link
               to="/discover"
               target="_blank"
+              rel="noopener noreferrer"
               style={{
                 display: "inline-block",
                 padding: "12px 18px",
