@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trilight Group | Visionary Developments</title>
+    
+    <!-- TAILWIND CONFIG -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        silver: 'var(--color-silver)', 
+                        accent: 'var(--color-accent)', 
+                        navy: 'rgb(var(--color-navy) / <alpha-value>)', 
+                        surface: 'rgb(var(--color-surface) / <alpha-value>)',
+                        contrast: 'rgb(var(--color-contrast) / <alpha-value>)',
+                        muted: 'rgb(var(--color-muted) / <alpha-value>)', 
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Montserrat', 'sans-serif'],
+                    },
+                    letterSpacing: {
+                        tightest: '-.05em',
+                        widest: '.25em',
+                    },
+                    transitionTimingFunction: {
+                        'out-expo': 'cubic-bezier(0.19, 1, 0.22, 1)',
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards',
+                        'spin-slow': 'spin 8s linear infinite',
+                        'pulse-glow': 'pulseGlow 2s infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(40px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        pulseGlow: {
+                            '0%': { boxShadow: '0 0 0 0 rgba(226, 232, 240, 0.4)' },
+                            '70%': { boxShadow: '0 0 0 10px rgba(226, 232, 240, 0)' },
+                            '100%': { boxShadow: '0 0 0 0 rgba(226, 232, 240, 0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap');
+        
+        :root {
+            /* DARK MODE (Navy & Silver) */
+            --color-silver: #e2e8f0;   /* Cool Silver/White */
+            --color-accent: #94a3b8;   /* Muted Silver/Blue for accents */
+            
+            --color-navy: 2 6 23;      /* #020617 (Deep Navy Background) */
+            --color-surface: 15 23 42; /* #0f172a (Lighter Navy Surface) */
+            --color-contrast: 248 250 252; /* #f8fafc (Silver White Text) */
+            --color-muted: 148 163 184;    /* #94a3b8 (Slate 400) */
+        }
+
+        .light-mode {
+            /* LIGHT MODE (White & Deep Navy) */
+            --color-silver: #0f172a;   /* Navy Text for Light Mode */
+            --color-accent: #334155;   /* Slate Accent */
+            
+            --color-navy: 255 255 255;     /* White Background */
+            --color-surface: 241 245 249;  /* Slate 100 Surface */
+            --color-contrast: 2 6 23;      /* Navy Text */
+            --color-muted: 71 85 105;      /* Slate 600 */
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: rgb(var(--color-navy));
+            color: rgb(var(--color-contrast));
+            transition: background-color 0.5s ease, color 0.5s ease;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* --- Starfield Canvas --- */
+        #starfield {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0; /* Behind content */
+            opacity: 0.8;
+            mix-blend-mode: screen;
+        }
+
+        /* --- Custom Cursor --- */
+        #cursor {
+            position: fixed; top: 0; left: 0; width: 12px; height: 12px;
+            border: 1px solid var(--color-silver);
+            background-color: rgba(226, 232, 240, 0.3);
+            border-radius: 50%; pointer-events: none; z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+            mix-blend-mode: difference;
+        }
+        #cursor.hovered {
+            width: 50px; height: 50px;
+            background-color: rgba(226, 232, 240, 0.1); border-color: transparent;
+        }
+
+        /* --- Minimal Scrollbar --- */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: rgb(var(--color-navy)); }
+        ::-webkit-scrollbar-thumb { background: #1e293b; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--color-silver); }
+
+        /* --- Utilities & Animations --- */
+        .text-stroke { -webkit-text-stroke: 1px rgba(226, 232, 240, 0.1); color: transparent; }
+        
+        .hover-underline-animation { display: inline-block; position: relative; }
+        .hover-underline-animation:after {
+            content: ''; position: absolute; width: 100%; transform: scaleX(0);
+            height: 1px; bottom: -4px; left: 0; background-color: var(--color-silver);
+            transform-origin: bottom right; transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .hover-underline-animation:hover:after { transform: scaleX(1); transform-origin: bottom left; }
+
+        .reveal-on-scroll { opacity: 0; transform: translateY(40px); transition: all 1.5s cubic-bezier(0.19, 1, 0.22, 1); }
+        .reveal-on-scroll.active { opacity: 1; transform: translateY(0); }
+
+        .parallax-img { height: 120%; width: 100%; object-fit: cover; position: absolute; top: -10%; transition: transform 0.1s linear; will-change: transform; }
+        .hero-video-wrapper { mask-image: linear-gradient(to bottom, black 70%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%); }
+        .theme-toggle-icon { transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
+
+        /* --- CONSTELLATION SCROLL STYLES --- */
+        .project-line {
+            height: 0%; width: 1px;
+            background: linear-gradient(to bottom, var(--color-silver), transparent);
+            box-shadow: 0 0 10px var(--color-silver);
+            will-change: height;
+        }
+
+        #pathfinder-star {
+            position: absolute; left: 0; top: 0;
+            width: 24px; height: 24px;
+            color: var(--color-silver);
+            z-index: 30;
+            opacity: 0;
+            transform: translateX(-50%) translateY(-50%);
+            transition: opacity 0.3s;
+            filter: drop-shadow(0 0 5px var(--color-silver));
+        }
+
+        .star-node {
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: translateX(-50%) scale(0.8);
+            background: rgb(var(--color-navy));
+            border: 1px solid var(--color-accent);
+            color: var(--color-accent);
+            z-index: 20;
+        }
+        
+        .project-row.active .star-node {
+            background: var(--color-silver);
+            border-color: var(--color-silver);
+            color: rgb(var(--color-navy));
+            transform: translateX(-50%) scale(1.3);
+            box-shadow: 0 0 20px var(--color-silver);
+        }
+
+        .project-card {
+            opacity: 0; transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .project-row.active .project-card { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body class="bg-navy text-contrast selection:bg-silver selection:text-navy">
+
+    <!-- Global Background Starfield -->
+    <canvas id="starfield"></canvas>
+
+    <!-- Custom Cursor -->
+    <div id="cursor" class="hidden md:block"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 py-8 transition-all duration-500 bg-gradient-to-b from-navy/90 to-transparent backdrop-blur-[2px]">
+        <div class="max-w-[90%] mx-auto flex justify-between items-center">
+            <a href="#" class="text-lg font-serif font-bold tracking-widest uppercase hover:text-silver transition-colors magnetic-target">
+                Trilight<span class="text-silver">.</span>
+            </a>
+
+            <div class="hidden md:flex items-center space-x-12 text-[10px] uppercase tracking-[0.2em] font-medium text-muted">
+                <a href="#about" class="hover:text-contrast transition-colors hover-underline-animation magnetic-target">Philosophy</a>
+                <a href="#projects" class="hover:text-contrast transition-colors hover-underline-animation magnetic-target">Collection</a>
+                <a href="#visionary" class="hover:text-contrast transition-colors hover-underline-animation magnetic-target">Visionary</a>
+                <a href="#journal" class="hover:text-contrast transition-colors hover-underline-animation magnetic-target">Journal</a>
+                <a href="#contact" class="text-contrast hover:text-silver transition-colors magnetic-target">Inquire</a>
+                <button id="theme-toggle" class="magnetic-target text-lg text-contrast hover:text-silver transition-colors ml-4 focus:outline-none"><i class="fas fa-moon theme-toggle-icon"></i></button>
+            </div>
+
+            <div class="md:hidden flex items-center gap-4">
+                <button id="mobile-theme-toggle" class="text-xl text-contrast magnetic-target"><i class="fas fa-moon"></i></button>
+                <button class="text-xl text-contrast magnetic-target" onclick="document.getElementById('mobile-menu').classList.toggle('translate-x-full')"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 bg-navy z-50 transform translate-x-full transition-transform duration-500 flex flex-col justify-center items-center space-y-8">
+        <button class="absolute top-8 right-8 text-2xl text-muted" onclick="document.getElementById('mobile-menu').classList.toggle('translate-x-full')"><i class="fas fa-times"></i></button>
+        <a href="#about" class="text-2xl font-serif text-contrast hover:text-silver transition-colors" onclick="document.getElementById('mobile-menu').classList.add('translate-x-full')">Philosophy</a>
+        <a href="#projects" class="text-2xl font-serif text-contrast hover:text-silver transition-colors" onclick="document.getElementById('mobile-menu').classList.add('translate-x-full')">Collection</a>
+        <a href="#visionary" class="text-2xl font-serif text-contrast hover:text-silver transition-colors" onclick="document.getElementById('mobile-menu').classList.add('translate-x-full')">Visionary</a>
+        <a href="#contact" class="text-2xl font-serif text-silver" onclick="document.getElementById('mobile-menu').classList.add('translate-x-full')">Inquire</a>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="h-screen w-full relative flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0 hero-video-wrapper">
+            <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-50 contrast-125 saturate-50 animate-[pulse_10s_infinite] scale-105" style="filter: hue-rotate(200deg);">
+                <source src="https://videos.pexels.com/video-files/3205624/3205624-uhd_2560_1440_25fps.mp4" type="video/mp4">
+            </video>
+        </div>
+        
+        <div class="z-10 text-center px-4">
+            <p class="text-[10px] md:text-xs uppercase tracking-[0.4em] text-silver mb-6 animate-fade-in-up" style="animation-delay: 0.2s;">The Trilight Group</p>
+            <h1 class="font-serif text-5xl md:text-7xl lg:text-9xl text-contrast leading-tight mb-8 mix-blend-overlay animate-fade-in-up" style="animation-delay: 0.4s;">
+                Beyond <br> <span class="italic font-light">Horizons</span>
+            </h1>
+            <div class="w-[1px] h-16 bg-silver/20 mx-auto mt-8 animate-fade-in-up" style="animation-delay: 0.8s;"></div>
+        </div>
+    </header>
+
+    <!-- Philosophy -->
+    <section id="about" class="py-32 md:py-48 bg-navy relative transition-colors duration-500 z-10">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <span class="block text-accent text-[10px] uppercase tracking-widest mb-8 reveal-on-scroll">Our Philosophy</span>
+            <p class="font-serif text-2xl md:text-4xl leading-relaxed text-contrast/90 reveal-on-scroll">
+                We believe that <span class="text-silver italic">luxury</span> is not just about excess, but about the absence of friction. We craft spaces that breathe, merging structural innovation with the tranquility of nature.
+            </p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-24 border-t border-contrast/5 pt-12">
+                <div class="reveal-on-scroll magnetic-target p-4 rounded-lg hover:bg-contrast/5 transition-colors duration-500">
+                    <span class="block text-3xl font-serif text-contrast mb-2 counter" data-target="15">0</span>
+                    <span class="text-[9px] uppercase tracking-widest text-accent">Years Experience</span>
+                </div>
+                <div class="reveal-on-scroll magnetic-target p-4 rounded-lg hover:bg-contrast/5 transition-colors duration-500" style="transition-delay: 100ms">
+                    <span class="block text-3xl font-serif text-contrast mb-2 counter" data-target="12">0</span>
+                    <span class="text-[9px] uppercase tracking-widest text-accent">Awards Won</span>
+                </div>
+                <div class="reveal-on-scroll magnetic-target p-4 rounded-lg hover:bg-contrast/5 transition-colors duration-500" style="transition-delay: 200ms">
+                    <span class="block text-3xl font-serif text-contrast mb-2">$<span class="counter" data-target="2">0</span>B+</span>
+                    <span class="text-[9px] uppercase tracking-widest text-accent">Project Value</span>
+                </div>
+                <div class="reveal-on-scroll magnetic-target p-4 rounded-lg hover:bg-contrast/5 transition-colors duration-500" style="transition-delay: 300ms">
+                    <span class="block text-3xl font-serif text-contrast mb-2 counter" data-target="4">0</span>
+                    <span class="text-[9px] uppercase tracking-widest text-accent">Global Cities</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Collection: CONSTELLATION SCROLL -->
+    <section id="projects" class="bg-navy pb-32 transition-colors duration-500 relative z-10">
+        <div class="max-w-[95%] mx-auto relative">
+            <div class="flex items-end justify-between mb-24 border-b border-contrast/5 pb-6 px-4">
+                <h2 class="text-xs font-bold uppercase tracking-[0.3em] text-muted">The Constellation</h2>
+                <span class="text-xs text-accent">Scroll to Explore</span>
+            </div>
+
+            <!-- Vertical Timeline Line (Grows on scroll) -->
+            <div class="absolute left-4 md:left-1/2 top-0 w-[1px] transform md:-translate-x-1/2 project-line" id="drawing-line"></div>
+            
+            <!-- The Pathfinder Star (Moves on scroll) -->
+            <div id="pathfinder-star" class="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 -translate-y-1/2 animate-spin-slow">
+                <i class="fas fa-star text-2xl"></i>
+            </div>
+
+            <!-- Project 1 -->
+            <div class="project-row group relative mb-32 md:mb-48" data-project="1">
+                <div class="absolute left-4 md:left-1/2 top-1/2 transform -translate-y-1/2 md:-translate-x-1/2 star-node w-8 h-8 rounded-full flex items-center justify-center -ml-[15px] md:ml-0">
+                    <i class="fas fa-star text-[10px]"></i>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pl-12 md:pl-0">
+                    <div class="order-2 lg:order-1 px-6 lg:pl-20 md:text-right md:pr-20 project-card">
+                        <h3 class="text-5xl md:text-7xl font-serif text-contrast mb-6 group-hover:text-silver transition-colors duration-500">The Trilight</h3>
+                        <p class="text-muted font-light text-sm leading-7 max-w-sm mb-8 md:ml-auto">
+                            A vertical sanctuary in the heart of the Golden District. Floor-to-ceiling glass, private sky garages, and a concierge service that anticipates your every need.
+                        </p>
+                        <a href="#" class="magnetic-target inline-flex items-center text-[10px] uppercase tracking-widest text-contrast border-b border-contrast/20 pb-1 hover:border-silver hover:text-silver transition-all">
+                            View Residence <i class="fas fa-arrow-right ml-4 text-silver text-[8px]"></i>
+                        </a>
+                    </div>
+                    <div class="order-1 lg:order-2 h-[60vh] lg:h-[80vh] parallax-container project-card" style="transition-delay: 200ms;">
+                        <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
+                             class="parallax-img grayscale-[50%] group-hover:grayscale-0 transition-all duration-1000" alt="Trilight">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-row group relative mb-32 md:mb-48" data-project="2">
+                <div class="absolute left-4 md:left-1/2 top-1/2 transform -translate-y-1/2 md:-translate-x-1/2 star-node w-8 h-8 rounded-full flex items-center justify-center -ml-[15px] md:ml-0">
+                    <i class="fas fa-star text-[10px]"></i>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pl-12 md:pl-0">
+                    <div class="h-[60vh] lg:h-[80vh] parallax-container project-card">
+                        <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
+                             class="parallax-img grayscale-[50%] group-hover:grayscale-0 transition-all duration-1000" alt="Rise with 9">
+                    </div>
+                    <div class="px-6 lg:pl-20 project-card" style="transition-delay: 200ms;">
+                        <h3 class="text-5xl md:text-7xl font-serif text-contrast mb-6 group-hover:text-silver transition-colors duration-500">Rise with 9</h3>
+                        <p class="text-muted font-light text-sm leading-7 max-w-sm mb-8">
+                            Where commerce meets culture. A sustainable LEED Platinum workspace designed for the global innovators shaping our future.
+                        </p>
+                        <a href="https://risewith9.com" target="_blank" class="magnetic-target inline-flex items-center text-[10px] uppercase tracking-widest text-contrast border-b border-contrast/20 pb-1 hover:border-silver hover:text-silver transition-all group-hover:pl-2">
+                            Visit Website <i class="fas fa-external-link-alt ml-4 text-silver text-[8px]"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-row group relative" data-project="3">
+                <div class="absolute left-4 md:left-1/2 top-1/2 transform -translate-y-1/2 md:-translate-x-1/2 star-node w-8 h-8 rounded-full flex items-center justify-center -ml-[15px] md:ml-0">
+                    <i class="fas fa-star text-[10px]"></i>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pl-12 md:pl-0">
+                    <div class="order-2 lg:order-1 px-6 lg:pl-20 md:text-right md:pr-20 project-card">
+                        <h3 class="text-5xl md:text-7xl font-serif text-contrast mb-6 group-hover:text-silver transition-colors duration-500">Project Apex</h3>
+                        <p class="text-muted font-light text-sm leading-7 max-w-sm mb-8 md:ml-auto">
+                            A coastal masterpiece currently in development. Bridging the gap between the serenity of the ocean and the vibrancy of urban life.
+                        </p>
+                        <span class="text-[10px] uppercase tracking-widest text-accent border border-accent/30 px-3 py-1 rounded-full">Coming 2024</span>
+                    </div>
+                    <div class="order-1 lg:order-2 h-[60vh] lg:h-[80vh] parallax-container project-card" style="transition-delay: 200ms;">
+                        <div class="absolute inset-0 bg-navy/20 z-10 flex items-center justify-center">
+                            <span class="text-stroke font-serif text-6xl opacity-30">SOON</span>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1512958779353-9152f257915b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
+                             class="parallax-img grayscale" alt="Apex">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Global Footprint -->
+    <section class="py-32 bg-navy border-t border-contrast/5 transition-colors duration-500 z-10 relative">
+        <div class="max-w-[90%] mx-auto text-center">
+            <span class="block text-silver text-[10px] uppercase tracking-widest mb-16 reveal-on-scroll">Global Presence</span>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-12 md:gap-32 text-4xl md:text-6xl font-serif text-contrast/20">
+                <span class="hover:text-contrast transition-colors duration-500 cursor-default reveal-on-scroll magnetic-target">Dubai</span>
+                <span class="hidden md:inline text-accent text-2xl">•</span>
+                <span class="hover:text-contrast transition-colors duration-500 cursor-default reveal-on-scroll magnetic-target" style="transition-delay: 100ms">London</span>
+                <span class="hidden md:inline text-accent text-2xl">•</span>
+                <span class="hover:text-contrast transition-colors duration-500 cursor-default reveal-on-scroll magnetic-target" style="transition-delay: 200ms">New York</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visionary -->
+    <section id="visionary" class="py-32 bg-surface transition-colors duration-500 relative z-10">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="mb-20 text-center">
+                <h2 class="font-serif text-4xl md:text-5xl text-contrast">The Visionaries</h2>
+                <div class="w-12 h-[1px] bg-silver mx-auto mt-6"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                <div class="group reveal-on-scroll">
+                    <div class="h-96 w-full overflow-hidden mb-8 relative">
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-105" alt="CEO">
+                    </div>
+                    <h4 class="text-2xl font-serif text-contrast">Jonathan Sterling</h4>
+                    <span class="text-[10px] uppercase tracking-widest text-accent block mb-4">Founder & CEO</span>
+                    <p class="text-muted text-sm font-light leading-relaxed">"We build legacies, not just buildings. Every project is a commitment to excellence."</p>
+                </div>
+                
+                <div class="group md:mt-24 reveal-on-scroll" style="transition-delay: 200ms">
+                    <div class="h-96 w-full overflow-hidden mb-8 relative">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-105" alt="Director">
+                    </div>
+                    <h4 class="text-2xl font-serif text-contrast">Eleanor Vance</h4>
+                    <span class="text-[10px] uppercase tracking-widest text-accent block mb-4">Design Director</span>
+                    <p class="text-muted text-sm font-light leading-relaxed">"Seamless integration of art and environment is the cornerstone of true luxury."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Journal -->
+    <section id="journal" class="py-32 bg-navy transition-colors duration-500 z-10 relative">
+        <div class="max-w-4xl mx-auto px-6">
+            <span class="block text-silver text-[10px] uppercase tracking-widest mb-12 text-center">Press & Journal</span>
+            <div class="space-y-8">
+                <a href="#" class="group block border-t border-contrast/10 pt-8 hover:border-silver transition-colors magnetic-target">
+                    <div class="flex flex-col md:flex-row justify-between items-baseline">
+                        <h3 class="text-2xl font-serif text-contrast group-hover:text-silver transition-colors">Architectural Digest: The New Height of Luxury</h3>
+                        <span class="text-[10px] uppercase tracking-widest text-accent mt-2 md:mt-0">October 2023</span>
+                    </div>
+                    <p class="text-muted text-sm font-light mt-4 max-w-2xl group-hover:text-contrast transition-colors">An exclusive look inside The Trilight's penthouse collection and sustainable design philosophy.</p>
+                </a>
+                <a href="#" class="group block border-t border-contrast/10 pt-8 hover:border-silver transition-colors magnetic-target">
+                    <div class="flex flex-col md:flex-row justify-between items-baseline">
+                        <h3 class="text-2xl font-serif text-contrast group-hover:text-silver transition-colors">Forbes: Top Developments to Watch</h3>
+                        <span class="text-[10px] uppercase tracking-widest text-accent mt-2 md:mt-0">September 2023</span>
+                    </div>
+                    <p class="text-muted text-sm font-light mt-4 max-w-2xl group-hover:text-contrast transition-colors">Rise with 9 named among the most innovative commercial hubs in the global market.</p>
+                </a>
+                <a href="#" class="group block border-t border-b border-contrast/10 py-8 hover:border-silver transition-colors magnetic-target">
+                    <div class="flex flex-col md:flex-row justify-between items-baseline">
+                        <h3 class="text-2xl font-serif text-contrast group-hover:text-silver transition-colors">Future Living: Sustainable Cities</h3>
+                        <span class="text-[10px] uppercase tracking-widest text-accent mt-2 md:mt-0">August 2023</span>
+                    </div>
+                    <p class="text-muted text-sm font-light mt-4 max-w-2xl group-hover:text-contrast transition-colors">How Trilight Group is pioneering eco-friendly technologies in urban construction.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Amenities -->
+    <section id="amenities" class="py-32 bg-surface transition-colors duration-500 relative z-10">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-y-12 gap-x-24">
+                <div class="border-t border-contrast/10 pt-8 reveal-on-scroll">
+                    <span class="text-accent text-xs font-serif italic mb-2 block">01</span>
+                    <h3 class="text-xl text-contrast uppercase tracking-widest mb-4">Infinity Pools</h3>
+                    <p class="text-muted text-sm font-light leading-6">Sky-high aquatic sanctuaries offering unobstructed views of the horizon, merging water with the sky.</p>
+                </div>
+                <div class="border-t border-contrast/10 pt-8 reveal-on-scroll">
+                    <span class="text-accent text-xs font-serif italic mb-2 block">02</span>
+                    <h3 class="text-xl text-contrast uppercase tracking-widest mb-4">Wellness Spas</h3>
+                    <p class="text-muted text-sm font-light leading-6">Holistic rejuvenation centers featuring thermal suites, hydrotherapy, and private treatment rooms.</p>
+                </div>
+                <div class="border-t border-contrast/10 pt-8 reveal-on-scroll">
+                    <span class="text-accent text-xs font-serif italic mb-2 block">03</span>
+                    <h3 class="text-xl text-contrast uppercase tracking-widest mb-4">24/7 Concierge</h3>
+                    <p class="text-muted text-sm font-light leading-6">Dedicated lifestyle management to handle everything from reservations to private event planning.</p>
+                </div>
+                <div class="border-t border-contrast/10 pt-8 reveal-on-scroll">
+                    <span class="text-accent text-xs font-serif italic mb-2 block">04</span>
+                    <h3 class="text-xl text-contrast uppercase tracking-widest mb-4">Private Lounges</h3>
+                    <p class="text-muted text-sm font-light leading-6">Exclusive social spaces perched atop our towers, perfect for intimate gatherings or solitude.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Minimal Contact -->
+    <section id="contact" class="py-32 bg-navy transition-colors duration-500 relative z-10">
+        <div class="max-w-xl mx-auto px-6 text-center">
+            <h2 class="font-serif text-4xl text-contrast mb-12">Inquire</h2>
+            <form class="space-y-8 text-left">
+                <input type="text" id="name" placeholder="Name" class="w-full bg-transparent border-b border-contrast/10 py-3 text-contrast focus:outline-none focus:border-silver transition-colors font-light">
+                <input type="email" id="email" placeholder="Email" class="w-full bg-transparent border-b border-contrast/10 py-3 text-contrast focus:outline-none focus:border-silver transition-colors font-light">
+                <textarea id="message" rows="2" placeholder="Message" class="w-full bg-transparent border-b border-contrast/10 py-3 text-contrast focus:outline-none focus:border-silver transition-colors font-light resize-none"></textarea>
+                
+                <div class="flex justify-between items-center pt-4">
+                    <button type="button" onclick="draftInquiry()" class="text-[9px] uppercase tracking-widest text-accent hover:text-contrast transition-colors magnetic-target">
+                        <i class="fas fa-magic mr-1"></i> Auto-Draft
+                    </button>
+                    <button type="submit" class="px-8 py-3 bg-contrast text-navy text-xs font-bold uppercase tracking-widest hover:bg-silver hover:text-navy transition-colors magnetic-target">Send</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-surface py-16 border-t border-contrast/5 transition-colors duration-500 relative z-10">
+        <div class="max-w-[90%] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div class="md:col-span-2">
+                <a href="#" class="text-lg font-serif font-bold tracking-widest uppercase text-contrast block mb-6">Trilight<span class="text-silver">.</span></a>
+                <p class="text-muted text-sm font-light max-w-xs">Visionary developments for the modern era. Crafting the skyline of tomorrow, today.</p>
+            </div>
+            <div>
+                <h4 class="text-contrast text-xs uppercase tracking-widest mb-6">Social</h4>
+                <div class="flex flex-col space-y-4 text-sm text-muted">
+                    <a href="#" class="hover:text-silver transition-colors magnetic-target w-fit">Instagram</a>
+                    <a href="#" class="hover:text-silver transition-colors magnetic-target w-fit">LinkedIn</a>
+                    <a href="#" class="hover:text-silver transition-colors magnetic-target w-fit">Twitter</a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-contrast text-xs uppercase tracking-widest mb-6">Newsletter</h4>
+                <form class="flex border-b border-contrast/10 pb-2">
+                    <input type="email" placeholder="Your Email" class="bg-transparent w-full text-contrast text-sm focus:outline-none placeholder-muted">
+                    <button class="text-silver uppercase text-[10px] tracking-widest magnetic-target">Join</button>
+                </form>
+            </div>
+        </div>
+        <div class="mt-16 text-center border-t border-contrast/5 pt-8">
+            <p class="text-[10px] uppercase tracking-[0.2em] text-muted">&copy; 2024 Trilight Group. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Chat Button -->
+    <div class="fixed bottom-8 right-8 z-50">
+        <button id="chat-toggle" class="w-12 h-12 bg-contrast rounded-full flex items-center justify-center shadow-lg hover:bg-silver transition-colors magnetic-target">
+            <i class="fas fa-comment text-navy"></i>
+        </button>
+    </div>
+
+    <!-- Hidden Chat Modal -->
+    <div id="chat-modal" class="fixed bottom-24 right-8 w-80 bg-surface border border-contrast/10 shadow-2xl p-4 hidden transition-colors duration-500">
+        <div class="flex justify-between items-center mb-4">
+            <span class="text-xs uppercase tracking-widest text-silver">Concierge</span>
+            <button id="chat-close" class="text-muted hover:text-contrast"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="chat-messages" class="h-48 overflow-y-auto mb-4 text-xs font-light text-muted space-y-2">
+            <div class="bg-contrast/5 p-3">Welcome to Trilight. How may I assist you?</div>
+        </div>
+        <form id="chat-form" class="flex border-t border-contrast/10 pt-2">
+            <input type="text" id="chat-input" class="w-full bg-transparent text-xs text-contrast focus:outline-none" placeholder="Type...">
+            <button type="submit" class="text-silver text-xs"><i class="fas fa-arrow-right"></i></button>
+        </form>
+    </div>
+
+    <script>
+        // --- Dark/Light Mode Toggle Logic ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+        const html = document.documentElement;
+        
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+            html.classList.add('light-mode');
+            updateIcons(true);
+        } else {
+            updateIcons(false);
+        }
+
+        function updateIcons(isLight) {
+            const iconClass = isLight ? 'fa-sun' : 'fa-moon';
+            if(themeToggle) themeToggle.innerHTML = `<i class="fas ${iconClass} theme-toggle-icon"></i>`;
+            if(mobileThemeToggle) mobileThemeToggle.innerHTML = `<i class="fas ${iconClass}"></i>`;
+        }
+
+        function toggleTheme() {
+            html.classList.toggle('light-mode');
+            const isLight = html.classList.contains('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            updateIcons(isLight);
+        }
+
+        themeToggle.addEventListener('click', toggleTheme);
+        mobileThemeToggle.addEventListener('click', toggleTheme);
+
+        // --- Custom Cursor ---
+        const cursor = document.getElementById('cursor');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        document.querySelectorAll('a, button, .magnetic-target').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+        });
+
+        // --- Intersection Observer for Reveals ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    
+                    const counters = entry.target.querySelectorAll('.counter');
+                    counters.forEach(counter => {
+                        const target = +counter.getAttribute('data-target');
+                        let count = 0;
+                        const inc = target / 50; 
+                        const updateCount = () => {
+                            count += inc;
+                            if (count < target) {
+                                counter.innerText = Math.ceil(count);
+                                requestAnimationFrame(updateCount);
+                            } else {
+                                counter.innerText = target;
+                            }
+                        };
+                        updateCount();
+                    });
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal-on-scroll').forEach((el) => {
+            observer.observe(el);
+        });
+
+        // --- Simple Parallax Logic ---
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            document.querySelectorAll('.parallax-img').forEach(img => {
+                const parentTop = img.parentElement.getBoundingClientRect().top + scrollY;
+                const offset = (scrollY - parentTop) * 0.15; 
+                img.style.transform = `translateY(${offset}px)`;
+            });
+        });
+
+        // --- Magnetic Buttons Logic ---
+        document.querySelectorAll('.magnetic-target').forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+                btn.style.transition = 'transform 0.1s linear';
+            });
+            
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0, 0)';
+                btn.style.transition = 'transform 0.5s cubic-bezier(0.19, 1, 0.22, 1)';
+            });
+        });
+
+        // --- Global Constellation Starfield ---
+        const canvas = document.getElementById('starfield');
+        if(canvas) {
+            const ctx = canvas.getContext('2d');
+            let width, height, stars = [], shootingStars = [];
+
+            // Colors for stars to look more realistic with navy theme
+            const starColors = ['#ffffff', '#e2e8f0', '#94a3b8']; 
+
+            function initStars() {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width;
+                canvas.height = height;
+                
+                stars = [];
+                for(let i=0; i<60; i++) {
+                    stars.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        radius: Math.random() * 2 + 1,
+                        vx: (Math.random() - 0.5) * 0.2, // Velocity X
+                        vy: (Math.random() - 0.5) * 0.2, // Velocity Y
+                        alpha: Math.random(),
+                        color: starColors[Math.floor(Math.random() * starColors.length)]
+                    });
+                }
+            }
+
+            function spawnShootingStar() {
+                const startX = Math.random() < 0.5 ? 0 : Math.random() * width;
+                const startY = startX === 0 ? Math.random() * height : 0;
+                
+                shootingStars.push({
+                    x: startX,
+                    y: startY,
+                    len: Math.random() * 80 + 50,
+                    speed: Math.random() * 10 + 6,
+                    size: Math.random() * 2 + 0.1,
+                    angle: 45 * (Math.PI / 180), 
+                    opacity: 1
+                });
+            }
+
+            function drawStars() {
+                ctx.clearRect(0, 0, width, height);
+                // Silver lines
+                ctx.strokeStyle = 'rgba(226, 232, 240, 0.15)'; 
+                
+                stars.forEach((star, index) => {
+                    star.x += star.vx;
+                    star.y += star.vy;
+
+                    if(star.x < 0 || star.x > width) star.vx *= -1;
+                    if(star.y < 0 || star.y > height) star.vy *= -1;
+
+                    ctx.beginPath();
+                    ctx.globalAlpha = star.alpha;
+                    ctx.fillStyle = star.color;
+                    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Connect constellation lines
+                    for(let j = index + 1; j < stars.length; j++) {
+                        let other = stars[j];
+                        let dx = star.x - other.x;
+                        let dy = star.y - other.y;
+                        let dist = Math.sqrt(dx*dx + dy*dy);
+
+                        if(dist < 150) { 
+                            ctx.beginPath();
+                            ctx.globalAlpha = 1 - (dist / 150); 
+                            ctx.lineWidth = 0.5;
+                            ctx.moveTo(star.x, star.y);
+                            ctx.lineTo(other.x, other.y);
+                            ctx.stroke();
+                        }
+                    }
+                });
+
+                // Shooting Stars
+                for (let i = 0; i < shootingStars.length; i++) {
+                    let s = shootingStars[i];
+                    s.x += s.speed * Math.cos(s.angle);
+                    s.y += s.speed * Math.sin(s.angle);
+                    s.opacity -= 0.02;
+                    
+                    if (s.opacity <= 0 || s.x > width || s.y > height) {
+                        shootingStars.splice(i, 1);
+                        i--;
+                        continue;
+                    }
+
+                    let tailX = s.x - s.len * Math.cos(s.angle);
+                    let tailY = s.y - s.len * Math.sin(s.angle);
+                    
+                    let gradient = ctx.createLinearGradient(s.x, s.y, tailX, tailY);
+                    gradient.addColorStop(0, "rgba(255, 255, 255, " + s.opacity + ")");
+                    gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+
+                    ctx.beginPath();
+                    ctx.strokeStyle = gradient;
+                    ctx.lineWidth = 2;
+                    ctx.moveTo(s.x, s.y);
+                    ctx.lineTo(tailX, tailY);
+                    ctx.stroke();
+                }
+
+                if (Math.random() < 0.01) { 
+                    spawnShootingStar();
+                }
+                
+                requestAnimationFrame(drawStars);
+            }
+
+            window.addEventListener('resize', initStars);
+            initStars();
+            drawStars();
+        }
+
+        // --- Constellation Scroll Logic (Pathfinder) ---
+        const pathfinderStar = document.getElementById('pathfinder-star');
+        const drawingLine = document.getElementById('drawing-line');
+        const projectSection = document.getElementById('projects');
+        const projectRows = document.querySelectorAll('.project-row');
+
+        if(projectSection && pathfinderStar) {
+            window.addEventListener('scroll', () => {
+                const rect = projectSection.getBoundingClientRect();
+                const sectionHeight = projectSection.offsetHeight;
+                const windowHeight = window.innerHeight;
+                
+                // Start calculating when section enters view
+                const startOffset = windowHeight / 2;
+                let scrollDist = -rect.top + startOffset;
+                let progress = scrollDist / sectionHeight;
+                
+                progress = Math.max(0, Math.min(1, progress));
+
+                // Update Line & Star
+                if (progress > 0 && progress < 1) {
+                    pathfinderStar.style.opacity = '1';
+                    drawingLine.style.height = `${progress * 100}%`;
+                    pathfinderStar.style.top = `${progress * 100}%`;
+                } else if (progress <= 0) {
+                    pathfinderStar.style.opacity = '0';
+                    drawingLine.style.height = '0%';
+                } else {
+                    pathfinderStar.style.opacity = '0'; 
+                    drawingLine.style.height = '100%';
+                }
+
+                // Activate Projects
+                projectRows.forEach(row => {
+                    const rowTop = row.offsetTop;
+                    // Trigger slightly before
+                    if (scrollDist > rowTop - 100) {
+                        row.classList.add('active');
+                    }
+                });
+            });
+        }
+
+        // --- Chat Logic ---
+        const chatToggle = document.getElementById('chat-toggle');
+        const chatModal = document.getElementById('chat-modal');
+        const chatClose = document.getElementById('chat-close');
+        
+        chatToggle.addEventListener('click', () => chatModal.classList.remove('hidden'));
+        chatClose.addEventListener('click', () => chatModal.classList.add('hidden'));
+
+        const apiKey = "";
+        document.getElementById('chat-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const input = document.getElementById('chat-input');
+            const msg = input.value;
+            if(!msg) return;
+            
+            const msgs = document.getElementById('chat-messages');
+            msgs.innerHTML += `<div class="text-right text-contrast mb-2">${msg}</div>`;
+            input.value = '';
+            
+            setTimeout(() => {
+                msgs.innerHTML += `<div class="bg-contrast/5 p-3">Thank you for your interest. A representative will contact you shortly.</div>`;
+                msgs.scrollTop = msgs.scrollHeight;
+            }, 1000);
+        });
+
+        async function draftInquiry() {
+            const msgBox = document.getElementById('message');
+            msgBox.value = "Drafting...";
+            setTimeout(() => {
+                msgBox.value = "Dear Trilight Team,\n\nI am interested in learning more about your residential opportunities at The Trilight. Please provide information regarding availability and pricing.\n\nSincerely,\n[Name]";
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
