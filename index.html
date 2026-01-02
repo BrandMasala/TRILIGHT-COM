@@ -106,7 +106,7 @@
             transform: translate(-50%, -50%);
             transition: width 0.3s, height 0.3s, background-color 0.3s;
             mix-blend-mode: difference;
-        }
+        } */
         #cursor.hovered {
             width: 50px; height: 50px;
             background-color: rgba(226, 232, 240, 0.1); border-color: transparent;
@@ -142,10 +142,11 @@
             background: linear-gradient(to bottom, var(--color-silver), transparent);
             box-shadow: 0 0 10px var(--color-silver);
             will-change: height;
+            z-index: 1; /* Low z-index */
         }
 
         #pathfinder-star {
-            position: absolute; left: 0; top: 0;
+            position: absolute;
             width: 24px; height: 24px;
             color: var(--color-silver);
             z-index: 30;
@@ -161,7 +162,8 @@
             background: rgb(var(--color-navy));
             border: 1px solid var(--color-accent);
             color: var(--color-accent);
-            z-index: 20;
+            z-index: 20; /* Higher than line */
+            position: relative; /* Ensure stacking context */
         }
         
         .project-row.active .star-node {
@@ -177,6 +179,74 @@
             transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
         }
         .project-row.active .project-card { opacity: 1; transform: translateY(0); }
+        /* Timeline Active State */
+        .timeline-node.active { opacity: 1; transform: translateY(0); }
+
+        /* Glassmorphism Deck Animation (User Requested) */
+        .deck-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 0;
+        }
+
+        .deck-glass {
+            position: relative;
+            width: 280px;
+            height: 420px;
+            background: linear-gradient(#fff2, transparent);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 25px rgba(0, 0, 0, 0.25);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.5s cubic-bezier(0.25, 1, 0.5, 1); /* Smooth easing */
+            border-radius: 10px;
+            margin: 0 -80px; /* Negative margin for overlap */
+            backdrop-filter: blur(10px);
+            transform: rotate(calc(var(--r) * 1deg));
+            overflow: hidden; /* Crop image */
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .deck-glass { width: 160px; height: 240px; margin: 0 -40px; }
+        }
+
+        .deck-container:hover .deck-glass {
+            transform: rotate(0deg);
+            margin: 0 10px;
+        }
+
+        .deck-glass::before {
+            content: attr(data-text);
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.6); /* Darker background for legibility */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 1px;
+            z-index: 10;
+        }
+
+        .deck-glass img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.9;
+            transition: transform 0.7s ease;
+        }
+        
+        .deck-glass:hover img {
+            transform: scale(1.1);
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="bg-navy text-contrast selection:bg-silver selection:text-navy">
@@ -190,8 +260,8 @@
     <!-- Navigation -->
     <nav class="fixed w-full z-50 py-8 transition-all duration-500 bg-gradient-to-b from-navy/90 to-transparent backdrop-blur-[2px]">
         <div class="max-w-[90%] mx-auto flex justify-between items-center">
-            <a href="#" class="text-lg font-serif font-bold tracking-widest uppercase hover:text-silver transition-colors magnetic-target">
-                Trilight<span class="text-silver">.</span>
+            <a href="#" class="magnetic-target block">
+                <img src="Assests/Trilight_Logo_Final.png" alt="Trilight Group" class="h-10 md:h-12 w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100 transition-opacity">
             </a>
 
             <div class="hidden md:flex items-center space-x-12 text-[10px] uppercase tracking-[0.2em] font-medium text-muted">
@@ -237,7 +307,7 @@
     </header>
 
     <!-- Philosophy -->
-    <section id="about" class="py-32 md:py-48 bg-navy relative transition-colors duration-500 z-10">
+    <section id="about" class="py-32 md:py-48 bg-transparent relative transition-colors duration-500 z-10">
         <div class="max-w-4xl mx-auto px-6 text-center">
             <span class="block text-accent text-[10px] uppercase tracking-widest mb-8 reveal-on-scroll">Our Philosophy</span>
             <p class="font-serif text-2xl md:text-4xl leading-relaxed text-contrast/90 reveal-on-scroll">
@@ -266,29 +336,32 @@
     </section>
 
     <!-- Projects Collection: CONSTELLATION SCROLL -->
-    <section id="projects" class="bg-navy pb-32 transition-colors duration-500 relative z-10">
+    <section id="projects" class="bg-transparent pt-32 pb-32 transition-colors duration-500 relative z-10">
         <div class="max-w-[95%] mx-auto relative">
-            <div class="flex items-end justify-between mb-24 border-b border-contrast/5 pb-6 px-4">
-                <h2 class="text-xs font-bold uppercase tracking-[0.3em] text-muted">The Constellation</h2>
-                <span class="text-xs text-accent">Scroll to Explore</span>
+            <div class="mb-24 text-center">
+                <span class="block text-accent text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Our Portfolio</span>
+                <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">The Constellations</h2>
+                <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
             </div>
+        </div>
 
+        <div class="max-w-[95%] mx-auto relative">
             <!-- Vertical Timeline Line (Grows on scroll) -->
             <div class="absolute left-4 md:left-1/2 top-0 w-[1px] transform md:-translate-x-1/2 project-line" id="drawing-line"></div>
             
             <!-- The Pathfinder Star (Moves on scroll) -->
-            <div id="pathfinder-star" class="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 -translate-y-1/2 animate-spin-slow">
-                <i class="fas fa-star text-2xl"></i>
+            <div id="pathfinder-star" class="absolute left-4 md:left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <i class="fas fa-star text-2xl animate-spin-slow"></i>
             </div>
 
             <!-- Project 1 -->
-            <div class="project-row group relative mb-32 md:mb-48" data-project="1">
+            <div class="project-row group relative mb-32 md:mb-48 z-10" data-project="1">
                 <div class="absolute left-4 md:left-1/2 top-1/2 transform -translate-y-1/2 md:-translate-x-1/2 star-node w-8 h-8 rounded-full flex items-center justify-center -ml-[15px] md:ml-0">
                     <i class="fas fa-star text-[10px]"></i>
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pl-12 md:pl-0">
                     <div class="order-2 lg:order-1 px-6 lg:pl-20 md:text-right md:pr-20 project-card">
-                        <h3 class="text-5xl md:text-7xl font-serif text-contrast mb-6 group-hover:text-silver transition-colors duration-500">The Trilight</h3>
+                        <img src="Assests/Trilight_Logo_Final.png" alt="The Trilight" class="h-16 md:h-20 w-auto md:ml-auto mb-6 object-contain">
                         <p class="text-muted font-light text-sm leading-7 max-w-sm mb-8 md:ml-auto">
                             A vertical sanctuary in the heart of the Golden District. Floor-to-ceiling glass, private sky garages, and a concierge service that anticipates your every need.
                         </p>
@@ -296,25 +369,25 @@
                             View Residence <i class="fas fa-arrow-right ml-4 text-silver text-[8px]"></i>
                         </a>
                     </div>
-                    <div class="order-1 lg:order-2 h-[60vh] lg:h-[80vh] parallax-container project-card" style="transition-delay: 200ms;">
-                        <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
-                             class="parallax-img grayscale-[50%] group-hover:grayscale-0 transition-all duration-1000" alt="Trilight">
+                    <div class="order-1 lg:order-2 parallax-container project-card" style="transition-delay: 200ms;">
+                        <img src="Assests/Trilight.jpg" 
+                             class="w-full h-auto grayscale-[50%] group-hover:grayscale-0 transition-all duration-1000" alt="Trilight">
                     </div>
                 </div>
             </div>
 
             <!-- Project 2 -->
-            <div class="project-row group relative mb-32 md:mb-48" data-project="2">
+            <div class="project-row group relative mb-32 md:mb-48 z-10" data-project="2">
                 <div class="absolute left-4 md:left-1/2 top-1/2 transform -translate-y-1/2 md:-translate-x-1/2 star-node w-8 h-8 rounded-full flex items-center justify-center -ml-[15px] md:ml-0">
                     <i class="fas fa-star text-[10px]"></i>
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pl-12 md:pl-0">
-                    <div class="h-[60vh] lg:h-[80vh] parallax-container project-card">
-                        <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
-                             class="parallax-img grayscale-[50%] group-hover:grayscale-0 transition-all duration-1000" alt="Rise with 9">
+                    <div class="parallax-container project-card">
+                        <img src="Assests/Risewith9.jpeg" 
+                             class="w-full h-auto grayscale-[50%] group-hover:grayscale-0 transition-all duration-1000" alt="Rise with 9">
                     </div>
                     <div class="px-6 lg:pl-20 project-card" style="transition-delay: 200ms;">
-                        <h3 class="text-5xl md:text-7xl font-serif text-contrast mb-6 group-hover:text-silver transition-colors duration-500">Rise with 9</h3>
+                        <img src="Assests/RW9.png" alt="Rise with 9" class="h-42 md:h-20 w-auto mb-6 object-contain opacity-90">
                         <p class="text-muted font-light text-sm leading-7 max-w-sm mb-8">
                             Where commerce meets culture. A sustainable LEED Platinum workspace designed for the global innovators shaping our future.
                         </p>
@@ -325,33 +398,55 @@
                 </div>
             </div>
 
-            <!-- Project 3 -->
-            <div class="project-row group relative" data-project="3">
-                <div class="absolute left-4 md:left-1/2 top-1/2 transform -translate-y-1/2 md:-translate-x-1/2 star-node w-8 h-8 rounded-full flex items-center justify-center -ml-[15px] md:ml-0">
-                    <i class="fas fa-star text-[10px]"></i>
-                </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pl-12 md:pl-0">
-                    <div class="order-2 lg:order-1 px-6 lg:pl-20 md:text-right md:pr-20 project-card">
-                        <h3 class="text-5xl md:text-7xl font-serif text-contrast mb-6 group-hover:text-silver transition-colors duration-500">Project Apex</h3>
-                        <p class="text-muted font-light text-sm leading-7 max-w-sm mb-8 md:ml-auto">
-                            A coastal masterpiece currently in development. Bridging the gap between the serenity of the ocean and the vibrancy of urban life.
-                        </p>
-                        <span class="text-[10px] uppercase tracking-widest text-accent border border-accent/30 px-3 py-1 rounded-full">Coming 2024</span>
-                    </div>
-                    <div class="order-1 lg:order-2 h-[60vh] lg:h-[80vh] parallax-container project-card" style="transition-delay: 200ms;">
+            <!-- Project 3 (Centered & Separate from Timeline) -->
+            <div class="project-row group relative z-10 mt-32 md:mt-48 text-center flex flex-col items-center" data-project="3">
+                <div class="max-w-3xl mx-auto px-6">
+                    <h3 class="text-5xl md:text-7xl font-serif text-contrast mb-6 group-hover:text-silver transition-colors duration-500">Upcoming Projects</h3>
+                    <p class="text-muted font-light text-sm leading-7 max-w-sm mx-auto mb-8">
+                        A coastal masterpiece currently in development. Bridging the gap between the serenity of the ocean and the vibrancy of urban life.
+                    </p>
+                        <span class="text-[10px] uppercase tracking-widest text-accent border border-accent/30 px-3 py-1 rounded-full">Coming 2026</span>
+                        </div>
+                    <!-- <div class="order-1 lg:order-2 h-[60vh] lg:h-[80vh] parallax-container project-card" style="transition-delay: 200ms;">
                         <div class="absolute inset-0 bg-navy/20 z-10 flex items-center justify-center">
                             <span class="text-stroke font-serif text-6xl opacity-30">SOON</span>
                         </div>
-                        <img src="https://images.unsplash.com/photo-1512958779353-9152f257915b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
-                             class="parallax-img grayscale" alt="Apex">
-                    </div>
+                       <img src="https://images.unsplash.com/photo-1512958779353-9152f257915b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
+                             class="parallax-img grayscale" alt="Apex"> 
+                    </div> -->
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Global Footprint -->
-    <section class="py-32 bg-navy border-t border-contrast/5 transition-colors duration-500 z-10 relative">
+    <!-- Signature Collection: Cards -->
+    <section id="signature-collection" class="py-32 bg-transparent relative z-10 transition-colors duration-500 overflow-hidden">
+        <div class="max-w-[95%] mx-auto px-6 mb-12 text-center">
+            <span class="block text-accent text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Exclusive Listings</span>
+            <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">The Signature Collection</h2>
+            <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
+        </div>
+
+        <div class="deck-container reveal-on-scroll">
+            <!-- Card 1 (Left) -->
+            <div data-text="Thrive" style="--r:-15;" class="deck-glass group">
+                <img src="Assests/T1.webp" alt="Thrive">
+            </div>
+            
+            <!-- Card 2 (Center) -->
+            <div data-text="Trust" style="--r:0;" class="deck-glass group z-10">
+                <img src="Assests/T2.webp" alt="Trust">
+            </div>
+            
+            <!-- Card 3 (Right) -->
+            <div data-text="Team" style="--r:15;" class="deck-glass group">
+                <img src="Assests/T3.webp" alt="Team">
+            </div>
+        </div>
+    </section>
+
+    <!-- Global Footprint
+    <section class="py-32 bg-transparent border-t border-contrast/5 transition-colors duration-500 z-10 relative">
         <div class="max-w-[90%] mx-auto text-center">
             <span class="block text-silver text-[10px] uppercase tracking-widest mb-16 reveal-on-scroll">Global Presence</span>
             <div class="flex flex-col md:flex-row justify-center items-center gap-12 md:gap-32 text-4xl md:text-6xl font-serif text-contrast/20">
@@ -362,10 +457,10 @@
                 <span class="hover:text-contrast transition-colors duration-500 cursor-default reveal-on-scroll magnetic-target" style="transition-delay: 200ms">New York</span>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- Visionary -->
-    <section id="visionary" class="py-32 bg-surface transition-colors duration-500 relative z-10">
+    <section id="visionary" class="py-32 bg-surface/90 transition-colors duration-500 relative z-10">
         <div class="max-w-6xl mx-auto px-6">
             <div class="mb-20 text-center">
                 <h2 class="font-serif text-4xl md:text-5xl text-contrast">The Visionaries</h2>
@@ -375,20 +470,20 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
                 <div class="group reveal-on-scroll">
                     <div class="h-96 w-full overflow-hidden mb-8 relative">
-                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                        <img src="Assests/23.webp" 
                              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-105" alt="CEO">
                     </div>
-                    <h4 class="text-2xl font-serif text-contrast">Jonathan Sterling</h4>
+                    <h4 class="text-2xl font-serif text-contrast">Sanjeeva Reddy</h4>
                     <span class="text-[10px] uppercase tracking-widest text-accent block mb-4">Founder & CEO</span>
                     <p class="text-muted text-sm font-light leading-relaxed">"We build legacies, not just buildings. Every project is a commitment to excellence."</p>
                 </div>
                 
                 <div class="group md:mt-24 reveal-on-scroll" style="transition-delay: 200ms">
                     <div class="h-96 w-full overflow-hidden mb-8 relative">
-                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                        <img src="Assests/24.webp" 
                              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-105" alt="Director">
                     </div>
-                    <h4 class="text-2xl font-serif text-contrast">Eleanor Vance</h4>
+                    <h4 class="text-2xl font-serif text-contrast">Sanjay Mangatram</h4>
                     <span class="text-[10px] uppercase tracking-widest text-accent block mb-4">Design Director</span>
                     <p class="text-muted text-sm font-light leading-relaxed">"Seamless integration of art and environment is the cornerstone of true luxury."</p>
                 </div>
@@ -397,7 +492,7 @@
     </section>
 
     <!-- Journal -->
-    <section id="journal" class="py-32 bg-navy transition-colors duration-500 z-10 relative">
+    <section id="journal" class="py-32 bg-transparent transition-colors duration-500 z-10 relative">
         <div class="max-w-4xl mx-auto px-6">
             <span class="block text-silver text-[10px] uppercase tracking-widest mb-12 text-center">Press & Journal</span>
             <div class="space-y-8">
@@ -427,7 +522,7 @@
     </section>
 
     <!-- Amenities -->
-    <section id="amenities" class="py-32 bg-surface transition-colors duration-500 relative z-10">
+    <section id="amenities" class="py-32 bg-surface/90 transition-colors duration-500 relative z-10">
         <div class="max-w-5xl mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-y-12 gap-x-24">
                 <div class="border-t border-contrast/10 pt-8 reveal-on-scroll">
@@ -455,7 +550,7 @@
     </section>
 
     <!-- Minimal Contact -->
-    <section id="contact" class="py-32 bg-navy transition-colors duration-500 relative z-10">
+    <section id="contact" class="py-32 bg-transparent transition-colors duration-500 relative z-10">
         <div class="max-w-xl mx-auto px-6 text-center">
             <h2 class="font-serif text-4xl text-contrast mb-12">Inquire</h2>
             <form class="space-y-8 text-left">
@@ -474,7 +569,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-surface py-16 border-t border-contrast/5 transition-colors duration-500 relative z-10">
+    <footer class="bg-surface/90 py-16 border-t border-contrast/5 transition-colors duration-500 relative z-10">
         <div class="max-w-[90%] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
             <div class="md:col-span-2">
                 <a href="#" class="text-lg font-serif font-bold tracking-widest uppercase text-contrast block mb-6">Trilight<span class="text-silver">.</span></a>
@@ -596,15 +691,7 @@
             observer.observe(el);
         });
 
-        // --- Simple Parallax Logic ---
-        window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            document.querySelectorAll('.parallax-img').forEach(img => {
-                const parentTop = img.parentElement.getBoundingClientRect().top + scrollY;
-                const offset = (scrollY - parentTop) * 0.15; 
-                img.style.transform = `translateY(${offset}px)`;
-            });
-        });
+
 
         // --- Magnetic Buttons Logic ---
         document.querySelectorAll('.magnetic-target').forEach(btn => {
@@ -626,10 +713,17 @@
         const canvas = document.getElementById('starfield');
         if(canvas) {
             const ctx = canvas.getContext('2d');
-            let width, height, stars = [], shootingStars = [];
+            let width, height, stars = [], shootingStars = [], nebulas = [];
 
             // Colors for stars to look more realistic with navy theme
             const starColors = ['#ffffff', '#e2e8f0', '#94a3b8']; 
+            // Nebula colors: Deep cosmic purples and blues
+            const nebulaColors = [
+                { r: 76, g: 29, b: 149 },   // Deep Purple
+                { r: 30, g: 58, b: 138 },   // Deep Blue
+                { r: 88, g: 28, b: 135 },   // Dark Violet
+                { r: 15, g: 23, b: 42 }     // Slate/Navy
+            ];
 
             function initStars() {
                 width = window.innerWidth;
@@ -638,7 +732,8 @@
                 canvas.height = height;
                 
                 stars = [];
-                for(let i=0; i<60; i++) {
+                // Increased stars for more constellations
+                for(let i=0; i<150; i++) {
                     stars.push({
                         x: Math.random() * width,
                         y: Math.random() * height,
@@ -647,6 +742,20 @@
                         vy: (Math.random() - 0.5) * 0.2, // Velocity Y
                         alpha: Math.random(),
                         color: starColors[Math.floor(Math.random() * starColors.length)]
+                    });
+                }
+
+                nebulas = [];
+                // Create fewer, larger nebula clouds with much lower opacity for "simple" look
+                for(let i=0; i<5; i++) {
+                    nebulas.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        radius: Math.random() * 300 + 300, 
+                        color: nebulaColors[Math.floor(Math.random() * nebulaColors.length)],
+                        vx: (Math.random() - 0.5) * 0.05, 
+                        vy: (Math.random() - 0.5) * 0.05,
+                        opacity: Math.random() * 0.1 + 0.05 // Reduced from 0.3+0.1 to 0.1+0.05
                     });
                 }
             }
@@ -668,6 +777,32 @@
 
             function drawStars() {
                 ctx.clearRect(0, 0, width, height);
+
+                // --- Draw Nebulas (Background Layer) ---
+                nebulas.forEach(nebula => {
+                    nebula.x += nebula.vx;
+                    nebula.y += nebula.vy;
+
+                    // Wrap around screen
+                    if(nebula.x < -nebula.radius) nebula.x = width + nebula.radius;
+                    if(nebula.x > width + nebula.radius) nebula.x = -nebula.radius;
+                    if(nebula.y < -nebula.radius) nebula.y = height + nebula.radius;
+                    if(nebula.y > height + nebula.radius) nebula.y = -nebula.radius;
+
+                    const gradient = ctx.createRadialGradient(nebula.x, nebula.y, 0, nebula.x, nebula.y, nebula.radius);
+                    const { r, g, b } = nebula.color;
+                    gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${nebula.opacity})`);
+                    gradient.addColorStop(0.6, `rgba(${r}, ${g}, ${b}, ${nebula.opacity * 0.4})`);
+                    gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
+
+                    ctx.globalCompositeOperation = 'screen'; // Blend mode for glowing effect
+                    ctx.fillStyle = gradient;
+                    ctx.beginPath();
+                    ctx.arc(nebula.x, nebula.y, nebula.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.globalCompositeOperation = 'source-over'; // Reset blend mode
+                });
+
                 // Silver lines
                 ctx.strokeStyle = 'rgba(226, 232, 240, 0.15)'; 
                 
@@ -691,9 +826,9 @@
                         let dy = star.y - other.y;
                         let dist = Math.sqrt(dx*dx + dy*dy);
 
-                        if(dist < 150) { 
+                        if(dist < 120) { 
                             ctx.beginPath();
-                            ctx.globalAlpha = 1 - (dist / 150); 
+                            ctx.globalAlpha = 1 - (dist / 120); 
                             ctx.lineWidth = 0.5;
                             ctx.moveTo(star.x, star.y);
                             ctx.lineTo(other.x, other.y);
@@ -759,10 +894,21 @@
                 let scrollDist = -rect.top + startOffset;
                 let progress = scrollDist / sectionHeight;
                 
-                progress = Math.max(0, Math.min(1, progress));
+                // Calculate dynamic safe limit (top of Project 3 minus buffer)
+                const project3 = document.querySelector('[data-project="3"]');
+                let maxProgress = 0.8; // Default fallback
+                
+                if(project3) {
+                    const project3Top = project3.offsetTop;
+                    // Stop ~35px before to account for star radius (12px) + 10px gap
+                    maxProgress = (project3Top - 35) / sectionHeight;
+                }
+
+                // Cap progress
+                progress = Math.max(0, Math.min(maxProgress, progress));
 
                 // Update Line & Star
-                if (progress > 0 && progress < 1) {
+                if (progress > 0 && progress < maxProgress) {
                     pathfinderStar.style.opacity = '1';
                     drawingLine.style.height = `${progress * 100}%`;
                     pathfinderStar.style.top = `${progress * 100}%`;
@@ -770,8 +916,10 @@
                     pathfinderStar.style.opacity = '0';
                     drawingLine.style.height = '0%';
                 } else {
-                    pathfinderStar.style.opacity = '0'; 
-                    drawingLine.style.height = '100%';
+                    // When capped
+                    pathfinderStar.style.opacity = '1'; 
+                    drawingLine.style.height = `${maxProgress * 100}%`;
+                    pathfinderStar.style.top = `${maxProgress * 100}%`;
                 }
 
                 // Activate Projects
