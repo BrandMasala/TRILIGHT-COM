@@ -250,12 +250,98 @@
             transform: scale(1.1);
             opacity: 1;
         }
+    /* --- Global Wave & Revolving Stars --- */
+        #global-wave-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 5; /* Above background, below interactive elements */
+            overflow: visible;
+        }
+
+        .wave-path-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .wave-path-line {
+            fill: none;
+            stroke: rgba(226, 232, 240, 0.2); /* Silver with low opacity */
+            stroke-width: 1;
+            /* stroke-dasharray: 10, 10; Optional dashed effect */
+        }
+        
+        .wave-path-progress {
+            fill: none;
+            stroke: var(--color-silver);
+            stroke-width: 2;
+            stroke-linecap: round;
+            filter: drop-shadow(0 0 5px var(--color-silver));
+        }
+
+        #star-cluster {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            /* will-change: transform; */ /* Optimization */
+        }
+
+        .cluster-rotator {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            top: -30px;
+            left: -30px;
+            animation: rotate-cluster 6s linear infinite;
+        }
+
+        .revolving-star {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            color: var(--color-silver);
+            filter: drop-shadow(0 0 4px var(--color-silver));
+        }
+
+        /* Position the 3 stars in a triangle */
+        .revolving-star:nth-child(1) { top: 0; left: 50%; transform: translate(-50%, 0); }
+        .revolving-star:nth-child(2) { bottom: 0; left: 0; transform: translate(0, 0); }
+        .revolving-star:nth-child(3) { bottom: 0; right: 0; transform: translate(0, 0); }
+
+        @keyframes rotate-cluster {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body class="bg-navy text-contrast selection:bg-silver selection:text-navy">
 
     <!-- Global Background Starfield -->
     <canvas id="starfield"></canvas>
+
+    <!-- Global Wave & Revolving Stars -->
+    <div id="global-wave-container">
+        <svg class="wave-path-svg">
+            <path id="wave-path-bg" class="wave-path-line" d="" />
+            <path id="wave-path-draw" class="wave-path-progress" d="" />
+        </svg>
+        <div id="star-cluster">
+            <div class="cluster-rotator">
+                <i class="fas fa-star revolving-star"></i>
+                <i class="fas fa-star revolving-star"></i>
+                <i class="fas fa-star revolving-star"></i>
+            </div>
+        </div>
+    </div>
 
     <!-- Custom Cursor -->
     <div id="cursor" class="hidden md:block"></div>
@@ -1023,6 +1109,131 @@
             setTimeout(() => {
                 msgBox.value = "Dear Trilight Team,\n\nI am interested in learning more about your residential opportunities at The Trilight. Please provide information regarding availability and pricing.\n\nSincerely,\n[Name]";
             }, 1500);
+        }
+
+        // --- Global Wave Path & Revolving Stars Logic ---
+        const waveContainer = document.getElementById('global-wave-container');
+        const wavePathBg = document.getElementById('wave-path-bg');
+        const wavePathDraw = document.getElementById('wave-path-draw');
+        const starCluster = document.getElementById('star-cluster');
+
+        if (waveContainer && wavePathBg && wavePathDraw && starCluster) {
+            let pathLength = 0;
+
+            function initWave() {
+                // Determine full document height
+                const docHeight = Math.max(
+                    document.body.scrollHeight, document.documentElement.scrollHeight,
+                    document.body.offsetHeight, document.documentElement.offsetHeight,
+                    document.body.clientHeight, document.documentElement.clientHeight
+                );
+                
+                const winWidth = window.innerWidth;
+                const winHeight = window.innerHeight;
+
+                // Adjust SVG container size to cover the entire scrollable area
+                // Note: We use fixed position for container, but the SVG path coords will map to scroll progress
+                // Actually, for a fixed container, we only see the viewport. 
+                // BUT we want the path to "exist" for the whole page.
+                // Strategy: We will render the CURRENT viewport's slice of the wave, 
+                // OR we render a path that fits the viewport and we animate the "t" along it.
+                // Wait, the user wants the stars to create the path "while scrolling to end of page".
+                // And "revolving each other".
+                
+                // Better approach for visuals: 
+                // Define a mathematical sine wave that spans 0 to docHeight.
+                // As we scroll, we calculate the position on this abstract wave.
+                // We draw the line from 0 to current scroll position.
+                // However, drawing a line that is "fixed" on screen but represents scroll is tricky.
+                
+                // Let's make the SVG container ABSOLUTE and sized to the full document height.
+                // That way the wave is static relative to the page content.
+                waveContainer.style.position = 'absolute';
+                waveContainer.style.height = `${docHeight}px`;
+
+                // Generate Path: A nice gentle sine wave down the center
+                const amplitude = winWidth < 768 ? winWidth * 0.3 : 150; // Smaller wave on mobile
+                const frequency = 0.002; // Adjust for wave tightness
+                const centerX = winWidth / 2;
+
+                let d = `M ${centerX} 0`;
+                const steps = 50; // Resolution
+                
+                for (let y = 0; y <= docHeight; y += steps) {
+                    const x = centerX + Math.sin(y * frequency) * amplitude;
+                    d += ` L ${x} ${y}`;
+                }
+                
+                // Ensure it ends at the bottom
+                d += ` L ${centerX + Math.sin(docHeight * frequency) * amplitude} ${docHeight}`;
+
+                wavePathBg.setAttribute('d', d);
+                wavePathDraw.setAttribute('d', d);
+
+                pathLength = wavePathDraw.getTotalLength();
+                
+                // Hide the "draw" path initially using dasharray/dashoffset
+                wavePathDraw.style.strokeDasharray = pathLength;
+                wavePathDraw.style.strokeDashoffset = pathLength;
+            }
+
+            function updateWaveScroll() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const winHeight = window.innerHeight;
+                const docHeight = waveContainer.offsetHeight;
+
+                // Calculate progress (0 to 1) based on how far we've scrolled + viewport center offset
+                // essentially, the "pen" is at the center of the viewport (or slightly lower)
+                const viewportY = scrollTop + winHeight * 0.5; 
+                
+                // The star should be at viewportY.
+                // We need to find the point on the path at y = viewportY.
+                
+                // Since we built the path with simple math (y is literal), we can calc x easily:
+                const winWidth = window.innerWidth;
+                const amplitude = winWidth < 768 ? winWidth * 0.3 : 150;
+                const frequency = 0.002;
+                const centerX = winWidth / 2;
+                
+                const targetX = centerX + Math.sin(viewportY * frequency) * amplitude;
+
+                // Move Star Cluster
+                starCluster.style.transform = `translate(${targetX}px, ${viewportY}px)`;
+
+                // Update drawn path
+                // We can't easily map Y to arc length without complex math or `getPointAtLength` loop.
+                // Approx: The path is roughly length of Y (since it's vertical-ish).
+                // Let's use the SVG API to find length at a step.
+                // A simpler visual hack: revealed amount = scrollTop + half screen.
+                
+                // Accurate way:
+                // We want the stroke to end exactly where the star is.
+                // Since the path is monotonic in Y (mostly), we can find the point.
+                
+                // optimization: pathLength * (viewportY / docHeight) is a decent approximation for "vertical-ish" paths
+                // But let's try to be closer.
+                
+                // Let's use the ratio of viewportY to TotalHeight
+                const ratio = Math.min(viewportY / docHeight, 1);
+                const drawLength = pathLength * ratio; // This might be slightly off due to curves
+                
+                // Correction: The curve makes the path longer than the height.
+                // Let's just trust the visual "reveal" sync isn't pixel perfect critical, 
+                // but the STAR position is.
+                
+                wavePathDraw.style.strokeDashoffset = pathLength - (pathLength * ratio);
+            }
+
+            window.addEventListener('resize', () => {
+                initWave();
+                updateWaveScroll();
+            });
+            
+            window.addEventListener('scroll', updateWaveScroll);
+            
+            // Init
+            initWave();
+            updateWaveScroll(); // Set initial position
         }
     </script>
 </body>
