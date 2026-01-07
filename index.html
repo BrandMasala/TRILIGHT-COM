@@ -36,6 +36,7 @@
                         'fade-in-up': 'fadeInUp 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards',
                         'spin-slow': 'spin 8s linear infinite',
                         'pulse-glow': 'pulseGlow 2s infinite',
+                        'marquee': 'marquee 80s linear infinite',
                     },
                     keyframes: {
                         fadeInUp: {
@@ -46,6 +47,10 @@
                             '0%': { boxShadow: '0 0 0 0 rgba(226, 232, 240, 0.4)' },
                             '70%': { boxShadow: '0 0 0 10px rgba(226, 232, 240, 0)' },
                             '100%': { boxShadow: '0 0 0 0 rgba(226, 232, 240, 0)' },
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-50%)' },
                         }
                     }
                 }
@@ -273,13 +278,13 @@
                 <a href="#visionary" class="hover:text-contrast transition-colors hover-underline-animation magnetic-target">Visionary</a>
                 <a href="#journal" class="hover:text-contrast transition-colors hover-underline-animation magnetic-target">Journal</a>
                 <a href="#contact" class="text-contrast hover:text-silver transition-colors magnetic-target">Inquire</a>
-                <button id="theme-toggle" class="magnetic-target text-lg text-contrast hover:text-silver transition-colors ml-4 focus:outline-none"><i class="fas fa-moon theme-toggle-icon"></i></button>
+                <!-- <button id="theme-toggle" class="magnetic-target text-lg text-contrast hover:text-silver transition-colors ml-4 focus:outline-none"><i class="fas fa-moon theme-toggle-icon"></i></button> -->
             </div>
 
-            <div class="md:hidden flex items-center gap-4">
+            <!-- <div class="md:hidden flex items-center gap-4">
                 <button id="mobile-theme-toggle" class="text-xl text-contrast magnetic-target"><i class="fas fa-moon"></i></button>
                 <button class="text-xl text-contrast magnetic-target" onclick="document.getElementById('mobile-menu').classList.toggle('translate-x-full')"><i class="fas fa-bars"></i></button>
-            </div>
+            </div> -->
         </div>
     </nav>
 
@@ -373,7 +378,7 @@
                     </div>
                     <div class="order-1 lg:order-2 parallax-container project-card" style="transition-delay: 200ms;">
                         <img src="Assests/Trilight.jpg" 
-                             class="w-full h-auto grayscale-[50%] group-hover:grayscale-0 transition-all duration-1000" alt="Trilight">
+                             class="w-full h-auto  group-hover:grayscale-0 transition-all duration-1000" alt="Trilight">
                     </div>
                 </div>
             </div>
@@ -386,7 +391,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pl-12 md:pl-0">
                     <div class="parallax-container project-card">
                         <img src="Assests/Risewith9.jpeg" 
-                             class="w-full h-auto grayscale-[50%] group-hover:grayscale-0 transition-all duration-1000" alt="Rise with 9">
+                             class="w-full h-auto  group-hover:grayscale-0 transition-all duration-1000" alt="Rise with 9">
                     </div>
                     <div class="px-6 lg:pl-20 project-card" style="transition-delay: 200ms;">
                         <img src="Assests/RW9.png" alt="Rise with 9" class="h-42 md:h-20 w-auto mb-6 object-contain opacity-90">
@@ -445,60 +450,181 @@
         </div>
     </section>
 
-    <!-- Global Footprint
-    <section class="py-32 bg-transparent border-t border-contrast/5 transition-colors duration-500 z-10 relative">
-        <div class="max-w-[90%] mx-auto text-center">
-            <span class="block text-silver text-[10px] uppercase tracking-widest mb-16 reveal-on-scroll">Global Presence</span>
-            <div class="flex flex-col md:flex-row justify-center items-center gap-12 md:gap-32 text-4xl md:text-6xl font-serif text-contrast/20">
-                <span class="hover:text-contrast transition-colors duration-500 cursor-default reveal-on-scroll magnetic-target">Dubai</span>
-                <span class="hidden md:inline text-accent text-2xl">•</span>
-                <span class="hover:text-contrast transition-colors duration-500 cursor-default reveal-on-scroll magnetic-target" style="transition-delay: 100ms">London</span>
-                <span class="hidden md:inline text-accent text-2xl">•</span>
-                <span class="hover:text-contrast transition-colors duration-500 cursor-default reveal-on-scroll magnetic-target" style="transition-delay: 200ms">New York</span>
+    <!-- Virtual Tour -->
+    <section id="virtual-tour" class="py-32 bg-transparent relative z-10 transition-colors duration-500">
+        <div class="max-w-[95%] mx-auto px-6 mb-12 text-center">
+            <span class="block text-accent text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Interactive Walkthroughs</span>
+            <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">Experience the Life</h2>
+            <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
+        </div>
+
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Tour 1: Lobby -->
+            <div class="relative h-[400px] group overflow-hidden rounded-sm border border-contrast/10 reveal-on-scroll magnetic-target">
+                 <div class="absolute inset-0 bg-navy/20 z-10 group-hover:bg-navy/10 transition-colors duration-500"></div>
+                 <img src="Assests/Trilight.jpg" alt="Lobby 360" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                 
+                 <div class="absolute inset-0 flex flex-col justify-center items-center z-20">
+                    <div class="w-16 h-16 rounded-full border border-silver/30 flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform duration-500 mb-6">
+                        <i class="fas fa-cube text-silver text-xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif text-contrast mb-2">Grand Lobby</h3>
+                    <span class="text-[9px] uppercase tracking-widest text-silver border-b border-transparent group-hover:border-silver transition-all pb-1">Start Tour</span>
+                 </div>
+            </div>
+
+            <!-- Tour 2: Residence -->
+            <div class="relative h-[400px] group overflow-hidden rounded-sm border border-contrast/10 reveal-on-scroll magnetic-target" style="transition-delay: 200ms">
+                 <div class="absolute inset-0 bg-navy/20 z-10 group-hover:bg-navy/10 transition-colors duration-500"></div>
+                 <img src="Assests/Risewith9.jpeg" alt="Residence 360" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                 
+                 <div class="absolute inset-0 flex flex-col justify-center items-center z-20">
+                    <div class="w-16 h-16 rounded-full border border-silver/30 flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform duration-500 mb-6">
+                        <i class="fas fa-cube text-silver text-xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif text-contrast mb-2">Sky Residence</h3>
+                    <span class="text-[9px] uppercase tracking-widest text-silver border-b border-transparent group-hover:border-silver transition-all pb-1">Start Tour</span>
+                 </div>
             </div>
         </div>
-    </section> -->
+    </section>
+
+    <!-- Resident Voices -->
+    <section id="testimonials" class="py-32 bg-transparent relative z-10 transition-colors duration-500">
+        <div class="max-w-[95%] mx-auto px-6 mb-12 text-center">
+            <span class="block text-accent text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Client Experiences</span>
+            <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">Resident Voices</h2>
+            <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="deck-container">
+                <!-- Testimonial 1 -->
+                <div class="p-12 md:p-16 bg-navy/20 border border-contrast/10 backdrop-blur-sm rounded-sm mx-4 md:mx-8 reveal-on-scroll magnetic-target min-w-[300px] md:min-w-[400px]">
+                    <i class="fas fa-quote-left text-3xl text-silver/20 mb-8 block"></i>
+                    <p class="font-serif italic text-lg text-contrast/90 leading-relaxed mb-8">
+                        "Choosing Trilight was not merely a real estate decision; it was a lifestyle affirmation. The attention to detail in the amenities is unparalleled."
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-[1px] bg-accent"></div>
+                        <div>
+                            <h4 class="text-xs uppercase tracking-widest text-contrast font-bold">Aravind Rao</h4>
+                            <span class="text-[9px] uppercase tracking-widest text-muted">Residence 1804</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 (Video) -->
+                <div class="relative p-0 aspect-video md:aspect-[4/3] bg-navy/20 border border-contrast/10 backdrop-blur-sm rounded-sm mx-4 md:mx-8 reveal-on-scroll magnetic-target min-w-[300px] md:min-w-[400px] group overflow-hidden" style="transition-delay: 200ms">
+                    <!-- Video Background -->
+                    <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-500">
+                         <source src="https://videos.pexels.com/video-files/7578552/7578552-uhd_2560_1440_30fps.mp4" type="video/mp4">
+                    </video>
+                    
+                    <!-- Overlay Content -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/20 to-transparent p-12 md:p-16 flex flex-col justify-end">
+                        <div class="mb-6">
+                            <button class="w-12 h-12 rounded-full bg-silver/20 backdrop-blur-md border border-silver/50 flex items-center justify-center text-silver group-hover:scale-110 transition-transform duration-300">
+                                <i class="fas fa-play ml-1"></i>
+                            </button>
+                        </div>
+                        <p class="font-serif italic text-lg text-contrast/90 leading-relaxed mb-6 drop-shadow-lg">
+                            "A home that understands your need for peace and prestige."
+                        </p>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-[1px] bg-silver"></div>
+                            <div>
+                                <h4 class="text-xs uppercase tracking-widest text-contrast font-bold drop-shadow-md">Meera Reddy</h4>
+                                <span class="text-[9px] uppercase tracking-widest text-silver/80 drop-shadow-md">Watch Story</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="p-12 md:p-16 bg-navy/20 border border-contrast/10 backdrop-blur-sm rounded-sm mx-4 md:mx-8 reveal-on-scroll magnetic-target min-w-[300px] md:min-w-[400px]" style="transition-delay: 400ms">
+                    <i class="fas fa-quote-left text-3xl text-silver/20 mb-8 block"></i>
+                    <p class="font-serif italic text-lg text-contrast/90 leading-relaxed mb-8">
+                        "From the grand lobby to the private golf simulator, every space is designed for those who appreciate the finer nuances of luxury."
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-[1px] bg-accent"></div>
+                        <div>
+                            <h4 class="text-xs uppercase tracking-widest text-contrast font-bold">Karthik & Ananya</h4>
+                            <span class="text-[9px] uppercase tracking-widest text-muted">Residence 1502</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Visionary -->
-    <section id="visionary" class="py-32 bg-surface/90 transition-colors duration-500 relative z-10">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="mb-20 text-center">
-                <h2 class="font-serif text-4xl md:text-5xl text-contrast">The Visionaries</h2>
-                <div class="w-12 h-[1px] bg-silver mx-auto mt-6"></div>
+    <!-- Visionary -->
+    <section id="visionary" class="py-32 bg-surface/90 transition-colors duration-500 relative z-10 overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6 relative">
+            <div class="mb-32 text-center">
+                <span class="block text-accent text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Leadership</span>
+                <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">The Visionaries</h2>
+                <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
-                <div class="group reveal-on-scroll">
-                    <div class="h-96 w-full overflow-hidden mb-8 relative">
+            <!-- Visionary 1: J Sanjeeva Reddy -->
+            <div class="flex flex-col md:flex-row items-center gap-12 md:gap-24 mb-32 group">
+                <!-- Image -->
+                <div class="w-full md:w-5/12 relative reveal-on-scroll">
+                    <div class="absolute -inset-4 border border-silver/20 rounded-sm z-0 transform translate-x-2 translate-y-2 transition-transform duration-700 group-hover:translate-x-4 group-hover:translate-y-4"></div>
+                    <div class="h-[500px] w-full overflow-hidden relative z-10">
                         <img src="Assests/23.webp" 
-                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-105" alt="CEO">
+                             class="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-105" alt="J Sanjeeva Reddy">
                     </div>
-                    <h4 class="text-2xl font-serif text-contrast">J Sanjeeva Reddy</h4>
-                    <!-- <span class="text-[10px] uppercase tracking-widest text-accent block mb-4">Founder & CEO</span> -->
-                    <p class="text-muted text-sm font-light leading-relaxed">"The Trilight Residences isn't in the business of mere square foot; we're sculpting the very horizon of aspiration."</p>
                 </div>
-                
-                <div class="group md:mt-24 reveal-on-scroll" style="transition-delay: 200ms">
-                    <div class="h-96 w-full overflow-hidden mb-8 relative">
-                        <img src="Assests/24.webp" 
-                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-105" alt="Director">
+                <!-- Content -->
+                <div class="w-full md:w-7/12 text-left reveal-on-scroll" style="transition-delay: 200ms">
+                    <h4 class="text-3xl md:text-4xl font-serif text-contrast mb-2">J Sanjeeva Reddy</h4>
+                    <span class="text-[10px] uppercase tracking-widest text-silver mb-8 block">Founder & Chairman</span>
+                    <div class="relative">
+                        <i class="fas fa-quote-left text-4xl text-contrast/5 absolute -top-6 -left-4"></i>
+                        <p class="text-muted text-lg font-light leading-relaxed pl-6 border-l border-accent/20">
+                            "The Trilight Residences isn't in the business of mere square foot; we're sculpting the very horizon of aspiration. Every detail is a testament to our relentless pursuit of perfection."
+                        </p>
                     </div>
-                    <h4 class="text-2xl font-serif text-contrast">Sanjay Mangatram</h4>
-                    <!-- <span class="text-[10px] uppercase tracking-widest text-accent block mb-4">Design Director</span> -->
-                    <p class="text-muted text-sm font-light leading-relaxed">"Born from a lineage that refused to settle for enough, we are the visionaries who burn the blueprints of convention."</p>
+                </div>
+            </div>
+
+            <!-- Visionary 2: Sanjay Mangatram -->
+            <div class="flex flex-col md:flex-row-reverse items-center gap-12 md:gap-24 group">
+                <!-- Image -->
+                <div class="w-full md:w-5/12 relative reveal-on-scroll">
+                    <div class="absolute -inset-4 border border-silver/20 rounded-sm z-0 transform -translate-x-2 translate-y-2 transition-transform duration-700 group-hover:-translate-x-4 group-hover:translate-y-4"></div>
+                    <div class="h-[500px] w-full overflow-hidden relative z-10">
+                        <img src="Assests/24.webp" 
+                             class="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-105" alt="Sanjay Mangatram">
+                    </div>
+                </div>
+                <!-- Content -->
+                <div class="w-full md:w-7/12 text-left md:text-right reveal-on-scroll" style="transition-delay: 200ms">
+                    <h4 class="text-3xl md:text-4xl font-serif text-contrast mb-2">Sanjay Mangatram</h4>
+                    <span class="text-[10px] uppercase tracking-widest text-silver mb-8 block">Director</span>
+                    <div class="relative md:flex md:justify-end">
+                        <i class="fas fa-quote-left text-4xl text-contrast/5 absolute -top-6 -left-4 md:left-auto md:-right-4 md:rotate-180"></i>
+                        <p class="text-muted text-lg font-light leading-relaxed pl-6 md:pl-0 md:pr-6 md:border-l-0 md:border-r border-l border-accent/20">
+                            "Born from a lineage that refused to settle for enough, we are the visionaries who burn the blueprints of convention to forge a new legacy of excellence."
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Journal -->
-    <section id="journal" class="py-32 bg-transparent transition-colors duration-500 z-10 relative">
-        <div class="max-w-4xl mx-auto px-6">
+    <section id="journal" class="py-32 bg-transparent transition-colors  ">
+        <div class="w-full overflow-hidden reveal-on-scroll">
             <span class="block text-silver text-[10px] uppercase tracking-widest mb-12 text-center">Press & Journal</span>
-            <div class="space-y-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 border-t border-contrast/10 pt-12">
+            <div class="flex animate-marquee gap-8 w-max hover:[animation-play-state:paused] border-t border-contrast/10 pt-12">
+                <!-- SET 1 -->
                 <!-- Card 1 -->
-                <a href="https://thetrilight.com/newsletter-page/" target="_blank" class="group block p-8 border border-contrast/10 hover:border-silver transition-all duration-500 hover:-translate-y-2 bg-navy/20 reveal-on-scroll magnetic-target" style="transition-delay: 100ms;">
+                <a href="https://thetrilight.com/newsletter-page/" target="_blank" class="w-96 flex-shrink-0 group block p-8 border border-contrast/10 hover:border-silver transition-all duration-300 hover:-translate-y-2 bg-navy/20 magnetic-target">
                     <div class="flex justify-between items-start mb-6">
                         <span class="text-[10px] uppercase tracking-widest text-accent border border-accent/20 px-3 py-1 rounded-full">August 2024</span>
                         <i class="fas fa-arrow-right text-silver opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-4 group-hover:translate-x-0"></i>
@@ -508,7 +634,7 @@
                 </a>
 
                 <!-- Card 2 -->
-                <a href="https://thetrilight.com/newsletter-page/" target="_blank" class="group block p-8 border border-contrast/10 hover:border-silver transition-all duration-500 hover:-translate-y-2 bg-navy/20 reveal-on-scroll magnetic-target" style="transition-delay: 200ms;">
+                <a href="https://thetrilight.com/newsletter-page/" target="_blank" class="w-96 flex-shrink-0 group block p-8 border border-contrast/10 hover:border-silver transition-all duration-300 hover:-translate-y-2 bg-navy/20 magnetic-target">
                     <div class="flex justify-between items-start mb-6">
                         <span class="text-[10px] uppercase tracking-widest text-accent border border-accent/20 px-3 py-1 rounded-full">July 2024</span>
                         <i class="fas fa-arrow-right text-silver opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-4 group-hover:translate-x-0"></i>
@@ -518,7 +644,7 @@
                 </a>
 
                 <!-- Card 3 -->
-                <a href="https://thetrilight.com/newsletter-page/" target="_blank" class="group block p-8 border border-contrast/10 hover:border-silver transition-all duration-500 hover:-translate-y-2 bg-navy/20 reveal-on-scroll magnetic-target" style="transition-delay: 300ms;">
+                <a href="https://thetrilight.com/newsletter-page/" target="_blank" class="w-96 flex-shrink-0 group block p-8 border border-contrast/10 hover:border-silver transition-all duration-300 hover:-translate-y-2 bg-navy/20 magnetic-target">
                     <div class="flex justify-between items-start mb-6">
                         <span class="text-[10px] uppercase tracking-widest text-accent border border-accent/20 px-3 py-1 rounded-full">January 2024</span>
                         <i class="fas fa-arrow-right text-silver opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-4 group-hover:translate-x-0"></i>
@@ -528,7 +654,7 @@
                 </a>
 
                 <!-- Card 4 -->
-                <a href="https://thetrilight.com/newsletter-page/" target="_blank" class="group block p-8 border border-contrast/10 hover:border-silver transition-all duration-500 hover:-translate-y-2 bg-navy/20 reveal-on-scroll magnetic-target" style="transition-delay: 100ms;">
+                <a href="https://thetrilight.com/newsletter-page/" target="_blank" class="w-96 flex-shrink-0 group block p-8 border border-contrast/10 hover:border-silver transition-all duration-300 hover:-translate-y-2 bg-navy/20 magnetic-target">
                     <div class="flex justify-between items-start mb-6">
                         <span class="text-[10px] uppercase tracking-widest text-accent border border-accent/20 px-3 py-1 rounded-full">September</span>
                         <i class="fas fa-arrow-right text-silver opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-4 group-hover:translate-x-0"></i>
@@ -538,7 +664,7 @@
                 </a>
 
                 <!-- Card 5 -->
-                <a href="https://thetrilight.com/newsletter-page/" target="_blank" class="group block p-8 border border-contrast/10 hover:border-silver transition-all duration-500 hover:-translate-y-2 bg-navy/20 reveal-on-scroll magnetic-target" style="transition-delay: 200ms;">
+                <a href="https://thetrilight.com/newsletter-page/" target="_blank" class="w-96 flex-shrink-0 group block p-8 border border-contrast/10 hover:border-silver transition-all duration-300 hover:-translate-y-2 bg-navy/20 magnetic-target">
                     <div class="flex justify-between items-start mb-6">
                         <span class="text-[10px] uppercase tracking-widest text-accent border border-accent/20 px-3 py-1 rounded-full">May</span>
                         <i class="fas fa-arrow-right text-silver opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-4 group-hover:translate-x-0"></i>
@@ -548,7 +674,7 @@
                 </a>
 
                 <!-- Card 6 -->
-                <a href="https://thetrilight.com/newsletter-page/" target="_blank" class="group block p-8 border border-contrast/10 hover:border-silver transition-all duration-500 hover:-translate-y-2 bg-navy/20 reveal-on-scroll magnetic-target" style="transition-delay: 300ms;">
+                <a href="https://thetrilight.com/newsletter-page/" target="_blank" class="w-96 flex-shrink-0 group block p-8 border border-contrast/10 hover:border-silver transition-all duration-300 hover:-translate-y-2 bg-navy/20 magnetic-target">
                     <div class="flex justify-between items-start mb-6">
                         <span class="text-[10px] uppercase tracking-widest text-accent border border-accent/20 px-3 py-1 rounded-full">April</span>
                         <i class="fas fa-arrow-right text-silver opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-4 group-hover:translate-x-0"></i>
@@ -558,7 +684,7 @@
                 </a>
 
                 <!-- Card 7 -->
-                <a href="https://thetrilight.com/newsletter-page/" target="_blank" class="group block p-8 border border-contrast/10 hover:border-silver transition-all duration-500 hover:-translate-y-2 bg-navy/20 reveal-on-scroll magnetic-target" style="transition-delay: 100ms;">
+                <a href="https://thetrilight.com/newsletter-page/" target="_blank" class="w-96 flex-shrink-0 group block p-8 border border-contrast/10 hover:border-silver transition-all duration-300 hover:-translate-y-2 bg-navy/20 magnetic-target">
                     <div class="flex justify-between items-start mb-6">
                         <span class="text-[10px] uppercase tracking-widest text-accent border border-accent/20 px-3 py-1 rounded-full">March</span>
                         <i class="fas fa-arrow-right text-silver opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-4 group-hover:translate-x-0"></i>
@@ -568,7 +694,7 @@
                 </a>
 
                 <!-- Card 8 -->
-                <a href="https://thetrilight.com/newsletter-page/" target="_blank" class="group block p-8 border border-contrast/10 hover:border-silver transition-all duration-500 hover:-translate-y-2 bg-navy/20 reveal-on-scroll magnetic-target" style="transition-delay: 200ms;">
+                <a href="https://thetrilight.com/newsletter-page/" target="_blank" class="w-96 flex-shrink-0 group block p-8 border border-contrast/10 hover:border-silver transition-all duration-300 hover:-translate-y-2 bg-navy/20 magnetic-target">
                     <div class="flex justify-between items-start mb-6">
                         <span class="text-[10px] uppercase tracking-widest text-accent border border-accent/20 px-3 py-1 rounded-full">February</span>
                         <i class="fas fa-arrow-right text-silver opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-4 group-hover:translate-x-0"></i>
@@ -576,34 +702,173 @@
                     <h3 class="text-xl font-serif text-contrast mb-4 group-hover:text-silver transition-colors">The Trilight Journal: February Edition</h3>
                     <p class="text-muted text-xs font-light leading-6 mb-6">The Trilight Launch Event: Recap and photo gallery.</p>
                 </a>
+
+                <!-- SET 2 (Duplicate for Seamless Loop) -->
+                <!-- Card 1 -->
+                <a href="https://thetrilight.com/newsletter-page/" target="_blank" class="w-96 flex-shrink-0 group block p-8 border border-contrast/10 hover:border-silver transition-all  bg-navy/20 magnetic-target">
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="text-[10px] uppercase tracking-widest text-accent border border-accent/20 px-3 py-1 rounded-full">August 2024</span>
+                        <i class="fas fa-arrow-right text-silver opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-4 group-hover:translate-x-0"></i>
+                    </div>
+                    <h3 class="text-xl font-serif text-contrast mb-4 group-hover:text-silver transition-colors">The Trilight Journal: August Edition</h3>
+                    <p class="text-muted text-xs font-light leading-6 mb-6">Exclusive updates on luxury apartments in Kokapet, new project launches, and more.</p>
+                </a>
+
+                <!-- Card 2 -->
+                <a href="https://thetrilight.com/newsletter-page/" target="_blank" class="w-96 flex-shrink-0 group block p-8 border border-contrast/10 hover:border-silver transition-all duration-300 hover:-translate-y-2 bg-navy/20 magnetic-target">
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="text-[10px] uppercase tracking-widest text-accent border border-accent/20 px-3 py-1 rounded-full">July 2024</span>
+                        <i class="fas fa-arrow-right text-silver opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-4 group-hover:translate-x-0"></i>
+                    </div>
+                    <h3 class="text-xl font-serif text-contrast mb-4 group-hover:text-silver transition-colors">The Trilight Journal: July Edition</h3>
+                    <p class="text-muted text-xs font-light leading-6 mb-6">Insights into our latest construction milestones and community events.</p>
+                </a>
+
+                <!-- Card 3 -->
+                <a href="https://thetrilight.com/newsletter-page/" target="_blank" class="w-96 flex-shrink-0 group block p-8 border border-contrast/10 hover:border-silver transition-all duration-300 hover:-translate-y-2 bg-navy/20 magnetic-target">
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="text-[10px] uppercase tracking-widest text-accent border border-accent/20 px-3 py-1 rounded-full">January 2024</span>
+                        <i class="fas fa-arrow-right text-silver opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-4 group-hover:translate-x-0"></i>
+                    </div>
+                    <h3 class="text-xl font-serif text-contrast mb-4 group-hover:text-silver transition-colors">The Trilight Journal: January Edition</h3>
+                    <p class="text-muted text-xs font-light leading-6 mb-6">A look back at our achievements and the roadmap for the year ahead.</p>
+                </a>
+
+                <!-- Card 4 -->
+                <a href="https://thetrilight.com/newsletter-page/" target="_blank" class="w-96 flex-shrink-0 group block p-8 border border-contrast/10 hover:border-silver transition-all duration-300 hover:-translate-y-2 bg-navy/20 magnetic-target">
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="text-[10px] uppercase tracking-widest text-accent border border-accent/20 px-3 py-1 rounded-full">September</span>
+                        <i class="fas fa-arrow-right text-silver opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-4 group-hover:translate-x-0"></i>
+                    </div>
+                    <h3 class="text-xl font-serif text-contrast mb-4 group-hover:text-silver transition-colors">The Trilight Journal: September Edition</h3>
+                    <p class="text-muted text-xs font-light leading-6 mb-6">Highlights from our Q3 progress and upcoming architectural innovations.</p>
+                </a>
+
+                <!-- Card 5 -->
+                <a href="https://thetrilight.com/newsletter-page/" target="_blank" class="w-96 flex-shrink-0 group block p-8 border border-contrast/10 hover:border-silver transition-all duration-300 hover:-translate-y-2 bg-navy/20 magnetic-target">
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="text-[10px] uppercase tracking-widest text-accent border border-accent/20 px-3 py-1 rounded-full">May</span>
+                        <i class="fas fa-arrow-right text-silver opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-4 group-hover:translate-x-0"></i>
+                    </div>
+                    <h3 class="text-xl font-serif text-contrast mb-4 group-hover:text-silver transition-colors">The Trilight Journal: May Edition</h3>
+                    <p class="text-muted text-xs font-light leading-6 mb-6">Spring updates: Sustainability initiatives and green building certifications.</p>
+                </a>
+
+                <!-- Card 6 -->
+                <a href="https://thetrilight.com/newsletter-page/" target="_blank" class="w-96 flex-shrink-0 group block p-8 border border-contrast/10 hover:border-silver transition-all duration-300 hover:-translate-y-2 bg-navy/20 magnetic-target">
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="text-[10px] uppercase tracking-widest text-accent border border-accent/20 px-3 py-1 rounded-full">April</span>
+                        <i class="fas fa-arrow-right text-silver opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-4 group-hover:translate-x-0"></i>
+                    </div>
+                    <h3 class="text-xl font-serif text-contrast mb-4 group-hover:text-silver transition-colors">The Trilight Journal: April Edition</h3>
+                    <p class="text-muted text-xs font-light leading-6 mb-6">Focus on Design: Interview with our lead interior architect.</p>
+                </a>
+
+                <!-- Card 7 -->
+                <a href="https://thetrilight.com/newsletter-page/" target="_blank" class="w-96 flex-shrink-0 group block p-8 border border-contrast/10 hover:border-silver transition-all duration-300 hover:-translate-y-2 bg-navy/20 magnetic-target">
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="text-[10px] uppercase tracking-widest text-accent border border-accent/20 px-3 py-1 rounded-full">March</span>
+                        <i class="fas fa-arrow-right text-silver opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-4 group-hover:translate-x-0"></i>
+                    </div>
+                    <h3 class="text-xl font-serif text-contrast mb-4 group-hover:text-silver transition-colors">The Trilight Journal: March Edition</h3>
+                    <p class="text-muted text-xs font-light leading-6 mb-6">Construction update: Foundation work complete for Tower A.</p>
+                </a>
+
+                <!-- Card 8 -->
+                <a href="https://thetrilight.com/newsletter-page/" target="_blank" class="w-96 flex-shrink-0 group block p-8 border border-contrast/10 hover:border-silver transition-all duration-300 hover:-translate-y-2 bg-navy/20 magnetic-target">
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="text-[10px] uppercase tracking-widest text-accent border border-accent/20 px-3 py-1 rounded-full">February</span>
+                        <i class="fas fa-arrow-right text-silver opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-4 group-hover:translate-x-0"></i>
+                    </div>
+                    <h3 class="text-xl font-serif text-contrast mb-4 group-hover:text-silver transition-colors">The Trilight Journal: February Edition</h3>
+                    <p class="text-muted text-xs font-light leading-6 mb-6">The Trilight Launch Event: Recap and photo gallery.</p>
+                </a>
+
             </div>
         </div>
     </section>
 
     <!-- Amenities -->
-    <section id="amenities" class="py-32 bg-surface/90 transition-colors duration-500 relative z-10">
-        <div class="max-w-5xl mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-y-12 gap-x-24">
-                <div class="border-t border-contrast/10 pt-8 reveal-on-scroll">
-                    <span class="text-accent text-xs font-serif italic mb-2 block">01</span>
-                    <h3 class="text-xl text-contrast uppercase tracking-widest mb-4">Infinity Pools</h3>
-                    <p class="text-muted text-sm font-light leading-6">Sky-high aquatic sanctuaries offering unobstructed views of the horizon, merging water with the sky.</p>
+    <!-- Timeline -->
+    <section id="timeline" class="py-32 bg-surface/90 transition-colors duration-500 relative z-10">
+        <div class="max-w-4xl mx-auto px-6 relative">
+             <div class="mb-24 text-center">
+                <span class="block text-accent text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Construction Updates</span>
+                <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">Timeline</h2>
+                <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
+            </div>
+
+            <!-- Vertical Line -->
+            <!-- Track -->
+            <div class="absolute left-[28px] md:left-1/2 top-48 bottom-0 w-[1px] bg-silver/10 md:-translate-x-1/2"></div>
+            <!-- Progress Line -->
+            <div id="timeline-progress" class="absolute left-[28px] md:left-1/2 top-48 w-[1px] bg-gradient-to-b from-silver via-silver to-transparent md:-translate-x-1/2 h-0 transition-[height] duration-75 ease-linear z-0"></div>
+
+            <div class="space-y-24">
+                <!-- Node 1 -->
+                <div class="timeline-item relative pl-12 md:pl-0 md:flex items-center justify-between group reveal-on-scroll">
+                     <!-- Dot -->
+                    <div class="timeline-dot absolute left-[20px] md:left-1/2 top-0 md:top-1/2 w-4 h-4 bg-navy border border-silver rounded-full z-10 transform -translate-x-1/2 md:-translate-y-1/2 transition-all duration-500 group-hover:scale-150 group-hover:bg-silver"></div>
+                    
+                    <div class="md:w-5/12 text-left md:text-right md:pr-12 mb-4 md:mb-0">
+                        <span class="text-3xl font-serif text-contrast block mb-2">2026</span>
+                        <span class="text-[10px] uppercase tracking-widest text-accent">Completion</span>
+                    </div>
+                    <div class="md:w-5/12 md:pl-12">
+                         <p class="text-muted text-sm font-light leading-7">
+                            Projected completion and handover of The Trilight residences. A new era of luxury living begins.
+                        </p>
+                    </div>
                 </div>
-                <div class="border-t border-contrast/10 pt-8 reveal-on-scroll">
-                    <span class="text-accent text-xs font-serif italic mb-2 block">02</span>
-                    <h3 class="text-xl text-contrast uppercase tracking-widest mb-4">Wellness Spas</h3>
-                    <p class="text-muted text-sm font-light leading-6">Holistic rejuvenation centers featuring thermal suites, hydrotherapy, and private treatment rooms.</p>
+
+                <!-- Node 2 -->
+                <div class="timeline-item relative pl-12 md:pl-0 md:flex flex-row-reverse items-center justify-between group reveal-on-scroll">
+                     <!-- Dot -->
+                    <div class="timeline-dot absolute left-[20px] md:left-1/2 top-0 md:top-1/2 w-4 h-4 bg-navy border border-silver rounded-full z-10 transform -translate-x-1/2 md:-translate-y-1/2 transition-all duration-500 group-hover:scale-150 group-hover:bg-silver"></div>
+                    
+                    <div class="md:w-5/12 text-left md:pl-12 mb-4 md:mb-0">
+                        <span class="text-3xl font-serif text-contrast block mb-2">2025</span>
+                        <span class="text-[10px] uppercase tracking-widest text-accent">Structure</span>
+                    </div>
+                    <div class="md:w-5/12 text-right md:pr-12">
+                         <p class="text-muted text-sm font-light leading-7">
+                            Superstructure completion for all three towers. Interior finishing works commence.
+                        </p>
+                    </div>
                 </div>
-                <div class="border-t border-contrast/10 pt-8 reveal-on-scroll">
-                    <span class="text-accent text-xs font-serif italic mb-2 block">03</span>
-                    <h3 class="text-xl text-contrast uppercase tracking-widest mb-4">24/7 Concierge</h3>
-                    <p class="text-muted text-sm font-light leading-6">Dedicated lifestyle management to handle everything from reservations to private event planning.</p>
+
+                <!-- Node 3 -->
+                <div class="timeline-item relative pl-12 md:pl-0 md:flex items-center justify-between group reveal-on-scroll">
+                     <!-- Dot -->
+                    <div class="timeline-dot absolute left-[20px] md:left-1/2 top-0 md:top-1/2 w-4 h-4 bg-navy border border-silver rounded-full z-10 transform -translate-x-1/2 md:-translate-y-1/2 transition-all duration-500 group-hover:scale-150 group-hover:bg-silver"></div>
+                    
+                    <div class="md:w-5/12 text-left md:text-right md:pr-12 mb-4 md:mb-0">
+                        <span class="text-3xl font-serif text-contrast block mb-2">2024</span>
+                        <span class="text-[10px] uppercase tracking-widest text-accent">Launch</span>
+                    </div>
+                    <div class="md:w-5/12 md:pl-12">
+                         <p class="text-muted text-sm font-light leading-7">
+                            Official launch of The Trilight. Groundbreaking ceremony and commencement of foundation works.
+                        </p>
+                    </div>
                 </div>
-                <div class="border-t border-contrast/10 pt-8 reveal-on-scroll">
-                    <span class="text-accent text-xs font-serif italic mb-2 block">04</span>
-                    <h3 class="text-xl text-contrast uppercase tracking-widest mb-4">Private Lounges</h3>
-                    <p class="text-muted text-sm font-light leading-6">Exclusive social spaces perched atop our towers, perfect for intimate gatherings or solitude.</p>
+
+                <!-- Node 4 -->
+                <div class="timeline-item relative pl-12 md:pl-0 md:flex flex-row-reverse items-center justify-between group reveal-on-scroll">
+                     <!-- Dot -->
+                    <div class="timeline-dot absolute left-[20px] md:left-1/2 top-0 md:top-1/2 w-4 h-4 bg-navy border border-silver rounded-full z-10 transform -translate-x-1/2 md:-translate-y-1/2 transition-all duration-500 group-hover:scale-150 group-hover:bg-silver"></div>
+                    
+                    <div class="md:w-5/12 text-left md:pl-12 mb-4 md:mb-0">
+                        <span class="text-3xl font-serif text-contrast block mb-2">2023</span>
+                        <span class="text-[10px] uppercase tracking-widest text-accent">Inception</span>
+                    </div>
+                    <div class="md:w-5/12 text-right md:pr-12">
+                         <p class="text-muted text-sm font-light leading-7">
+                            Conceptualization and architectural design phase. Partnering with world-class consultants.
+                        </p>
+                    </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -629,10 +894,18 @@
 
     <!-- Footer -->
     <footer class="bg-surface/90 py-16 border-t border-contrast/5 transition-colors duration-500 relative z-10">
-        <div class="max-w-[90%] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+        <div class="max-w-[90%] mx-auto grid grid-cols-1 md:grid-cols-5 gap-12">
             <div class="md:col-span-2">
                 <a href="#" class="text-lg font-serif font-bold tracking-widest uppercase text-contrast block mb-6">Trilight<span class="text-silver">.</span></a>
                 <p class="text-muted text-sm font-light max-w-xs">Visionary developments for the modern era. Crafting the skyline of tomorrow, today.</p>
+            </div>
+            <div>
+                 <h4 class="text-contrast text-xs uppercase tracking-widest mb-6">Visit Us</h4>
+                 <address class="text-muted text-sm font-light leading-7 not-italic">
+                    Trilight Experience Center,<br>
+                    Kokapet, Hyderabad<br>
+                    <a href="tel:+91400000000" class="hover:text-silver transition-colors mt-4 block">+91 40 0000 0000</a>
+                 </address>
             </div>
             <div>
                 <h4 class="text-contrast text-xs uppercase tracking-widest mb-6">Social</h4>
@@ -679,33 +952,33 @@
 
     <script>
         // --- Dark/Light Mode Toggle Logic ---
-        const themeToggle = document.getElementById('theme-toggle');
-        const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
-        const html = document.documentElement;
+        // const themeToggle = document.getElementById('theme-toggle');
+        // const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+        // const html = document.documentElement;
         
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
-            html.classList.add('light-mode');
-            updateIcons(true);
-        } else {
-            updateIcons(false);
-        }
+        // const savedTheme = localStorage.getItem('theme');
+        // if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+        //     html.classList.add('light-mode');
+        //     updateIcons(true);
+        // } else {
+        //     updateIcons(false);
+        // }
 
-        function updateIcons(isLight) {
-            const iconClass = isLight ? 'fa-sun' : 'fa-moon';
-            if(themeToggle) themeToggle.innerHTML = `<i class="fas ${iconClass} theme-toggle-icon"></i>`;
-            if(mobileThemeToggle) mobileThemeToggle.innerHTML = `<i class="fas ${iconClass}"></i>`;
-        }
+        // function updateIcons(isLight) {
+        //     const iconClass = isLight ? 'fa-sun' : 'fa-moon';
+        //     if(themeToggle) themeToggle.innerHTML = `<i class="fas ${iconClass} theme-toggle-icon"></i>`;
+        //     if(mobileThemeToggle) mobileThemeToggle.innerHTML = `<i class="fas ${iconClass}"></i>`;
+        // }
 
-        function toggleTheme() {
-            html.classList.toggle('light-mode');
-            const isLight = html.classList.contains('light-mode');
-            localStorage.setItem('theme', isLight ? 'light' : 'dark');
-            updateIcons(isLight);
-        }
+        // function toggleTheme() {
+        //     html.classList.toggle('light-mode');
+        //     const isLight = html.classList.contains('light-mode');
+        //     localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        //     updateIcons(isLight);
+        // }
 
-        themeToggle.addEventListener('click', toggleTheme);
-        mobileThemeToggle.addEventListener('click', toggleTheme);
+        // themeToggle.addEventListener('click', toggleTheme);
+        // mobileThemeToggle.addEventListener('click', toggleTheme);
 
         // --- Custom Cursor ---
         const cursor = document.getElementById('cursor');
@@ -1023,6 +1296,59 @@
             setTimeout(() => {
                 msgBox.value = "Dear Trilight Team,\n\nI am interested in learning more about your residential opportunities at The Trilight. Please provide information regarding availability and pricing.\n\nSincerely,\n[Name]";
             }, 1500);
+        }
+
+        // --- Timeline Animation Logic ---
+        const timelineSection = document.getElementById('timeline');
+        const timelineProgress = document.getElementById('timeline-progress');
+        const timelineItems = document.querySelectorAll('.timeline-item');
+
+        if(timelineSection && timelineProgress) {
+            window.addEventListener('scroll', () => {
+                const rect = timelineSection.getBoundingClientRect();
+                const sectionHeight = timelineSection.offsetHeight;
+                const windowHeight = window.innerHeight;
+                
+                // Start a bit earlier
+                const startOffset = windowHeight * 0.6; 
+                const endOffset = 200; // Buffer at bottom
+
+                // Calculate progress relative to the section's content area
+                // We want the line to reach the bottom node when the user scrolls past it
+                const scrollDist = -rect.top + startOffset;
+                const totalDist = sectionHeight - endOffset;
+
+                let progress = scrollDist / totalDist;
+                progress = Math.max(0, Math.min(1, progress));
+
+                timelineProgress.style.height = `${progress * 100}%`;
+
+                // Highlight Nodes
+                timelineItems.forEach((item) => {
+                    const dot = item.querySelector('.timeline-dot');
+                    // Get 'top' position of dot relative to section
+                    // Since section is relative, item is inside. 
+                    const itemTop = item.offsetTop;
+                    // If the line (progress * totalHeight) passes the dot's top
+                    // Note: timelineProgress top is at 12rem (top-48 = 192px)
+                    // item offsets include the top padding of section
+                   
+                    const lineBottom = (progress * totalDist); 
+                    // Adjust for the top-48 offset of the line itself
+                    // item.offsetTop is relative to section top
+                    // line starts at 192px from section top
+                    
+                    const relativeItemTop = itemTop - 192; 
+
+                    if(lineBottom > relativeItemTop) {
+                         dot.classList.add('bg-silver', 'scale-150');
+                         dot.classList.remove('bg-navy');
+                    } else {
+                         dot.classList.remove('bg-silver', 'scale-150');
+                         dot.classList.add('bg-navy');
+                    }
+                });
+            });
         }
     </script>
 </body>
