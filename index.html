@@ -61,6 +61,7 @@
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&display=swap');
         
         :root {
             /* DARK MODE (Navy & Silver) */
@@ -71,7 +72,225 @@
             --color-surface: 15 23 42; /* #0f172a (Lighter Navy Surface) */
             --color-contrast: 248 250 252; /* #f8fafc (Silver White Text) */
             --color-muted: 148 163 184;    /* #94a3b8 (Slate 400) */
+
+             /* TIMELINE THEME VARIABLES */
+            --c-bg: #0b0f19;          
+            --c-bg-card: #141b2d;
+            --c-gold: #C5A47E;        
+            --c-gold-glow: rgba(197, 164, 126, 0.25);
+            --font-head: 'Playfair Display', serif; 
+            --font-body: 'Manrope', sans-serif;
         }
+
+        /* --- TIMELINE STYLES --- */
+        .timeline-section {
+            background-color: transparent; /* Use section background */
+            padding: 140px 20px;
+            position: relative;
+        }
+        
+        .timeline-header {
+            text-align: center;
+            margin-bottom: 120px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .timeline-header h2 {
+            font-family: var(--font-head);
+            font-size: 3.5rem;
+            font-weight: 400;
+            margin: 15px 0 0 0;
+            color: rgb(var(--color-contrast));
+            letter-spacing: -0.5px;
+        }
+
+        .timeline-header span {
+            color: var(--c-gold);
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+            display: block;
+            opacity: 0.9;
+        }
+
+        .timeline-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            padding: 20px 0 150px 0;
+            z-index: 1;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: -50px;
+            bottom: 0; 
+            width: 1px;
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(-50%);
+        }
+
+        .timeline-line-fill {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            width: 1px;
+            height: 0%;
+            background: linear-gradient(180deg, var(--c-gold) 0%, #fff 50%, var(--c-gold) 100%);
+            box-shadow: 0 0 25px var(--c-gold-glow);
+            transform: translateX(-50%);
+            transition: height 0.1s linear; 
+            z-index: 1;
+        }
+
+        .timeline-item {
+            display: flex;
+            width: 100%;
+            margin-bottom: 150px;
+            position: relative;
+            opacity: 0;
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+            justify-content: center;
+        }
+        
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-content {
+            width: 40%;
+            position: relative;
+        }
+
+        /* Left Items (Odd) */
+        .timeline-item:nth-child(odd) {
+            transform: translateY(40px);
+        }
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-right: 50%;
+            transform: translateX(-60px);
+            text-align: right;
+        }
+
+        /* Right Items (Even) */
+        .timeline-item:nth-child(even) {
+            transform: translateY(40px);
+        }
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 50%;
+            transform: translateX(60px);
+            text-align: left;
+        }
+
+        .timeline-year {
+            font-family: var(--font-head);
+            font-size: 5rem;
+            color: rgba(255, 255, 255, 0.03);
+            position: absolute;
+            top: -30px;
+            line-height: 1;
+            font-weight: 400;
+            z-index: -1;
+            white-space: nowrap;
+            transition: color 0.6s ease;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-year { right: 0; }
+        .timeline-item:nth-child(even) .timeline-year { left: 0; }
+
+        .timeline-item.active .timeline-year {
+            color: rgba(197, 164, 126, 0.12);
+        }
+
+        .timeline-title {
+            font-family: var(--font-body);
+            font-size: 1.25rem;
+            color: var(--c-gold);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 15px;
+            display: block;
+            font-weight: 500;
+        }
+
+        .timeline-desc {
+            font-size: 1.05rem;
+            color: var(--color-accent);
+            line-height: 1.7;
+            margin: 0;
+            font-weight: 300;
+        }
+
+        .timeline-node {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%) rotate(45deg); 
+            width: 14px;
+            height: 14px;
+            background-color: var(--c-bg);
+            border: 1px solid rgba(255,255,255,0.15);
+            z-index: 2;
+            transition: all 0.6s ease;
+        }
+
+        .timeline-item.active .timeline-node {
+            background-color: var(--c-gold);
+            border-color: var(--c-gold);
+            box-shadow: 0 0 25px var(--c-gold-glow), 0 0 10px rgba(255,255,255,0.4);
+            transform: translateX(-50%) rotate(225deg) scale(1.3);
+        }
+
+        .timeline-connector {
+            position: absolute;
+            top: 7px;
+            width: 0px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--c-gold), transparent);
+            opacity: 0;
+            transition: all 0.5s ease 0.2s;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-connector {
+            right: -60px;
+            width: 60px;
+            transform-origin: right;
+            transform: scaleX(0);
+            background: linear-gradient(to left, var(--c-gold), transparent);
+        }
+        
+        .timeline-item:nth-child(even) .timeline-connector {
+            left: -60px;
+            width: 60px;
+            transform-origin: left;
+            transform: scaleX(0);
+            background: linear-gradient(to right, var(--c-gold), transparent);
+        }
+
+        .timeline-item.active .timeline-connector {
+            opacity: 0.5;
+            transform: scaleX(1);
+        }
+
+        @media (max-width: 768px) {
+            .timeline-header h2 { font-size: 2.5rem; }
+            .timeline-line, .timeline-line-fill { left: 20px; transform: translateX(0); }
+            .timeline-item { flex-direction: column !important; align-items: flex-start; margin-bottom: 80px; padding-left: 50px; }
+            .timeline-item:nth-child(odd) .timeline-content, .timeline-item:nth-child(even) .timeline-content { margin: 0; width: 100%; text-align: left; transform: none; padding: 0 20px 0 0; }
+            .timeline-year { font-size: 4rem; left: 0 !important; right: auto !important; top: -40px; opacity: 0.5; z-index: -1; }
+            .timeline-node { left: 20px; }
+            .timeline-connector { display: none; }
+        }
+
 
         .light-mode {
             /* LIGHT MODE (White & Deep Navy) */
@@ -255,6 +474,46 @@
             transform: scale(1.1);
             opacity: 1;
         }
+
+            /* Animation Keyframes */
+        @keyframes scrollUp {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
+
+        @keyframes scrollDown {
+            0% { transform: translateY(-50%); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes pulse-slow {
+            0%, 100% { opacity: .3; }
+            50% { opacity: .5; }
+        }
+
+        /* Utility Classes */
+        .animate-scroll-up {
+            animation: scrollUp linear infinite;
+        }
+
+        .animate-scroll-down {
+            animation: scrollDown linear infinite;
+        }
+
+        .animate-pulse-slow {
+            animation: pulse-slow 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        .mask-fade-vertical {
+            mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+        }
+
+        /* Pause animation on hover */
+        .hover-pause:hover {
+            animation-play-state: paused;
+        }
+
     </style>
 </head>
 <body class="bg-navy text-contrast selection:bg-silver selection:text-navy">
@@ -490,32 +749,25 @@
     </section>
 
     <!-- Resident Voices -->
-    <section id="testimonials" class="py-32 bg-transparent relative z-10 transition-colors duration-500">
+    <!-- Resident Voices -->
+    <section id="testimonials" class="py-20 md:py-32 bg-transparent relative z-10 transition-colors duration-500">
+        <!-- Old Header -->
         <div class="max-w-[95%] mx-auto px-6 mb-12 text-center">
             <span class="block text-accent text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Client Experiences</span>
-            <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">Resident Voices</h2>
+            <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">Community Voices</h2>
             <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
         </div>
 
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="deck-container">
-                <!-- Testimonial 1 -->
-                <div class="p-12 md:p-16 bg-navy/20 border border-contrast/10 backdrop-blur-sm rounded-sm mx-4 md:mx-8 reveal-on-scroll magnetic-target min-w-[300px] md:min-w-[400px]">
-                    <i class="fas fa-quote-left text-3xl text-silver/20 mb-8 block"></i>
-                    <p class="font-serif italic text-lg text-contrast/90 leading-relaxed mb-8">
-                        "Choosing Trilight was not merely a real estate decision; it was a lifestyle affirmation. The attention to detail in the amenities is unparalleled."
-                    </p>
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-[1px] bg-accent"></div>
-                        <div>
-                            <h4 class="text-xs uppercase tracking-widest text-contrast font-bold">Aravind Rao</h4>
-                            <span class="text-[9px] uppercase tracking-widest text-muted">Residence 1804</span>
-                        </div>
-                    </div>
+        <div class="max-w-[95%] mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 h-[900px]">
+                
+                <!-- Left Waterfall -->
+                <div id="waterfall-left" class="relative overflow-hidden h-full rounded-sm mask-fade-vertical bg-navy/20 ">
+                    <!-- JS Injected -->
                 </div>
 
                 <!-- Testimonial 2 (Video) -->
-                <div class="relative p-0 aspect-video md:aspect-[9/16] bg-navy/20 border border-contrast/10 backdrop-blur-sm rounded-sm mx-4 md:mx-8 reveal-on-scroll magnetic-target min-w-[300px] md:min-w-[400px] group overflow-hidden" style="transition-delay: 200ms">
+                <div class="relative p-0 aspect-video md:aspect-[9/16] bg-navy/20 backdrop-blur-sm rounded-sm mx-4 md:mx-8 reveal-on-scroll magnetic-target min-w-[300px] md:min-w-[400px] group overflow-hidden" style="transition-delay: 200ms">
                     <!-- Video Background -->
                     <video id="testimonial-video" autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500">
                          <source src="/Assests/TESTIMONAL1920_V2.mp4" type="video/mp4">
@@ -525,23 +777,19 @@
                     <button onclick="toggleMute()" class="absolute bottom-6 right-6 z-20 w-10 h-10 rounded-full bg-navy/50 backdrop-blur-md border border-silver/30 flex items-center justify-center text-silver hover:bg-navy/80 transition-all group/btn">
                         <i id="mute-icon" class="fas fa-volume-mute text-sm group-hover/btn:scale-110 transition-transform"></i>
                     </button>
-                   
-                </div>
-
-                <!-- Testimonial 3 -->
-                <div class="p-12 md:p-16 bg-navy/20 border border-contrast/10 backdrop-blur-sm rounded-sm mx-4 md:mx-8 reveal-on-scroll magnetic-target min-w-[300px] md:min-w-[400px]" style="transition-delay: 400ms">
-                    <i class="fas fa-quote-left text-3xl text-silver/20 mb-8 block"></i>
-                    <p class="font-serif italic text-lg text-contrast/90 leading-relaxed mb-8">
-                        "From the grand lobby to the private golf simulator, every space is designed for those who appreciate the finer nuances of luxury."
-                    </p>
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-[1px] bg-accent"></div>
-                        <div>
-                            <h4 class="text-xs uppercase tracking-widest text-contrast font-bold">Karthik & Ananya</h4>
-                            <span class="text-[9px] uppercase tracking-widest text-muted">Residence 1502</span>
-                        </div>
+                    
+                    <!-- Overlay Text (Optional, keeping clean for video focus) -->
+                    <div class="absolute bottom-6 left-6 z-20">
+                         <h4 class="text-xs uppercase tracking-widest text-white font-bold mb-1">Visual Stories</h4>
+                         <span class="text-[9px] uppercase tracking-widest text-silver/80">Experience the vibe</span>
                     </div>
                 </div>
+
+                <!-- Right Waterfall -->
+                <div id="waterfall-right" class="relative overflow-hidden h-full rounded-sm mask-fade-vertical bg-navy/20  hidden md:block">
+                    <!-- JS Injected -->
+                </div>
+                
             </div>
         </div>
     </section>
@@ -777,88 +1025,63 @@
 
     <!-- Amenities -->
     <!-- Timeline -->
-    <section id="timeline" class="py-32 bg-surface/90 transition-colors duration-500 relative z-10">
-        <div class="max-w-4xl mx-auto px-6 relative">
-             <div class="mb-24 text-center">
-                <span class="block text-accent text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Construction Updates</span>
-                <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">Timeline</h2>
-                <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
+    <section class="timeline-section" id="timeline">
+        
+        <div class="timeline-header">
+            <span>Construction Updates</span>
+            <h2>Milestones</h2>
+        </div>
+
+        <div class="timeline-container">
+            <!-- Vertical Track -->
+            <div class="timeline-line"></div>
+            <!-- Animated Beam -->
+            <div class="timeline-line-fill" id="progressLine"></div>
+
+            <!-- 2026 -->
+            <div class="timeline-item">
+                <div class="timeline-node"></div>
+                <div class="timeline-content">
+                    <span class="timeline-connector"></span>
+                    <span class="timeline-year">2026</span>
+                    <span class="timeline-title">Completion</span>
+                    <p class="timeline-desc">Projected completion and grand handover. A new era of luxury living begins as The Trilight redefines the Kokapet skyline.</p>
+                </div>
             </div>
 
-            <!-- Vertical Line -->
-            <!-- Track -->
-            <!-- Timeline Container -->
-            <div class="relative space-y-24">
-                 <!-- Vertical LInes (Now relative to this container) -->
-                 <!-- Track -->
-                 <div class="absolute left-[20px] md:left-1/2 top-4 bottom-4 w-[1px] bg-silver/10 md:-translate-x-1/2"></div>
-                 <!-- Progress Line -->
-                 <div id="timeline-progress" class="absolute left-[20px] md:left-1/2 top-4 w-[1px] bg-gradient-to-b from-silver via-silver to-transparent md:-translate-x-1/2 h-0 z-0"></div>
-                <!-- Node 1 -->
-                <div class="timeline-item relative pl-12 md:pl-0 md:flex items-center justify-between group reveal-on-scroll">
-                     <!-- Dot -->
-                    <div class="timeline-dot absolute left-[20px] md:left-1/2 top-0 md:top-1/2 w-4 h-4 bg-navy border border-silver rounded-full z-10 transform -translate-x-1/2 md:-translate-y-1/2 transition-all duration-500 group-hover:scale-150 group-hover:bg-silver"></div>
-                    
-                    <div class="md:w-5/12 text-left md:text-right md:pr-12 mb-4 md:mb-0">
-                        <span class="text-3xl font-serif text-contrast block mb-2">2026</span>
-                        <span class="text-[10px] uppercase tracking-widest text-accent">Completion</span>
-                    </div>
-                    <div class="md:w-5/12 md:pl-12">
-                         <p class="text-muted text-sm font-light leading-7">
-                            Projected completion and handover of The Trilight residences. A new era of luxury living begins.
-                        </p>
-                    </div>
+            <!-- 2025 -->
+            <div class="timeline-item">
+                <div class="timeline-node"></div>
+                <div class="timeline-content">
+                    <span class="timeline-connector"></span>
+                    <span class="timeline-year">2025</span>
+                    <span class="timeline-title">Structure Rise</span>
+                    <p class="timeline-desc">Superstructure completion for all three towers. Interior finishing works commence, bringing the vision to life floor by floor.</p>
                 </div>
-
-                <!-- Node 2 -->
-                <div class="timeline-item relative pl-12 md:pl-0 md:flex flex-row-reverse items-center justify-between group reveal-on-scroll">
-                     <!-- Dot -->
-                    <div class="timeline-dot absolute left-[20px] md:left-1/2 top-0 md:top-1/2 w-4 h-4 bg-navy border border-silver rounded-full z-10 transform -translate-x-1/2 md:-translate-y-1/2 transition-all duration-500 group-hover:scale-150 group-hover:bg-silver"></div>
-                    
-                    <div class="md:w-5/12 text-left md:pl-12 mb-4 md:mb-0">
-                        <span class="text-3xl font-serif text-contrast block mb-2">2025</span>
-                        <span class="text-[10px] uppercase tracking-widest text-accent">Structure</span>
-                    </div>
-                    <div class="md:w-5/12 text-right md:pr-12">
-                         <p class="text-muted text-sm font-light leading-7">
-                            Superstructure completion for all three towers. Interior finishing works commence.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Node 3 -->
-                <div class="timeline-item relative pl-12 md:pl-0 md:flex items-center justify-between group reveal-on-scroll">
-                     <!-- Dot -->
-                    <div class="timeline-dot absolute left-[20px] md:left-1/2 top-0 md:top-1/2 w-4 h-4 bg-navy border border-silver rounded-full z-10 transform -translate-x-1/2 md:-translate-y-1/2 transition-all duration-500 group-hover:scale-150 group-hover:bg-silver"></div>
-                    
-                    <div class="md:w-5/12 text-left md:text-right md:pr-12 mb-4 md:mb-0">
-                        <span class="text-3xl font-serif text-contrast block mb-2">2024</span>
-                        <span class="text-[10px] uppercase tracking-widest text-accent">Launch</span>
-                    </div>
-                    <div class="md:w-5/12 md:pl-12">
-                         <p class="text-muted text-sm font-light leading-7">
-                            Official launch of The Trilight. Groundbreaking ceremony and commencement of foundation works.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Node 4 -->
-                <div class="timeline-item relative pl-12 md:pl-0 md:flex flex-row-reverse items-center justify-between group reveal-on-scroll">
-                     <!-- Dot -->
-                    <div class="timeline-dot absolute left-[20px] md:left-1/2 top-0 md:top-1/2 w-4 h-4 bg-navy border border-silver rounded-full z-10 transform -translate-x-1/2 md:-translate-y-1/2 transition-all duration-500 group-hover:scale-150 group-hover:bg-silver"></div>
-                    
-                    <div class="md:w-5/12 text-left md:pl-12 mb-4 md:mb-0">
-                        <span class="text-3xl font-serif text-contrast block mb-2">2023</span>
-                        <span class="text-[10px] uppercase tracking-widest text-accent">Inception</span>
-                    </div>
-                    <div class="md:w-5/12 text-right md:pr-12">
-                         <p class="text-muted text-sm font-light leading-7">
-                            Conceptualization and architectural design phase. Partnering with world-class consultants.
-                        </p>
-                    </div>
-                </div>
-
             </div>
+
+            <!-- 2024 -->
+            <div class="timeline-item">
+                <div class="timeline-node"></div>
+                <div class="timeline-content">
+                    <span class="timeline-connector"></span>
+                    <span class="timeline-year">2024</span>
+                    <span class="timeline-title">The Launch</span>
+                    <p class="timeline-desc">Official launch of The Trilight. Groundbreaking ceremony and commencement of deep foundation works.</p>
+                </div>
+            </div>
+
+            <!-- 2023 -->
+            <div class="timeline-item">
+                <div class="timeline-node"></div>
+                <div class="timeline-content">
+                    <span class="timeline-connector"></span>
+                    <span class="timeline-year">2023</span>
+                    <span class="timeline-title">Inception</span>
+                    <p class="timeline-desc">Conceptualization and architectural design phase. Partnering with world-class consultants to blueprint the future of luxury.</p>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -1290,109 +1513,61 @@
             }, 1500);
         }
 
-        // --- Timeline Animation Logic ---
-        const timelineSection = document.getElementById('timeline');
-        const timelineProgress = document.getElementById('timeline-progress');
-        const timelineItems = document.querySelectorAll('.timeline-item');
 
-        if(timelineSection && timelineProgress && timelineItems.length > 0) {
+        document.addEventListener("DOMContentLoaded", () => {
+            const container = document.querySelector('.timeline-container');
+            if(!container) return; // Guard clause if section is missing
+
+            const lineFill = document.getElementById('progressLine');
+            const items = document.querySelectorAll('.timeline-item');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        const rect = entry.target.getBoundingClientRect();
+                        // Activate slightly earlier for smoother feel
+                        if(rect.top < window.innerHeight * 0.8) {
+                             entry.target.classList.add('active');
+                        }
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            items.forEach(item => observer.observe(item));
+
             window.addEventListener('scroll', () => {
-                const rect = timelineSection.getBoundingClientRect();
-                const windowHeight = window.innerHeight;
+                if(!container) return;
                 
-                // Start drawing when the section is in view (e.g., top enters lower third of screen)
-                const triggerPoint = windowHeight * 0.7; // Start when top is at 70% viewport
+                const containerRect = container.getBoundingClientRect();
+                const containerTop = containerRect.top + window.scrollY;
+                const containerHeight = containerRect.height;
                 
-                // We want the animation to complete when the LAST item is reached
-                // Let's use the container of items for precise calculation
-                const firstItem = timelineItems[0];
-                const lastItem = timelineItems[timelineItems.length - 1];
+                // Trigger point: Lower Middle of screen
+                const scrollPos = window.scrollY + window.innerHeight * 0.6; 
                 
-                // Get positions relative to start of timeline section
-                const sectionTop = timelineSection.offsetTop;
-                const firstItemTop = firstItem.offsetTop; // Relative to document if not positioned? No, offsetParent
-                // Actually offsetTop is relative to offsetParent. 
-                // The container .space-y-24 is relatively positioned now.
-                // So item.offsetTop is relative to that container.
-                
-                // Let's map scroll progress to the height between first and last item
-                // However, user just wants line to grow as they scroll.
-                
-                // Calculate scroll distance past the start of the timeline
-                // We add a 'startOffset' so it starts drawing before the item is at the very top
-                const scrollY = window.scrollY;
-                const startDrawAt = sectionTop - windowHeight * 0.5; // Start drawing when section is center-screen
-                const endDrawAt = sectionTop + lastItem.offsetTop; // Finish when we reach the last item
-                
-                // Calculate visible progress through the section
-                // This is a bit simpler: animate based on scroll relative to section height
-                const scrollDist = -rect.top + (windowHeight * 0.5);
-                
-                // Total distance to cover (height of the track)
-                const totalTrackHeight = lastItem.offsetTop + lastItem.offsetHeight/2; // Go to middle of last dot approx
-                
-                let progress = scrollDist / totalTrackHeight;
-                // Clamp
-                // But we want to ensure max height is exactly the track height
-                // The 'track' div height is roughly the container height.
-                
-                // Let's try matching the progress to the visual track line (from 0 to last dot)
-                // The lines are absolute inside the relative container.
-                // top-4 is approx top of first dot?
-                // last dot is at lastItem.offsetTop.
-                
-                const trackHeight = lastItem.offsetTop; // From top of container to top of last item
-                
-                // Re-calc specific progress
-                // 0% at first item, 100% at last item
-                // scrollDist needs to be relative to first item
-                 
-                // Simple approach that feels good:
-                // Height = Scroll Past Section Start
-                // Max Height = Position of Last Dot
-                
-                // Current scroll position relative to the container Start
-                // rect.top is position of section relative to viewport.
-                // container is inside section.
-                // container top is roughly rect.top + padding (py-32 = 8rem = 128px) + header (mb-24...)
-                // Let's simply limit height to the calculated max.
-                
-                // Max height allowed: position of last dot relative to line start
-                // Line starts at top: 1rem (top-4)
-                
-                const lastDot = lastItem.querySelector('.timeline-dot');
-                // Calculate precise top of the last dot relative to the container
-                // dot.offsetTop gives position inside the item (top:0 or top:50%)
-                const lastDotTop = lastItem.offsetTop + lastDot.offsetTop;
-                const maxLineHeight = lastDotTop - 16; 
-                
-                // Calculate desired height based on scroll
-                const effectiveScroll = -rect.top + (windowHeight * 0.5); // Adjusted trigger point to center
-                
-                let targetHeight = effectiveScroll;
-                
-                // Cap it
-                targetHeight = Math.max(0, Math.min(maxLineHeight, targetHeight));
-                
-                timelineProgress.style.height = `${targetHeight}px`;
+                // Calculate how much of the timeline we have scrolled past
+                let drawHeight = scrollPos - containerTop;
 
-                // Highlight Nodes
-                timelineItems.forEach((item) => {
-                    const dot = item.querySelector('.timeline-dot');
-                    const itemTop = item.offsetTop; 
-                    const dotTop = itemTop + dot.offsetTop;
-                    
-                    // Trigger active state when line passes the dot's center
-                    if(targetHeight >= (dotTop - 16)) { // -16 for the top-4 offset
-                         dot.classList.add('bg-silver', 'scale-150');
-                         dot.classList.remove('bg-navy');
+                // We use containerHeight - 100 to account for the bottom padding
+                // This ensures the line reaches 100% just as we pass the last item
+                let percentage = (drawHeight / (containerHeight - 100)) * 100;
+                
+                percentage = Math.max(0, Math.min(percentage, 100));
+                
+                if(lineFill) lineFill.style.height = `${percentage}%`;
+
+                // Active State Logic
+                items.forEach(item => {
+                    const itemTop = item.getBoundingClientRect().top + window.scrollY;
+                    if (scrollPos > itemTop) {
+                        item.classList.add('active');
                     } else {
-                         dot.classList.remove('bg-silver', 'scale-150');
-                         dot.classList.add('bg-navy');
+                        item.classList.remove('active');
                     }
                 });
             });
-        }
+        });
 
         // --- Video Mute Toggle ---
         function toggleMute() {
@@ -1409,6 +1584,177 @@
                 icon.classList.add('fa-volume-mute');
             }
         }
+
+        // --- Waterfall Testimonials Data & Logic ---
+        const reviews = [
+            {
+                id: 1, type: "video", name: "Sarah Chen", role: "Lead Designer, Flow",
+                thumbnailGradient: "from-pink-900/50 to-purple-900/50",
+                content: "The workflow integration is seamless. It's a game changer.", tag: "Design Story"
+            },
+            {
+                id: 2, type: "text", name: "Alex Rivera", role: "CTO, Nexus",
+                content: "The animation fluidity is unlike anything else. It transformed our conversion rates overnight.", rating: 5, tag: "Enterprise"
+            },
+            {
+                id: 3, type: "text", name: "David Park", role: "Frontend Dev, Stripe",
+                content: "Incredible attention to detail. The glow effects are pure joy.", rating: 5, tag: "UI/UX"
+            },
+            {
+                id: 4, type: "text", name: "Marcus Thorne", role: "Founder, Zenith",
+                content: "I've used every tool in the book. This one stands out for its sheer performance and visual fidelity.", rating: 5, tag: "SaaS"
+            },
+            {
+                id: 5, type: "video", name: "Jessica Wu", role: "Director, Trilight Inc",
+                thumbnailGradient: "from-violet-900/50 to-indigo-900/50",
+                content: "A must-have for any modern web application.", tag: "Founder Talk"
+            },
+            {
+                id: 6, type: "text", name: "Elena Vost", role: "Product Manager",
+                content: "We shipped 3x faster using the component library.", rating: 5, tag: "Product"
+            },
+            {
+                id: 7, type: "text", name: "James Wilson", role: "Indie Hacker",
+                content: "The dark mode implementation is flawless. Saved me weeks of work.", rating: 5, tag: "Indie"
+            },
+            {
+                id: 8, type: "video", name: "Anna K.", role: "Creative Director",
+                thumbnailGradient: "from-blue-900/50 to-cyan-900/50",
+                content: "Visually stunning and incredibly robust.", tag: "Creative"
+            },
+        ];
+
+        // --- Render Functions ---
+
+        function createStars() {
+            return Array(5).fill(0).map(() => 
+                `<i data-lucide="star" class="w-[10px] h-[10px] fill-current"></i>`
+            ).join('');
+        }
+
+        function createCard(item) {
+            const isVideo = item.type === 'video';
+            
+            // Common wrapper
+            let cardContent = '';
+
+            if (isVideo) {
+                cardContent = `
+                    <div class="flex flex-col gap-4">
+                        <!-- Video Thumbnail -->
+                        <div class="relative w-full h-40 rounded-xl overflow-hidden bg-black/50 border border-white/5 group-hover:border-white/20 transition-colors">
+                            <div class="absolute inset-0 bg-gradient-to-br ${item.thumbnailGradient} opacity-60"></div>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <i data-lucide="play" class="w-4 h-4 fill-white ml-1"></i>
+                                </div>
+                            </div>
+                            <div class="absolute top-2 right-2 px-2 py-0.5 bg-black/60 rounded text-[10px] font-mono border border-white/10 text-gray-300">0:45</div>
+                        </div>
+                        
+                        <div>
+                            <p class="text-lg font-medium leading-snug text-gray-200">"${item.content}"</p>
+                            <div class="mt-4 flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold">${item.name[0]}</div>
+                                <div class="text-xs text-muted">
+                                    <span class="text-white block font-medium">${item.name}</span>
+                                    ${item.role}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                cardContent = `
+                    <div class="flex flex-col h-full justify-between gap-6">
+                        <div class="flex justify-between items-start opacity-50">
+                            <i data-lucide="quote" class="w-5 h-5"></i>
+                            <div class="flex text-yellow-500/80 gap-0.5 items-center">
+                                ${createStars()}
+                            </div>
+                        </div>
+
+                        <p class="text-lg font-light leading-relaxed text-gray-200">
+                            <span class="text-purple-400 font-serif text-2xl mr-1">“</span>
+                            ${item.content}
+                        </p>
+
+                        <div class="flex items-center gap-3 border-t border-white/5 pt-4">
+                            <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-gray-800 to-black border border-white/10 flex items-center justify-center text-xs font-bold shadow-inner">
+                                ${item.name[0]}
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-medium text-white">${item.name}</h4>
+                                <p class="text-xs text-muted">${item.role}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="group relative w-full flex-shrink-0 cursor-default">
+                    <!-- 1. Animated Border Gradient -->
+                    <div class="absolute -inset-[1px] bg-gradient-to-b from-white/20 to-transparent rounded-2xl opacity-50 group-hover:opacity-100 transition duration-500"></div>
+                    
+                    <!-- 2. Glass Background -->
+                    <div class="relative bg-navy/60 backdrop-blur-xl rounded-2xl p-6 border border-white/5 overflow-hidden transition-transform duration-300 group-hover:scale-[1.02] shadow-2xl">
+                        <!-- Subtle Highlight -->
+                        <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                        
+                        ${cardContent}
+                    </div>
+                </div>
+            `;
+        }
+
+        function createColumn(items, speed, direction, hiddenOnMobile = false) {
+            // Duplicate items to ensure smooth infinite scroll
+            const doubledItems = [...items, ...items];
+            
+            const animationClass = direction === 'up' ? 'animate-scroll-up' : 'animate-scroll-down';
+            const displayClass = hiddenOnMobile ? 'hidden md:flex' : 'flex';
+            const topPadding = (direction === 'down') ? 'pt-24' : '';
+
+            const columnHtml = `
+                <div class="flex flex-col gap-6 relative h-[200%] overflow-hidden ${displayClass} ${topPadding}">
+                    <div class="flex flex-col gap-6 w-full hover-pause ${animationClass}" style="animation-duration: ${speed};">
+                        ${doubledItems.map(item => createCard(item)).join('')}
+                    </div>
+                </div>
+            `;
+            return columnHtml;
+        }
+
+        // --- Initialization ---
+
+        function initWaterfall() {
+            const leftCol = document.getElementById('waterfall-left');
+            const rightCol = document.getElementById('waterfall-right');
+            
+            // Split data
+            const col1 = [reviews[0], reviews[3], reviews[6], reviews[1]];
+            const col3 = [reviews[2], reviews[5], reviews[0], reviews[3]];
+
+            // Inject Columns if container exists
+            if (leftCol) {
+                leftCol.innerHTML = createColumn(col1, '40s', 'up');
+            }
+            if (rightCol) {
+                rightCol.innerHTML = createColumn(col3, '45s', 'up');
+            }
+
+            // Initialize Icons
+            if(window.lucide) {
+                window.lucide.createIcons();
+            }
+        }
+
+        // Run
+        document.addEventListener('DOMContentLoaded', initWaterfall);
+        // Fallback if already loaded
+        initWaterfall();
+
     </script>
 </body>
 </html>
