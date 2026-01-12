@@ -59,6 +59,33 @@
     </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
+    <script>
+        // Force scroll to top on refresh
+        if (history.scrollRestoration) {
+            history.scrollRestoration = 'manual';
+        }
+        
+        window.onbeforeunload = function () {
+            window.scrollTo(0, 0);
+        }
+
+        window.addEventListener('load', function() {
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'instant'
+            });
+            // Double check after a short delay to override any browser restoration
+            setTimeout(() => {
+                window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: 'instant'
+                });
+            }, 10);
+        });
+    </script>
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&display=swap');
@@ -557,19 +584,19 @@
     </div>
 
     <!-- Hero Section -->
-    <header class="h-screen w-full relative flex items-center justify-center overflow-hidden">
-        <div class="absolute inset-0 z-0 hero-video-wrapper">
-            <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-50 contrast-125 saturate-50 animate-[pulse_10s_infinite] scale-105" style="filter: hue-rotate(200deg);">
-                <source src="https://videos.pexels.com/video-files/3205624/3205624-uhd_2560_1440_25fps.mp4" type="video/mp4">
-            </video>
-        </div>
-        
-        <div class="z-10 text-center px-4">
-            <p class="text-[10px] md:text-xs uppercase tracking-[0.4em] text-silver mb-6 animate-fade-in-up" style="animation-delay: 0.2s;">The Trilight Group</p>
-            <h1 class="font-serif text-5xl md:text-7xl lg:text-9xl text-contrast leading-tight mb-8 mix-blend-overlay animate-fade-in-up" style="animation-delay: 0.4s;">
-                Beyond <br> <span class="italic font-light">Horizons</span>
-            </h1>
-            <div class="w-[1px] h-16 bg-silver/20 mx-auto mt-8 animate-fade-in-up" style="animation-delay: 0.8s;"></div>
+    <header class="h-[250vh] w-full relative">
+        <div class="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0 z-0 hero-video-wrapper">
+                 <canvas class="webgl absolute inset-0 w-full h-full block"></canvas>
+            </div>
+            
+            <div class="z-10 text-center px-4">
+                <p class="text-[10px] md:text-xs uppercase tracking-[0.4em] text-silver mb-6 animate-fade-in-up" style="animation-delay: 0.2s;">The Trilight Group</p>
+                <h1 class="font-serif text-5xl md:text-7xl lg:text-9xl text-contrast leading-tight mb-8 mix-blend-overlay animate-fade-in-up" style="animation-delay: 0.4s;">
+                    Beyond <br> <span class="italic font-light">Horizons</span>
+                </h1>
+                <div class="w-[1px] h-16 bg-silver/20 mx-auto mt-8 animate-fade-in-up" style="animation-delay: 0.8s;"></div>
+            </div>
         </div>
     </header>
 
@@ -1756,5 +1783,6 @@
         initWaterfall();
 
     </script>
+    <script type="module" src="./galaxy.js"></script>
 </body>
 </html>
