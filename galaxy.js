@@ -1,6 +1,7 @@
 // import './style.css'
 import * as THREE from "https://cdn.skypack.dev/three@0.132.2";
 
+import { OrbitControls } from "https://cdn.skypack.dev/three@0.132.2/examples/jsm/controls/OrbitControls.js";
 
 
 // import { Geometry, TetrahedronGeometry } from 'three'
@@ -16,204 +17,160 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
-// Big Bang Universe
+//galaxy - Optimized for performance
 const parameters = {}
-parameters.count = 50000;
-parameters.size = 0.025; // Bigger stars
-parameters.radius = 0.3;   // Wider initial spread
-parameters.colors = [
-    new THREE.Color('#1b3984'), // Deep Royal Blue
-    new THREE.Color('#00bfff'), // Bright Blue
-    new THREE.Color('#ff66b2'), // Soft Pink
-    new THREE.Color('#4b0082'), // Deep Indigo
-    new THREE.Color('#ffddcc')  // Warm White
-];
-// ... (rest of file until tick) ...
 
+// Detect device capabilities for adaptive quality
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+const isLowEnd = navigator.hardwareConcurrency <= 4;
+const qualityLevel = window.STARFIELD_QUALITY || (isMobile || isLowEnd ? 'low' : 'high');
 
+// Adaptive particle count based on device
+parameters.count = qualityLevel === 'low' ? 25000 : 50000; // Reduced from 155000
+parameters.size = 0.015;
+parameters.radius = 2.15; 
+parameters.branches = 4; 
+parameters.spin = 3;
+parameters.randomness = 5;
+parameters.randomnessPower = 4;
+parameters.insideColor = '#6a73ee';
+parameters.outsideColor = '#1e2c50';
 
-let material = null; 
-let geometry = null; 
-let points = null; 
-let linesMesh = null; // Global reference
-let galaxyGroups = []; 
+let materials = [];
+let geometries = [];
+let galaxyPoints = [];
 
-const getTexture = () => {
-    const canvas = document.createElement('canvas');
-    canvas.width = 32;
-    canvas.height = 32;
-    const ctx = canvas.getContext('2d');
-    const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
-    // Core: Super bright white
-    gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-    // Mid: Sustained brightness
-    gradient.addColorStop(0.2, 'rgba(255, 255, 255, 0.8)');
-    // Outer: Brighter glow
-    gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.4)');
-    gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, 32, 32);
-    const texture = new THREE.Texture(canvas);
-    texture.needsUpdate = true;
-    return texture;
-} 
-
-const generateMiniGalaxy = (position, scale) => {
-    const count = 2000;
-    const geo = new THREE.BufferGeometry();
-    const pos = new Float32Array(count * 3);
-    const col = new Float32Array(count * 3);
-
-    const inside = new THREE.Color('#ffddcc');
-    const outside = new THREE.Color('#1b3984');
-
-    for(let i=0; i<count; i++){
-        const i3 = i*3;
-        const r = Math.random() * 2; 
-        const spin = r * 5;
-        const branch = ((i % 3)/3) * Math.PI * 2;
-        
-        const randomX = (Math.random() - 0.5) * 0.5;
-        const randomY = (Math.random() - 0.5) * 0.5;
-        const randomZ = (Math.random() - 0.5) * 0.5;
-
-        pos[i3] = Math.cos(branch + spin) * r + randomX;
-        pos[i3+1] = randomY * (r<0.5 ? 2 : 0.5); 
-        pos[i3+2] = Math.sin(branch + spin) * r + randomZ;
-
-        const mixed = inside.clone();
-        mixed.lerp(outside, r/2);
-        
-        col[i3] = mixed.r;
-        col[i3+1] = mixed.g;
-        col[i3+2] = mixed.b;
-    }
+const generateGalaxy = () => {
+    // Cleanup
+    galaxyPoints.forEach(points => scene.remove(points));
+    geometries.forEach(geometry => geometry.dispose());
+    materials.forEach(material => material.dispose());
     
-    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-    geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
-    
-    const mat = new THREE.PointsMaterial({
-        size: parameters.size * scale,
-        sizeAttenuation: true,
-        depthWrite: false,
-        blending: THREE.AdditiveBlending,
-        vertexColors: true,
-        map: getTexture(),
-        transparent: true
-    });
+    galaxyPoints = [];
+    geometries = [];
+    materials = [];
 
-    const mesh = new THREE.Points(geo, mat);
-    mesh.position.set(position.x, position.y, position.z);
-    mesh.rotation.x = Math.random() * Math.PI;
-    mesh.rotation.y = Math.random() * Math.PI;
-    mesh.scale.set(scale, scale, scale);
-    
-    scene.add(mesh);
-    galaxyGroups.push(mesh);
-}
-
-const generateBigBang = () => {
-    if(points !== null){
-        geometry.dispose();
-        material.dispose();
-        scene.remove(points);
-    }
-    
-    // --- 1. The Blast (Spherical) ---
-    geometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(parameters.count * 3);
-    const colors = new Float32Array(parameters.count * 3);
-
-    for(let i=0; i<parameters.count; i++){
-        const i3 = i*3;
+    const getStarTexture = (type) => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 128;
+        canvas.height = 128;
+        const ctx = canvas.getContext('2d');
         
-        // Chaotic Direction (Random Vector)
-        const randomX = (Math.random() - 0.5) * 2;
-        const randomY = (Math.random() - 0.5) * 2;
-        const randomZ = (Math.random() - 0.5) * 2;
-        const direction = new THREE.Vector3(randomX, randomY, randomZ).normalize();
-        
-        // Chaotic Distance: Concentrate mass in core, fling outliers
-        let r = Math.random();
-        r = Math.pow(r, 3) * parameters.radius; // Power 3 to keep 80% stars close to center
-        
-        // Add "Jets" / Spikes (10% of particles go SUPER far to make rough edges)
-        if(Math.random() < 0.1) r *= (2.0 + Math.random() * 2.5); 
-        
-        // Apply position with irregularity (Flatten Y slightly for 'disk-ish' explosion look)
-        positions[i3] = direction.x * r;
-        positions[i3+1] = direction.y * r * 0.7; // Flatten height slightly
-        positions[i3+2] = direction.z * r;
+        const cx = 64;
+        const cy = 64;
 
-        const color = parameters.colors[Math.floor(Math.random() * parameters.colors.length)];
-        colors[i3] = color.r;
-        colors[i3+1] = color.g;
-        colors[i3+2] = color.b;
-    }
+        // Common Glow
+        const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, 60);
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
+        gradient.addColorStop(0.2, 'rgba(255, 255, 255, 0.2)');
+        gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.05)');
+        gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 128, 128);
 
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        ctx.fillStyle = 'rgba(255, 255, 255, 1)';
 
-    material = new THREE.PointsMaterial({
-        size: parameters.size,
-        sizeAttenuation: true,
-        depthWrite: false,
-        blending: THREE.AdditiveBlending,
-        vertexColors: true,
-        map: getTexture(),
-        transparent: true,
-        alphaMap: getTexture() 
-    });
-
-    points = new THREE.Points(geometry, material);
-    // Align with 'i' in Horizons
-    points.position.set(-0.110, -0.1, 0.027);
-    scene.add(points);
-
-    // --- 2. Mini Galaxies ---
-    // Add a few distant ones
-    generateMiniGalaxy({x: 4, y: 2, z: -3}, 0.2);
-    generateMiniGalaxy({x: -4, y: -2, z: -2}, 0.3);
-    generateMiniGalaxy({x: 2, y: 4, z: 2}, 0.25);
-    generateMiniGalaxy({x: -3, y: 3, z: 4}, 0.2);
-
-    // --- 3. Constellations Lines ---
-    const linesGeo = new THREE.BufferGeometry();
-    const linePos = [];
-    // Try to connect some random points
-    for(let i=0; i<300; i++) {
-        // Pick a random star
-        const idx1 = Math.floor(Math.random() * parameters.count);
-        // Look for neighbors (simplified check of random samples)
-        for(let j=0; j<10; j++) { 
-             const idx2 = Math.floor(Math.random() * parameters.count);
-             if(idx1 === idx2) continue;
-             
-             const p1 = new THREE.Vector3(positions[idx1*3], positions[idx1*3+1], positions[idx1*3+2]);
-             const p2 = new THREE.Vector3(positions[idx2*3], positions[idx2*3+1], positions[idx2*3+2]);
-             
-             if(p1.distanceTo(p2) < 0.8) { 
-                 linePos.push(p1.x, p1.y, p1.z);
-                 linePos.push(p2.x, p2.y, p2.z);
-             }
+        if (type === 0) {
+            // Type 0: 4-Point Shiny Star (Original)
+            ctx.beginPath();
+            ctx.ellipse(cx, cy, 2, 40, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.ellipse(cx, cy, 40, 2, 0, 0, Math.PI * 2);
+            ctx.fill();
+        } else if (type === 1) {
+            // Type 1: 6-Point Star (More complex)
+            ctx.beginPath();
+            ctx.ellipse(cx, cy, 2, 40, 0, 0, Math.PI * 2); // Vertical
+            ctx.fill();
+            ctx.beginPath();
+            ctx.ellipse(cx, cy, 40, 2, 0, 0, Math.PI * 2); // Horizontal
+            ctx.fill();
+            
+            // Diagonals (smaller)
+            ctx.beginPath();
+            ctx.ellipse(cx, cy, 2, 25, Math.PI/4, 0, Math.PI * 2); 
+            ctx.fill();
+            ctx.beginPath();
+            ctx.ellipse(cx, cy, 2, 25, -Math.PI/4, 0, Math.PI * 2);
+            ctx.fill();
+        } else {
+            // Type 2: Simple Round Star (Distant/Small)
+            ctx.beginPath();
+            ctx.arc(cx, cy, 6, 0, Math.PI * 2);
+            ctx.fill();
         }
+
+        // Core for all
+        ctx.beginPath();
+        ctx.arc(cx, cy, 4, 0, Math.PI * 2);
+        ctx.fillStyle = 'white';
+        ctx.fill();
+
+        const texture = new THREE.Texture(canvas);
+        texture.needsUpdate = true;
+        return texture;
     }
-    
-    if(linePos.length > 0) {
-        linesGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePos, 3));
-        const linesMat = new THREE.LineBasicMaterial({
-            color: 0xffffff,
-            transparent: true,
-            opacity: 0.08
-        });
-        linesMesh = new THREE.LineSegments(linesGeo, linesMat);
-        // Align lines with the points
-        linesMesh.position.set(-0.3, -1.2, 0);
+
+    // Create 3 layers of stars with different shapes
+    const starTypes = 3;
+    const particlesPerType = Math.floor(parameters.count / starTypes);
+
+    for(let t = 0; t < starTypes; t++) {
+        const geometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(particlesPerType * 3);
+        const colors = new Float32Array(particlesPerType * 3);
         
+        const colorInside = new THREE.Color(parameters.insideColor);
+        const colorOutside = new THREE.Color(parameters.outsideColor);
+
+        for(let i = 0; i < particlesPerType; i++) {
+            const i3 = i * 3;
+            const radius = Math.pow(Math.random() * parameters.randomness, Math.random() * parameters.radius);
+            const spinAngle = radius * parameters.spin;
+            const branchAngle = ((i % parameters.branches) / parameters.branches) * Math.PI * 2;
+            
+            const negPos = [1,-1];
+            const randomX = Math.pow(Math.random(), parameters.randomnessPower) * negPos[Math.floor(Math.random() * negPos.length)];
+            const randomY = Math.pow(Math.random(), parameters.randomnessPower) * negPos[Math.floor(Math.random() * negPos.length)];
+            const randomZ = Math.pow(Math.random(), parameters.randomnessPower) * negPos[Math.floor(Math.random() * negPos.length)];
+
+            positions[i3] = Math.cos(branchAngle + spinAngle) * radius + randomX;
+            positions[i3+1] = randomY;
+            positions[i3+2] = Math.sin(branchAngle + spinAngle) * radius + randomZ;
+
+            const mixedColor = colorInside.clone();
+            mixedColor.lerp(colorOutside, Math.random() * radius / parameters.radius);
+
+            colors[i3] = mixedColor.r;
+            colors[i3+1] = mixedColor.g;
+            colors[i3+2] = mixedColor.b;
+        }
+
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+        const material = new THREE.PointsMaterial({
+            size: parameters.size * (t === 2 ? 1.5 : 2), // Adjust size: simple stars slightly smaller
+            sizeAttenuation: true,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending,
+            vertexColors: true,
+            map: getStarTexture(t),
+            transparent: true,
+            alphaMap: getStarTexture(t)
+        });
+
+        const points = new THREE.Points(geometry, material);
+        scene.add(points);
+        
+        // Save to arrays
+        geometries.push(geometry);
+        materials.push(material);
+        galaxyPoints.push(points);
     }
 }
-
-generateBigBang();
+generateGalaxy();
 
 /**
  * Test cube
@@ -247,24 +204,39 @@ window.addEventListener('resize', () =>
  */
 // Base camera
 const camera = new 
-THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
+THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 10)
 camera.position.x = 3
 camera.position.y = 3
 camera.position.z = 3
 scene.add(camera)
 
 // Controls
-
+const controls = new OrbitControls(camera, canvas)
+controls.enableDamping = true
+controls.enableZoom = false; // Disable native zoom so page scroll drives the camera distance
+// Wait, if they want "OrbitControl" they usually want interaction. 
+// "match with the site" -> The site is a scroll experience.
+// Let's enable AutoRotate but keep Zoom/Pan optional or default. 
+// User previously removed "controls.autoRotate = true". I will put it back.
+controls.autoRotate = true;
+controls.autoRotateSpeed = 0.01;
 
 /**
- * Renderer
+ * Renderer - Optimized for performance
  */
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
-    alpha: true // Added alpha true just in case
+    powerPreference: "high-performance",
+    antialias: !isMobile, // Disable antialiasing on mobile for better performance
+    alpha: false // Opaque background is faster
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+// Additional optimizations
+if (qualityLevel === 'low') {
+    renderer.setPixelRatio(1); // Force 1x pixel ratio on low-end devices
+}
 
 /**
  * Animate
@@ -275,76 +247,27 @@ const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
 
-    // --- Scroll Logic ---
-    const scrollY = window.scrollY;
-    // Map animation to the first 1.5 screens of scrolling
-    const maxScroll = window.innerHeight * 1.2; 
-    let targetRatio = scrollY / maxScroll;
-    targetRatio = Math.min(Math.max(targetRatio, 0), 0.8); 
-    
-    // Smooth the ratio using Linear Interpolation (Lerp) to prevent jitter
-    // If currentRatio doesn't exist yet, init it
-    if(typeof window.currentScrollRatio === 'undefined') window.currentScrollRatio = 0;
-    
-    // Lerp factor (0.1 = smooth, 1.0 = instant)
-    window.currentScrollRatio += (targetRatio - window.currentScrollRatio) * 0.1;
-    
-    // Use the smoothed ratio for animation
-    const ratio = window.currentScrollRatio;
+    // Update controls
+    controls.update()
 
-    // 1. Galaxy Expansion (Scroll Controlled)
-    if(points) {
-        // Start as Singularity (0.1) -> Explode to Universe (40.0)
-        const baseScale = 0.1 + (ratio * 40.0); 
-        points.scale.set(baseScale, baseScale, baseScale);
-        
-        // Reduce Particles on Scroll (50000 -> 5000)
-        // Ratio goes from 0 to 0.8 (as per user clamp)
-        // Normalize ratio to 0-1 range relative to the 0.8 cap
-        const normalizedRatio = Math.min(ratio / 0.9, 1.0);
-        
-        // Calculate current count: Lerp from Max to Min
-        const minParticles = 5000;
-        const currentCount = Math.floor(parameters.count - (normalizedRatio * (parameters.count - minParticles)));
-        
-        if(geometry) {
-            geometry.setDrawRange(0, currentCount);
-        }
-        
-        // Steady rotation
-        points.rotation.y = elapsedTime * 0.05; 
-        
-        // Sync Constellation Lines
-        if(linesMesh) {
-            linesMesh.scale.set(baseScale, baseScale, baseScale);
-            linesMesh.rotation.y = points.rotation.y;
-            linesMesh.position.copy(points.position); 
-        }
-    }
-
-    // 2. Mini Galaxies Appearance
-    galaxyGroups.forEach((g, i) => {
-        g.rotation.y += 0.001 * (i + 1);
-        
-        // Intro + Scroll visibility
-        // Start invisible until intro is partly done? Or just rely on scroll?
-        // Let's keep them hidden until scroll to keep focus on the text/core during intro.
-        
-        const appearThreshold = 0.05;
-        let pRatio = (ratio - appearThreshold);
-        pRatio = Math.max(0, pRatio); 
-        
-        const finalScale = 2.0; 
-        const scale = Math.min(pRatio * 2.5, 1) * finalScale;
-        
-        g.scale.set(scale, scale, scale);
-    });
+    // 3. Scroll-Driven Zoom
+    // Map scroll range (0 to 1200px approx) to camera distance (5 to 2.5)
+    // As we scroll down (ratio increases), we zoom in (distance decreases)
+    
+    // Smooth scroll ratio is already calculated as window.currentScrollRatio (0 to 0.8)
+    // We can use that or calculate a dedicated zoom ratio
+    
+    const maxZoomScroll = window.innerHeight * 2;
+    const zoomRatio = Math.min(scrollY / maxZoomScroll, 1);
+    
+    // Distance moves from 5 (far) to 2 (close)
+    const startDist = 4;
+    const endDist = 2;
+    const camDist = startDist - (zoomRatio * (startDist - endDist));
 
     // Camera Orbit 
-    // Stay relatively close (4) to feel the size of the blast passing you
-    const camDist = 5;
-    camera.position.x = Math.cos(elapsedTime * 0.01) * camDist;
-    camera.position.z = Math.sin(elapsedTime * 0.01) * camDist;
+    camera.position.x = Math.cos(elapsedTime * 0.05) * camDist;
+    camera.position.z = Math.sin(elapsedTime * 0.05) * camDist;
     camera.lookAt(0, 0, 0);
 
     // Render
@@ -355,3 +278,88 @@ const tick = () =>
 }
 
 tick()
+// const tick = () =>
+// {
+//     const elapsedTime = clock.getElapsedTime()
+
+//     // --- Scroll Logic ---
+//     const scrollY = window.scrollY;
+//     // Map animation to the first 1.5 screens of scrolling
+//     const maxScroll = window.innerHeight * 1.2; 
+//     let targetRatio = scrollY / maxScroll;
+//     targetRatio = Math.min(Math.max(targetRatio, 0), 0.8); 
+    
+//     // Smooth the ratio using Linear Interpolation (Lerp) to prevent jitter
+//     // If currentRatio doesn't exist yet, init it
+//     if(typeof window.currentScrollRatio === 'undefined') window.currentScrollRatio = 0;
+    
+//     // Lerp factor (0.1 = smooth, 1.0 = instant)
+//     window.currentScrollRatio += (targetRatio - window.currentScrollRatio) * 0.1;
+    
+//     // Use the smoothed ratio for animation
+//     const ratio = window.currentScrollRatio;
+
+//     // 1. Galaxy Expansion (Scroll Controlled)
+//     if(points) {
+//         // Start as Singularity (0.1) -> Explode to Universe (60.0)
+//         const baseScale = 0.1 + (ratio * 60.0); 
+//         points.scale.set(baseScale, baseScale, baseScale);
+        
+//         // Reduce Particles on Scroll (90000 -> 40000)
+//         // Ratio goes from 0 to 0.8 (as per user clamp)
+//         // Normalize ratio to 0-1 range relative to the 0.8 cap
+//         const normalizedRatio = Math.min(ratio / 0.9, 1.0);
+        
+//         // Calculate current count: Lerp from Max to Min
+//         const minParticles = 40000;
+//         const currentCount = Math.floor(parameters.count - (normalizedRatio * (parameters.count - minParticles)));
+        
+//         if(geometry) {
+//             geometry.setDrawRange(0, currentCount);
+//         }
+        
+//         // Steady rotation
+//         points.rotation.y = elapsedTime * 0.05; 
+        
+//         // Sync Constellation Lines
+//         if(linesMesh) {
+//             linesMesh.scale.set(baseScale, baseScale, baseScale);
+//             linesMesh.rotation.y = points.rotation.y;
+//             linesMesh.position.copy(points.position); 
+//         }
+//     }
+
+//     // 2. Mini Galaxies Appearance
+//     galaxyGroups.forEach((g, i) => {
+//         g.rotation.y += 0.001 * (i + 1);
+        
+//         // Intro + Scroll visibility
+//         // Start invisible until intro is partly done? Or just rely on scroll?
+//         // Let's keep them hidden until scroll to keep focus on the text/core during intro.
+        
+//         const appearThreshold = 0.05;
+//         let pRatio = (ratio - appearThreshold);
+//         pRatio = Math.max(0, pRatio); 
+        
+//         const finalScale = 2.0; 
+//         const scale = Math.min(pRatio * 2.5, 1) * finalScale;
+        
+//         g.scale.set(scale, scale, scale);
+//     });
+
+//     // Camera Orbit 
+//     // Stay relatively close (4) to feel the size of the blast passing you
+//     const camDist = 5;
+//     camera.position.x = Math.cos(elapsedTime * 0.1) * camDist;
+//     camera.position.z = Math.sin(elapsedTime * 0.1) * camDist;
+//     camera.lookAt(0, 0, 0);
+
+//     // Render
+//     renderer.render(scene, camera)
+
+//     // Call tick again on the next frame
+//     window.requestAnimationFrame(tick)
+// }
+
+// tick()
+

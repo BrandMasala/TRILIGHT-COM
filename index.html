@@ -6,6 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trilight Group | Visionary Developments</title>
     
+    <!-- Performance Optimizations -->
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="https://unpkg.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://cdn.skypack.dev">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
     <!-- TAILWIND CONFIG -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -20,7 +30,8 @@
                         dark: '#030712', 
                         surface: 'rgb(var(--color-surface) / <alpha-value>)',
                         contrast: 'rgb(var(--color-contrast) / <alpha-value>)',
-                        muted: 'rgb(var(--color-muted) / <alpha-value>)', 
+                        muted: 'rgb(var(--color-muted) / <alpha-value>)',
+                        gold: '#C5A47E',
                     },
                     fontFamily: {
                         serif: ['Playfair Display', 'serif'],
@@ -38,6 +49,7 @@
                     animation: {
                         'fade-in-up': 'fadeInUp 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards',
                         'spin-slow': 'spin 8s linear infinite',
+                        'spin-revolve': 'spin 4s linear infinite',
                         'pulse-glow': 'pulseGlow 2s infinite',
                         'marquee': 'marquee 80s linear infinite',
                     },
@@ -61,9 +73,9 @@
         }
     </script>
 
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script> 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Lucide Icons - Deferred -->
+    <script src="https://unpkg.com/lucide@latest" defer></script> 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" media="print" onload="this.media='all'">
     
     <script>
         // Force scroll to top on refresh
@@ -93,7 +105,7 @@
     </script>
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
         
@@ -165,7 +177,7 @@
             top: -50px;
             bottom: 0; 
             width: 1px;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(197, 164, 126, 0.15);
             transform: translateX(-50%);
         }
 
@@ -243,7 +255,7 @@
         .timeline-item:nth-child(even) .timeline-year { left: 0; }
 
         .timeline-item.active .timeline-year {
-            color: rgba(197, 164, 126, 0.12);
+            color: rgba(197, 164, 126, 0.361);
         }
 
         .timeline-title {
@@ -327,16 +339,7 @@
         }
 
 
-        .light-mode {
-            /* LIGHT MODE (White & Deep Navy) */
-            --color-silver: #0f172a;   /* Navy Text for Light Mode */
-            --color-accent: #334155;   /* Slate Accent */
-            
-            --color-navy: 255 255 255;     /* White Background */
-            --color-surface: 241 245 249;  /* Slate 100 Surface */
-            --color-contrast: 2 6 23;      /* Navy Text */
-            --color-muted: 71 85 105;      /* Slate 600 */
-        }
+        
 
         body {
             font-family: 'Montserrat', sans-serif;
@@ -398,21 +401,21 @@
         /* --- CONSTELLATION SCROLL STYLES --- */
         .project-line {
             height: 0%; width: 1px;
-            background: linear-gradient(to bottom, var(--color-silver), transparent);
-            box-shadow: 0 0 10px var(--color-silver);
+            background: linear-gradient(to bottom, var(--c-gold), transparent);
+            box-shadow: 0 0 10px var(--c-gold);
             will-change: height;
             z-index: 1; /* Low z-index */
         }
 
         #pathfinder-star {
             position: absolute;
-            width: 24px; height: 24px;
+            width: 54px; height: 54px;
             color: var(--color-silver);
             z-index: 30;
             opacity: 0;
             transform: translateX(-50%) translateY(-50%);
             transition: opacity 0.3s;
-            filter: drop-shadow(0 0 5px var(--color-silver));
+            filter: drop-shadow(0 0 5px var(--c-gold));
         }
 
         .star-node {
@@ -570,12 +573,119 @@
             transform-origin: left;
         }
 
+        /* Custom Scrollbar for Journal */
+        .journal-scroll::-webkit-scrollbar {
+            width: 1px;
+        }
+        .journal-scroll::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 4px;
+        }
+        .journal-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        .journal-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* --- CONTACT SECTION STYLES --- */
+        /* 1. Cinematic Rise for Text */
+        @keyframes rise {
+            0% { transform: translateY(40px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        
+        /* 2. Floating Orb Movement */
+        @keyframes float-slow {
+            0%, 100% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+
+        /* 3. Film Grain Animation */
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-5%, -10%); }
+            20% { transform: translate(-15%, 5%); }
+            30% { transform: translate(7%, -25%); }
+            40% { transform: translate(-5%, 25%); }
+            50% { transform: translate(-15%, 10%); }
+            60% { transform: translate(15%, 0%); }
+            70% { transform: translate(0%, 15%); }
+            80% { transform: translate(3%, 35%); }
+            90% { transform: translate(-10%, 10%); }
+        }
+
+        /* 4. Smooth Staggered Slide Up for Form */
+        @keyframes slide-up-fade {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 5. Text Wipe Reveal */
+        @keyframes reveal-wipe {
+            0% { clip-path: inset(0 100% 0 0); }
+            100% { clip-path: inset(0 0 0 0); }
+        }
+
+        /* Animation Utility Classes */
+        .animate-rise { animation: rise 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; }
+        .animate-float-slow { animation: float-slow 20s ease-in-out infinite alternate; }
+        .animate-grain { animation: grain 8s steps(10) infinite; }
+        .animate-slide-up { animation: slide-up-fade 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; }
+        .animate-reveal { animation: reveal-wipe 1.5s cubic-bezier(0.77, 0, 0.175, 1) forwards; clip-path: inset(0 100% 0 0); }
+        
+        /* Custom Scrollbar for Right Panel */
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-track { background: rgb(var(--color-navy)); }
+        .custom-scroll::-webkit-scrollbar-thumb { background: rgb(var(--color-muted)); border-radius: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #C5A47E; }
+
+        /* Initial Hidden State for Right Panel Entrance */
+        .right-panel-entrance {
+            transform: translateX(100%);
+            transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .right-panel-entrance.mounted {
+            transform: translateX(0);
+        }
+
+        /* Focus States for Inputs */
+        .input-group.active label { color: #C5A47E; }
+        .input-group.active .icon-wrapper { color: #C5A47E; }
+        .input-group.active .input-container { transform: scale(1.02); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2); }
+        .input-group.inactive { opacity: 0.5; filter: blur(0.5px); }
+
     </style>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body class="bg-navy text-contrast selection:bg-silver selection:text-navy">
 
     <!-- Global Background Starfield -->
     <canvas id="starfield"></canvas>
+
+    <!-- Global Wave Container -->
+    <div id="global-wave-container" class="absolute top-0 left-0 w-full pointer-events-none z-0 overflow-hidden">
+        <svg class="absolute top-0 left-0 w-full h-full">
+            <path id="wave-path-bg" fill="none" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1"></path>
+            <path id="wave-path-draw" fill="none" stroke="#C5A47E" stroke-width="2" stroke-linecap="round"></path>
+        </svg>
+        <div id="star-cluster" class="absolute w-12 h-12 flex items-center justify-center transition-all duration-100 ease-out will-change-transform z-10" style="left: -24px; top: -24px;">
+             <div id="revolving-group" class="relative w-full h-full">
+                <div class="w-full h-full animate-spin-revolve">
+                    <!-- Stars positioned in perfect equilateral triangle -->
+                    <!-- Top star (0 degrees) -->
+                    <i class="fas fa-star text-gold text-[10px] absolute" style="top: 15%; left: 50%; transform: translate(-50%, -50%);"></i>
+                    <!-- Bottom right star (120 degrees) -->
+                    <i class="fas fa-star text-gold text-[10px] absolute" style="top: 58%; left: 73%; transform: translate(-50%, -50%);"></i>
+                    <!-- Bottom left star (240 degrees) -->
+                    <i class="fas fa-star text-gold text-[10px] absolute" style="top: 58%; left: 27%; transform: translate(-50%, -50%);"></i>
+                </div>
+             </div>
+        </div>
+    </div>
 
     <!-- Custom Cursor -->
     <div id="cursor" class="hidden md:block"></div>
@@ -584,7 +694,11 @@
     <nav class="fixed w-full z-50 py-8 transition-all duration-500 bg-gradient-to-b from-navy/90 to-transparent backdrop-blur-[2px]">
         <div class="max-w-[90%] mx-auto flex justify-between items-center">
             <a href="#" class="magnetic-target block">
-                <img src="Assests/Trilight_Logo_Final.png" alt="Trilight Group" class="h-10 md:h-12 w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100 transition-opacity">
+                <img src="Assests/Trilight.png" 
+                     alt="Trilight Group" 
+                     class="h-10 md:h-12 w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100 transition-opacity"
+                     width="150"
+                     height="48">
             </a>
 
             <div class="hidden md:flex items-center space-x-12 text-[10px] uppercase tracking-[0.2em] font-medium text-muted">
@@ -624,7 +738,6 @@
                 <h1 class="font-serif text-5xl md:text-7xl lg:text-9xl text-contrast leading-tight mb-8 mix-blend-overlay animate-fade-in-up" style="animation-delay: 0.4s;">
                     Beyond <br> <span class="italic font-light">Horizons</span>
                 </h1>
-                <div class="w-[1px] h-16 bg-silver/20 mx-auto mt-8 animate-fade-in-up" style="animation-delay: 0.8s;"></div>
             </div>
         </div>
     </header>
@@ -632,7 +745,7 @@
     <!-- Philosophy -->
     <section id="about" class="py-32 md:py-48 bg-transparent relative transition-colors duration-500 z-10">
         <div class="max-w-4xl mx-auto px-6 text-center">
-            <span class="block text-accent text-[10px] uppercase tracking-widest mb-8 reveal-on-scroll">Our Philosophy</span>
+            <span class="block text-gold text-[10px] uppercase tracking-widest mb-8 reveal-on-scroll">Our Philosophy</span>
             <p class="font-serif text-2xl md:text-4xl leading-relaxed text-contrast/90 reveal-on-scroll">
                 We believe that <span class="text-silver italic">luxury</span> is not just about excess, but about the absence of friction. We craft spaces that breathe, merging structural innovation with the tranquility of nature.
             </p>
@@ -640,19 +753,19 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-24 border-t border-contrast/5 pt-12">
                 <div class="reveal-on-scroll magnetic-target p-4 rounded-lg hover:bg-contrast/5 transition-colors duration-500">
                     <span class="block text-3xl font-serif text-contrast mb-2 counter" data-target="15">0</span>
-                    <span class="text-[9px] uppercase tracking-widest text-accent">Years Experience</span>
+                    <span class="text-[9px] uppercase tracking-widest text-gold">Years Experience</span>
                 </div>
                 <div class="reveal-on-scroll magnetic-target p-4 rounded-lg hover:bg-contrast/5 transition-colors duration-500" style="transition-delay: 100ms">
                     <span class="block text-3xl font-serif text-contrast mb-2 counter" data-target="12">0</span>
-                    <span class="text-[9px] uppercase tracking-widest text-accent">Awards Won</span>
+                    <span class="text-[9px] uppercase tracking-widest text-gold">Awards Won</span>
                 </div>
                 <div class="reveal-on-scroll magnetic-target p-4 rounded-lg hover:bg-contrast/5 transition-colors duration-500" style="transition-delay: 200ms">
                     <span class="block text-3xl font-serif text-contrast mb-2">$<span class="counter" data-target="2">0</span>B+</span>
-                    <span class="text-[9px] uppercase tracking-widest text-accent">Project Value</span>
+                    <span class="text-[9px] uppercase tracking-widest text-gold">Project Value</span>
                 </div>
                 <div class="reveal-on-scroll magnetic-target p-4 rounded-lg hover:bg-contrast/5 transition-colors duration-500" style="transition-delay: 300ms">
                     <span class="block text-3xl font-serif text-contrast mb-2 counter" data-target="4">0</span>
-                    <span class="text-[9px] uppercase tracking-widest text-accent">Global Cities</span>
+                    <span class="text-[9px] uppercase tracking-widest text-gold">Global Cities</span>
                 </div>
             </div>
         </div>
@@ -662,18 +775,18 @@
     <section id="projects" class="bg-transparent pt-32 pb-32 transition-colors duration-500 relative z-10">
         <div class="max-w-[95%] mx-auto relative">
             <div class="mb-24 text-center">
-                <span class="block text-accent text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Our Portfolio</span>
+                <span class="block text-gold text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Our Portfolio</span>
                 <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">The Constellations</h2>
                 <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
             </div>
         </div>
 
-        <div class="max-w-[95%] mx-auto relative">
+        <div id="constellation-container" class="max-w-[95%] mx-auto relative">
             <!-- Vertical Timeline Line (Grows on scroll) -->
             <div class="absolute left-4 md:left-1/2 top-0 w-[1px] transform md:-translate-x-1/2 project-line" id="drawing-line"></div>
             
             <!-- The Pathfinder Star (Moves on scroll) -->
-            <div id="pathfinder-star" class="absolute left-4 md:left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div id="pathfinder-star" class="absolute left-4 md:left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8">
                 <i class="fas fa-star text-2xl animate-spin-slow"></i>
             </div>
 
@@ -684,7 +797,12 @@
                 </div> -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pl-12 md:pl-0">
                     <div class="order-2 lg:order-1 px-6 lg:pl-20 md:text-right md:pr-20 project-card">
-                        <img src="Assests/Trilight_Logo_Final.png" alt="The Trilight" class="h-16 md:h-20 w-auto md:ml-auto mb-6 object-contain">
+                        <img src="Assests/Trilight_Logo_Final.png" 
+                             loading="lazy" 
+                             alt="The Trilight" 
+                             class="h-16 md:h-20 w-auto md:ml-auto mb-6 object-contain"
+                             width="300"
+                             height="80">
                         <p class="text-muted font-light text-sm leading-7 max-w-sm mb-8 md:ml-auto">
                             Three landmark towers in Kokapet, redefining luxury living with generous spaces, elite amenities and commanding skyline presence.                             </p>
                         <a href="thetrilight.com" class="magnetic-target inline-flex items-center text-[10px] uppercase tracking-widest text-contrast border-b border-contrast/20 pb-1 hover:border-silver hover:text-silver transition-all">
@@ -706,10 +824,19 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pl-12 md:pl-0">
                     <div class="parallax-container project-card">
                         <img src="Assests/Risewith9.jpeg" 
-                             class="w-full h-auto  group-hover:grayscale-0 transition-all duration-1000" alt="Rise with 9">
+                             loading="lazy"
+                             class="w-full h-auto group-hover:grayscale-0 transition-all duration-1000" 
+                             alt="Rise with 9"
+                             width="1200"
+                             height="800">
                     </div>
                     <div class="px-6 lg:pl-20 project-card" style="transition-delay: 200ms;">
-                        <img src="Assests/RW9.png" alt="Rise with 9" class="h-42 md:h-20 w-auto mb-6 object-contain opacity-90">
+                        <img src="Assests/RW9.png" 
+                             loading="lazy" 
+                             alt="Rise with 9" 
+                             class="h-42 md:h-20 w-auto mb-6 object-contain opacity-90"
+                             width="400"
+                             height="80">
                         <p class="text-muted font-light text-sm leading-7 max-w-sm mb-8">
                             A landmark high-rise in Kokapet, redefining elevated living with expansive residences, curated amenities and a commanding skyline presence.                        <a href="https://risewith9.com" target="_blank" class="magnetic-target inline-flex items-center text-[10px] uppercase tracking-widest text-contrast border-b border-contrast/20 pb-1 hover:border-silver hover:text-silver transition-all group-hover:pl-2">
                             Visit Website <i class="fas fa-external-link-alt ml-4 text-silver text-[8px]"></i>
@@ -725,7 +852,7 @@
                     <p class="text-muted font-light text-sm leading-7 max-w-sm mx-auto mb-8">
                         A coastal masterpiece currently in development. Bridging the gap between the serenity of the ocean and the vibrancy of urban life.
                     </p>
-                        <span class="text-[10px] uppercase tracking-widest text-accent border border-accent/30 px-3 py-1 rounded-full">Coming 2026</span>
+                        <span class="text-[10px] uppercase tracking-widest text-gold border border-gold/30 px-3 py-1 rounded-full">Coming 2026</span>
                         </div>
                      <div class="order-1 lg:order-2 h-[60vh] lg:h-[80vh] parallax-container project-card" style="transition-delay: 200ms;">
                         <div class="absolute inset-0 bg-navy/20 z-10 flex items-center justify-center">
@@ -742,7 +869,7 @@
     <!-- Signature Collection: Cards -->
     <section id="signature-collection" class="py-32 bg-transparent relative z-10 transition-colors duration-500 overflow-hidden">
         <div class="max-w-[95%] mx-auto px-6 mb-12 text-center">
-            <span class="block text-accent text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Exclusive Listings</span>
+            <span class="block text-gold text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Exclusive Listings</span>
             <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">The Signature Collection</h2>
             <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
         </div>
@@ -750,17 +877,17 @@
         <div class="deck-container reveal-on-scroll">
             <!-- Card 1 (Left) -->
             <div data-text="Thrive" style="--r:-15;" class="deck-glass group">
-                <img src="Assests/T1.webp" alt="Thrive">
+                <img src="Assests/T1.webp" loading="lazy" alt="Thrive" width="280" height="420">
             </div>
             
             <!-- Card 2 (Center) -->
             <div data-text="Trust" style="--r:0;" class="deck-glass group z-10">
-                <img src="Assests/T2.webp" alt="Trust">
+                <img src="Assests/T2.webp" loading="lazy" alt="Trust" width="280" height="420">
             </div>
             
             <!-- Card 3 (Right) -->
             <div data-text="Team" style="--r:15;" class="deck-glass group">
-                <img src="Assests/T3.webp" alt="Team">
+                <img src="Assests/T3.webp" loading="lazy" alt="Team" width="280" height="420">
             </div>
         </div>
     </section>
@@ -768,7 +895,7 @@
     <!-- Virtual Tour -->
     <section id="virtual-tour" class="py-32 bg-transparent relative z-10 transition-colors duration-500">
         <div class="max-w-[95%] mx-auto px-6 mb-12 text-center">
-            <span class="block text-accent text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Interactive Walkthroughs</span>
+            <span class="block text-gold text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Interactive Walkthroughs</span>
             <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">Experience the Life</h2>
             <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
         </div>
@@ -783,8 +910,8 @@
                     <div class="w-16 h-16 rounded-full border border-silver/30 flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform duration-500 mb-6">
                         <i class="fas fa-cube text-silver text-xl"></i>
                     </div>
-                    <h3 class="text-2xl font-serif text-contrast mb-2">Grand Lobby</h3>
-                    <span class="text-[9px] uppercase tracking-widest text-silver border-b border-transparent group-hover:border-silver transition-all pb-1">Start Tour</span>
+                    <h3 class="text-2xl font-serif text-contrast mb-2 group-hover:text-gold group-hover:border-gold transition-all pb-1">Grand Lobby</h3>
+                    <span class="text-[9px] uppercase tracking-widest text-silver border-b border-transparent group-hover:text-gold group-hover:border-gold transition-all pb-1">Start Tour</span>
                  </div>
             </div>
 
@@ -797,8 +924,8 @@
                     <div class="w-16 h-16 rounded-full border border-silver/30 flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform duration-500 mb-6">
                         <i class="fas fa-cube text-silver text-xl"></i>
                     </div>
-                    <h3 class="text-2xl font-serif text-contrast mb-2">Sky Residence</h3>
-                    <span class="text-[9px] uppercase tracking-widest text-silver border-b border-transparent group-hover:border-silver transition-all pb-1">Start Tour</span>
+                    <h3 class="text-2xl font-serif text-contrast mb-2  group-hover:text-gold group-hover:border-gold transition-all pb-1">Sky Residence</h3>
+                    <span class="text-[9px] uppercase tracking-widest text-silver border-b border-transparent group-hover:text-gold group-hover:border-gold transition-all pb-1">Start Tour</span>
                  </div>
             </div>
         </div>
@@ -809,7 +936,7 @@
     <section id="testimonials" class="py-20 md:py-32 bg-transparent relative z-10 transition-colors duration-500">
         <!-- Old Header -->
         <div class="max-w-[95%] mx-auto px-6 mb-12 text-center">
-            <span class="block text-accent text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Client Experiences</span>
+            <span class="block text-gold text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Client Experiences</span>
             <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">Community Voices</h2>
             <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
         </div>
@@ -855,7 +982,7 @@
     <section id="visionary" class="py-32 bg-surface/90 transition-colors duration-500 relative z-10 overflow-hidden">
         <div class="max-w-6xl mx-auto px-6 relative">
             <div class="mb-32 text-center">
-                <span class="block text-accent text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Leadership</span>
+                <span class="block text-gold text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Leadership</span>
                 <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">The Visionaries</h2>
                 <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
             </div>
@@ -867,7 +994,11 @@
                     <div class="absolute -inset-4 border border-silver/20 rounded-sm z-0 transform translate-x-2 translate-y-2 transition-transform duration-700 group-hover:translate-x-4 group-hover:translate-y-4"></div>
                     <div class="h-[500px] w-full overflow-hidden relative z-10">
                         <img src="Assests/23.webp" 
-                             class="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-105" alt="J Sanjeeva Reddy">
+                             loading="lazy"
+                             class="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-105" 
+                             alt="J Sanjeeva Reddy"
+                             width="600"
+                             height="500">
                     </div>
                 </div>
                 <!-- Content -->
@@ -876,7 +1007,7 @@
                     <span class="text-[10px] uppercase tracking-widest text-silver mb-8 block">Founder & Chairman</span>
                     <div class="relative">
                         <i class="fas fa-quote-left text-4xl text-contrast/5 absolute -top-6 -left-4"></i>
-                        <p class="text-muted text-lg font-light leading-relaxed pl-6 border-l border-accent/20">
+                        <p class="text-muted text-lg font-light leading-relaxed pl-6 border-l border-gold/20">
                             "The Trilight Residences isn't in the business of mere square foot; we're sculpting the very horizon of aspiration. Every detail is a testament to our relentless pursuit of perfection."
                         </p>
                     </div>
@@ -890,7 +1021,11 @@
                     <div class="absolute -inset-4 border border-silver/20 rounded-sm z-0 transform -translate-x-2 translate-y-2 transition-transform duration-700 group-hover:-translate-x-4 group-hover:translate-y-4"></div>
                     <div class="h-[500px] w-full overflow-hidden relative z-10">
                         <img src="Assests/24.webp" 
-                             class="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-105" alt="Sanjay Mangatram">
+                             loading="lazy"
+                             class="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-105" 
+                             alt="Sanjay Mangatram"
+                             width="600"
+                             height="500">
                     </div>
                 </div>
                 <!-- Content -->
@@ -899,7 +1034,7 @@
                     <span class="text-[10px] uppercase tracking-widest text-silver mb-8 block">Director</span>
                     <div class="relative md:flex md:justify-end">
                         <i class="fas fa-quote-left text-4xl text-contrast/5 absolute -top-6 -left-4 md:left-auto md:-right-4 md:rotate-180"></i>
-                        <p class="text-muted text-lg font-light leading-relaxed pl-6 md:pl-0 md:pr-6 md:border-l-0 md:border-r border-l border-accent/20">
+                        <p class="text-muted text-lg font-light leading-relaxed pl-6 md:pl-0 md:pr-6 md:border-l-0 md:border-r border-l border-gold/20">
                             "Born from a lineage that refused to settle for enough, we are the visionaries who burn the blueprints of convention to forge a new legacy of excellence."
                         </p>
                     </div>
@@ -914,7 +1049,7 @@
         
         <!-- Header -->
         <div class="mb-16 md:mb-24 text-center opacity-0 animate-fade-in-up reveal-on-scroll" id="main-header" style="animation: fadeInUp 0.8s forwards;">
-            <span class="block text-accent text-[10px] uppercase tracking-widest mb-4">Updates</span>
+            <span class="block text-gold text-[10px] uppercase tracking-widest mb-4">Updates</span>
             <h2 class="font-serif text-4xl md:text-5xl text-contrast">Press & Journal</h2>
             <div class="w-12 h-[1px] bg-silver mx-auto mt-8"></div>
         </div>
@@ -922,14 +1057,14 @@
         <div class="flex flex-col lg:flex-row gap-12 lg:gap-24">
             
             <!-- LEFT PANEL: Sticky "Lens" Detail View -->
-            <div class="lg:w-1/2 lg:sticky lg:top-24 lg:h-[calc(100vh-12rem)] flex flex-col justify-center order-2 lg:order-1 relative min-h-[400px]">
+            <div class="lg:w-1/2 lg:h-[34rem] flex flex-col justify-center order-2 lg:order-1 relative min-h-[400px]">
                 
                 <!-- Dynamic Content Container -->
                 <div id="lens-container" class="lens-content flex flex-col justify-center h-full w-full">
                     
                     <!-- Meta Tags -->
                     <div class="flex items-center gap-4 mb-8">
-                        <span id="lens-type" class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border transition-colors border-white/20 text-gray-300 bg-white/5">
+                        <span id="lens-type" class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border transition-colors border-gold/30 text-gold bg-gold/10">
                             Journal
                         </span>
                         
@@ -950,14 +1085,14 @@
                     </h2>
 
                     <!-- Excerpt -->
-                    <p id="lens-excerpt" class="text-lg text-gray-400 leading-relaxed mb-10 max-w-xl border-l-2 border-blue-500/30 pl-6">
+                    <p id="lens-excerpt" class="text-lg text-gray-400 leading-relaxed mb-10 max-w-xl border-l-2 border-gold/30 pl-6">
                         An exclusive look into how Trilight's latest tower integrates biophilic design at 40 stories high, merging nature with concrete.
                     </p>
 
                     <!-- CTA -->
                     <div>
-                        <button class="group flex items-center gap-3 text-sm font-medium text-white hover:text-blue-300 transition-colors">
-                            <span class="border-b border-white/20 pb-1 group-hover:border-blue-300 transition-colors">
+                        <button class="group flex items-center gap-3 text-sm font-medium text-white hover:text-gold transition-colors">
+                            <span class="border-b border-white/20 pb-1 group-hover:border-gold transition-colors">
                                 Read Full Story
                             </span>
                             <i data-lucide="arrow-up-right" class="w-4 h-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1"></i>
@@ -967,25 +1102,20 @@
             </div>
 
             <!-- RIGHT PANEL: Scrollable List -->
-            <div class="lg:w-1/2 flex flex-col gap-2 order-1 lg:order-2 pb-24">
+            <div class="lg:w-1/2 flex flex-col gap-2 order-1 lg:order-2 pb-24 lg:pb-0 lg:h-[25rem]">
                 
                 <!-- Desktop List Header -->
-                <div class="hidden lg:flex items-center justify-between mb-8 pb-4 border-b border-white/10">
+                <div class="hidden lg:flex items-center justify-between mb-8 pb-4 border-b border-white/10 shrink-0">
                     <span class="text-xs font-bold tracking-[0.2em] uppercase text-gray-500">Index</span>
                     <span class="text-xs font-bold tracking-[0.2em] uppercase text-gray-500">Select to View</span>
                 </div>
 
                 <!-- Articles List Container -->
-                <div id="articles-list" class="flex flex-col gap-2">
+                <div id="articles-list" class="flex flex-col gap-2 lg:flex-1 lg:overflow-y-auto pr-2 journal-scroll">
                     <!-- Items will be injected here by JS -->
                 </div>
 
-                <!-- Load More -->
-                <div class="mt-8 flex justify-center lg:justify-start">
-                    <button id="load-more-btn" class="px-8 py-4 rounded-full border border-white/10 text-xs uppercase tracking-widest hover:bg-white hover:text-black hover:scale-105 active:scale-95 transition-all duration-300 text-white group">
-                        Load More from Archive
-                    </button>
-                </div>
+                <!-- Load More Removed -->
             </div>
 
         </div>
@@ -1055,7 +1185,6 @@
             // --- DOM ELEMENTS ---
             const listContainer = document.getElementById('articles-list');
             const lensContainer = document.getElementById('lens-container');
-            const loadMoreBtn = document.getElementById('load-more-btn');
             
             // Lens Elements
             const lensType = document.getElementById('lens-type');
@@ -1065,20 +1194,11 @@
             const lensExcerpt = document.getElementById('lens-excerpt');
 
             let currentActiveId = 1;
-            let visibleCount = 3; // Initially show 3 items
 
             // --- INITIALIZATION ---
             function init() {
                 renderList();
                 
-                // Add Click Event Listener
-                if (loadMoreBtn) {
-                    loadMoreBtn.addEventListener('click', () => {
-                        visibleCount += 3; // Load 3 more items
-                        renderList();
-                    });
-                }
-
                 // Lucide icons are re-initialized after rendering list
                 if (typeof lucide !== 'undefined') {
                     lucide.createIcons();
@@ -1090,8 +1210,8 @@
                 if (!listContainer) return;
                 listContainer.innerHTML = '';
                 
-                // Filter articles based on visibleCount
-                const itemsToShow = articles.slice(0, visibleCount);
+                // Render all articles
+                const itemsToShow = articles;
                 
                 itemsToShow.forEach(item => {
                     const isActive = item.id === currentActiveId;
@@ -1104,7 +1224,7 @@
                     
                     // Active Indicator (Blue Line)
                     const activeLine = isActive ? `
-                        <div class="absolute left-0 top-6 bottom-6 w-1 bg-blue-500 rounded-r-full animate-in fade-in zoom-in-y duration-300"></div>
+                        <div class="absolute left-0 top-6 bottom-6 w-1 bg-gold rounded-r-full animate-in fade-in zoom-in-y duration-300"></div>
                     ` : '';
 
                     // Arrow State
@@ -1118,7 +1238,7 @@
                         <div class="flex items-start justify-between gap-4 pointer-events-none">
                             <div class="flex-1">
                                 <div class="flex items-center gap-3 mb-2">
-                                    <span class="text-[10px] font-bold tracking-widest uppercase text-blue-400">${item.category}</span>
+                                    <span class="text-[10px] font-bold tracking-widest uppercase text-gold">${item.category}</span>
                                     <span class="w-1 h-1 rounded-full bg-gray-600"></span>
                                     <span class="text-[10px] text-gray-500 font-mono">${item.date}</span>
                                 </div>
@@ -1128,7 +1248,7 @@
                             </div>
 
                             <div class="mt-2 transition-all duration-300 ${arrowClass}">
-                                <i data-lucide="arrow-right" class="w-5 h-5 text-blue-400"></i>
+                                <i data-lucide="arrow-right" class="w-5 h-5 text-gold"></i>
                             </div>
                         </div>
                     `;
@@ -1139,15 +1259,6 @@
 
                     listContainer.appendChild(div);
                 });
-                
-                // Check visibility of Load More button
-                if (loadMoreBtn) {
-                     if (visibleCount >= articles.length) {
-                        loadMoreBtn.style.display = 'none';
-                    } else {
-                        loadMoreBtn.style.display = 'block';
-                    }
-                }
                
                 if (typeof lucide !== 'undefined') {
                     lucide.createIcons();
@@ -1179,7 +1290,7 @@
                                 if (item.type === 'press') {
                                     lensType.className = "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border transition-colors border-blue-500/30 text-blue-300 bg-blue-500/10";
                                 } else {
-                                    lensType.className = "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border transition-colors border-white/20 text-gray-300 bg-white/5";
+                                    lensType.className = "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border transition-colors border-blue-500/30 text-blue-300 bg-blue-500/10";
                                 }
                             }
                             if (lensDate) lensDate.textContent = item.date;
@@ -1261,30 +1372,332 @@
         </div>
     </section>
 
-    <!-- Minimal Contact -->
-    <section id="contact" class="py-32 bg-transparent transition-colors duration-500 relative z-10">
-        <div class="max-w-xl mx-auto px-6 text-center">
-            <h2 class="font-serif text-4xl text-contrast mb-12">Inquire</h2>
-            <form class="space-y-8 text-left">
-                <input type="text" id="name" placeholder="Name" class="w-full bg-transparent border-b border-contrast/10 py-3 text-contrast focus:outline-none focus:border-silver transition-colors font-light">
-                <input type="email" id="email" placeholder="Email" class="w-full bg-transparent border-b border-contrast/10 py-3 text-contrast focus:outline-none focus:border-silver transition-colors font-light">
-                <textarea id="message" rows="2" placeholder="Message" class="w-full bg-transparent border-b border-contrast/10 py-3 text-contrast focus:outline-none focus:border-silver transition-colors font-light resize-none"></textarea>
+    <!-- === VELOCITY INQUIRY SECTION === -->
+    <section id="velocity-contact" class="relative w-full h-screen overflow-hidden  text-white">
+        
+        <!-- Ambient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-tr from-indigo-900/10 via-transparent to-rose-900/10 pointer-events-none z-0"></div>
+
+        <!-- 2. Interface Layer -->
+        <div id="interface-layer" class="relative z-10 w-full h-full flex flex-col justify-center align-center pointer-events-none">
+            
+           
+
+            <!-- Dynamic Form -->
+            <form id="velocity-form" class="interactive-area w-full max-w-3xl mx-auto px-8 pointer-events-auto" onsubmit="return false;">
                 
-                <div class="flex justify-between items-center pt-4">
-                    <button type="button" onclick="draftInquiry()" class="text-[9px] uppercase tracking-widest text-accent hover:text-contrast transition-colors magnetic-target">
-                        <i class="fas fa-magic mr-1"></i> Auto-Draft
-                    </button>
-                    <button type="submit" class="px-8 py-3 bg-contrast text-navy text-xs font-bold uppercase tracking-widest hover:bg-silver hover:text-navy transition-colors magnetic-target">Send</button>
+                <!-- STEP 1: NAME -->
+                <div class="form-step step-active transition-all duration-700 ease-out" id="step-1">
+                    <div class="question-text text-4xl md:text-6xl font-extrabold tracking-tight mb-8 opacity-0 translate-y-5 transition-all duration-700 delay-100 bg-clip-text text-transparent bg-gradient-to-br from-white to-slate-400">
+                        Let's begin.<br>
+                        What is your <span class="text-gold">full name?</span>
+                    </div>
+                    <input type="text" id="input-name" class="velocity-input w-full bg-transparent border-b-2 border-white/10 text-3xl md:text-5xl text-gold py-4 font-light outline-none opacity-0 translate-y-5 transition-all duration-700 delay-200 focus:border-gold focus:shadow-[0_10px_30px_-10px_rgba(197,164,126,0.1)] placeholder:text-slate-600 font-sans" placeholder="Type your name here..." autocomplete="off">
+                    <div class="nav-controls flex gap-4 mt-12 opacity-0 translate-y-5 transition-all duration-700 delay-300">
+                        <button type="button" class="nav-btn primary group flex items-center gap-2 bg-gold/10 border border-gold/30 text-gold px-8 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-gold/20 hover:border-gold/60 transition-all shadow-[0_4px_10px_rgba(0,0,0,0.2)] hover:shadow-[0_0_20px_rgba(197,164,126,0.2)]" onclick="nextStep(1)">
+                            Next <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                        <div class="text-xs text-slate-500 flex items-center ml-4">Press Enter ↵</div>
+                    </div>
                 </div>
+
+                <!-- STEP 2: EMAIL -->
+                <div class="form-step hidden transition-all duration-700 ease-out" id="step-2">
+                    <div class="question-text text-4xl md:text-6xl font-extrabold tracking-tight mb-8 opacity-0 translate-y-5 transition-all duration-700 delay-100 bg-clip-text text-transparent bg-gradient-to-br from-white to-slate-400">
+                        Pleasure to meet you, <span id="display-name" class="text-indigo-300">Guest</span>.<br>
+                        Where should we send your <span class="text-gold">invite?</span>
+                    </div>
+                    <input type="email" id="input-email" class="velocity-input w-full bg-transparent border-b-2 border-white/10 text-3xl md:text-5xl text-gold py-4 font-light outline-none opacity-0 translate-y-5 transition-all duration-700 delay-200 focus:border-gold focus:shadow-[0_10px_30px_-10px_rgba(197,164,126,0.1)] placeholder:text-slate-600 font-sans" placeholder="name@example.com" autocomplete="off">
+                    <div class="nav-controls flex gap-4 mt-12 opacity-0 translate-y-5 transition-all duration-700 delay-300">
+                        <button type="button" class="nav-btn bg-slate-800/40 border border-white/5 text-slate-300 px-8 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-white/5 hover:text-white transition-all backdrop-blur-md" onclick="prevStep(2)">Back</button>
+                        <button type="button" class="nav-btn primary group flex items-center gap-2 bg-gold/10 border border-gold/30 text-gold px-8 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-gold/20 hover:border-gold/60 transition-all shadow-[0_4px_10px_rgba(0,0,0,0.2)] hover:shadow-[0_0_20px_rgba(197,164,126,0.2)]" onclick="nextStep(2)">
+                            Next <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 3: MESSAGE -->
+                <div class="form-step hidden transition-all duration-700 ease-out" id="step-3">
+                    <div class="question-text text-4xl md:text-6xl font-extrabold tracking-tight mb-8 opacity-0 translate-y-5 transition-all duration-700 delay-100 bg-clip-text text-transparent bg-gradient-to-br from-white to-slate-400">
+                        Finally.<br>
+                        Tell us about your <span class="text-gold">vision.</span>
+                    </div>
+                    <input type="text" id="input-message" class="velocity-input w-full bg-transparent border-b-2 border-white/10 text-3xl md:text-5xl text-gold py-4 font-light outline-none opacity-0 translate-y-5 transition-all duration-700 delay-200 focus:border-gold focus:shadow-[0_10px_30px_-10px_rgba(197,164,126,0.1)] placeholder:text-slate-600 font-sans" placeholder="I am looking for a penthouse..." autocomplete="off">
+                    <div class="nav-controls flex gap-4 mt-12 opacity-0 translate-y-5 transition-all duration-700 delay-300">
+                        <button type="button" class="nav-btn bg-slate-800/40 border border-white/5 text-slate-300 px-8 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-white/5 hover:text-white transition-all backdrop-blur-md" onclick="prevStep(3)">Back</button>
+                        <button type="button" class="nav-btn primary group flex items-center gap-2 bg-gold/10 border border-gold/30 text-gold px-8 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-gold/20 hover:border-gold/60 transition-all shadow-[0_4px_10px_rgba(0,0,0,0.2)] hover:shadow-[0_0_20px_rgba(197,164,126,0.2)]" onclick="submitForm()">
+                            Initialize Request <i data-lucide="send" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SUCCESS STATE -->
+                <div class="form-step hidden text-center transition-all duration-700 ease-out" id="step-success">
+                    <div class="mb-8 flex justify-center opacity-0 scale-90 transition-all duration-700 delay-100 reveal-item">
+                        <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-gold/20 to-white/20 border border-gold/50 flex items-center justify-center animate-[pulse_3s_infinite] shadow-[0_0_50px_rgba(197,164,126,0.2)]">
+                            <i data-lucide="check" class="w-10 h-10 text-gold"></i>
+                        </div>
+                    </div>
+                    <div class="question-text text-4xl md:text-5xl font-extrabold mb-6 opacity-0 translate-y-5 transition-all duration-700 delay-200 reveal-item bg-clip-text text-transparent bg-gradient-to-br from-white to-slate-400">
+                        Transmission <span class="text-gold">Received.</span>
+                    </div>
+                    <p class="text-slate-400 text-lg max-w-lg mx-auto mb-8 leading-relaxed opacity-0 translate-y-5 transition-all duration-700 delay-300 reveal-item">
+                        Our concierge has been alerted. We will be in contact shortly.
+                    </p>
+                    <button type="button" class="nav-btn mx-auto bg-slate-800/40 border border-white/5 text-slate-300 px-8 py-3 rounded-full hover:bg-white/5 transition-all opacity-0 translate-y-5 duration-700 delay-400 reveal-item" onclick="resetForm()">
+                        Start Over
+                    </button>
+                </div>
+
             </form>
+
+            <!-- Progress Indicators -->
+            <div class="progress-container absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-2" id="progress-dots">
+                <div class="progress-dot w-12 h-1 bg-gold rounded-full shadow-[0_0_15px_rgba(197,164,126,0.4)] transition-all duration-500" id="dot-1"></div>
+                <div class="progress-dot w-12 h-1 bg-white/10 rounded-full transition-all duration-500" id="dot-2"></div>
+                <div class="progress-dot w-12 h-1 bg-white/10 rounded-full transition-all duration-500" id="dot-3"></div>
+            </div>
+
         </div>
+
     </section>
+
+    <!-- Velocity Logic Script -->
+    <script>
+        (function() {
+            // --- 0. NO STARFIELD (REMOVED) ---
+            
+            // Warp Speed Function (Kept as dummy to prevent errors in form calls)
+            window.triggerWarp = function() {
+                // No-op since starfield is gone
+            }
+
+            // --- 2. FORM INTERACTION LOGIC ---
+            let currentStep = 1;
+            const totalSteps = 3;
+
+            // Re-init Icons for this section
+            if(window.lucide) window.lucide.createIcons();
+
+            function focusInput(step) {
+                setTimeout(() => {
+                    const input = document.querySelector(`#step-${step} input`);
+                    if(input) input.focus();
+                }, 500);
+            }
+
+            // Global Keydown (scoped to when form is visible ideally, but here globally is ok for demo)
+            // Ideally attach to inputs
+            const inputs = document.querySelectorAll('.velocity-input');
+            inputs.forEach(input => {
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        if (currentStep < totalSteps) nextStep(currentStep);
+                        else if (currentStep === totalSteps) submitForm();
+                    }
+                });
+            });
+
+            window.nextStep = function(step) {
+                const input = document.querySelector(`#step-${step} input`);
+                if (input && !input.value.trim()) {
+                    input.classList.add('animate-pulse'); // Tailwind pulse
+                    // Custom heavy pulse
+                    const originalBorder = input.style.borderColor;
+                    input.style.borderColor = '#ef4444'; // Red error
+                    setTimeout(() => {
+                        input.classList.remove('animate-pulse');
+                        input.style.borderColor = ''; // Reset
+                    }, 500);
+                    return;
+                }
+
+                if (step === 1) {
+                    const name = input.value.split(' ')[0];
+                    const display = document.getElementById('display-name');
+                    if(display) display.textContent = name;
+                }
+
+                transitionStep(step, step + 1);
+            };
+
+            window.prevStep = function(step) {
+                transitionStep(step, step - 1);
+            };
+
+            function transitionStep(current, next) {
+                triggerWarp(); // Visual Flare
+
+                const currentEl = document.getElementById(`step-${current}`);
+                const nextEl = document.getElementById(`step-${next}`);
+
+                if(!currentEl || !nextEl) return;
+
+                // Animate Out: Slide up and fade out
+                // Using Tailwind utility classes for transitions defined in HTML
+                // Remove 'step-active' to revert to base state (hidden/opacity 0)
+                currentEl.classList.remove('step-active'); 
+                currentEl.classList.add('hidden'); // Add hidden after transition? 
+                // We need to wait for transition.
+                // But the helper classes in the user CSS were convenient. 
+                // Let's manually manage classes for Tailwind transition.
+                
+                // My Tailwind classes:
+                // Active: opacity-100 translate-y-0
+                // Inactive: opacity-0 translate-y-5
+                
+                // Logic:
+                // 1. Fade out current
+                const currentChildren = currentEl.children;
+                for(let child of currentChildren) {
+                    child.classList.remove('opacity-100', 'translate-y-0');
+                    child.classList.add('opacity-0', '-translate-y-5'); // Move UP on exit
+                }
+
+                updateDots(next);
+
+                setTimeout(() => {
+                    currentEl.classList.add('hidden');
+                    // Reset positions for next time
+                    for(let child of currentChildren) {
+                         child.classList.remove('-translate-y-5');
+                         child.classList.add('translate-y-5'); 
+                    }
+
+                    nextEl.classList.remove('hidden');
+                    
+                    // Trigger reflow
+                    void nextEl.offsetWidth;
+
+                    // Animate In
+                    const nextChildren = nextEl.children;
+                    for(let child of nextChildren) {
+                        child.classList.remove('opacity-0', 'translate-y-5');
+                        child.classList.add('opacity-100', 'translate-y-0');
+                    }
+                    
+                    focusInput(next);
+                    currentStep = next;
+                }, 500);
+            }
+
+            window.submitForm = function() {
+                triggerWarp();
+                
+                const dots = document.getElementById('progress-dots');
+                if(dots) dots.style.opacity = '0';
+
+                const currentEl = document.getElementById(`step-3`);
+                
+                // Fade out step 3
+                const currentChildren = currentEl.children;
+                for(let child of currentChildren) {
+                    child.classList.remove('opacity-100', 'translate-y-0');
+                    child.classList.add('opacity-0', '-translate-y-5'); 
+                }
+
+                setTimeout(() => {
+                    currentEl.classList.add('hidden');
+                    
+                    const successEl = document.getElementById('step-success');
+                    successEl.classList.remove('hidden');
+                    
+                    // Trigger reflow
+                    void successEl.offsetWidth;
+
+                    // Fade in success items staggered
+                    const items = successEl.querySelectorAll('.reveal-item');
+                    items.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.classList.remove('opacity-0', 'translate-y-5', 'scale-90');
+                            item.classList.add('opacity-100', 'translate-y-0', 'scale-100');
+                        }, index * 100);
+                    });
+
+                }, 500);
+            };
+
+            window.resetForm = function() {
+                // Ideally reset values and go to step 1
+               // Simple reload for demo, or reset state
+               document.getElementById('velocity-form').reset();
+               const successEl = document.getElementById('step-success');
+               successEl.classList.add('hidden');
+               // Hide items again
+               const items = successEl.querySelectorAll('.reveal-item');
+               items.forEach(item => {
+                   item.classList.add('opacity-0', 'translate-y-5', 'scale-90');
+                   item.classList.remove('opacity-100', 'translate-y-0', 'scale-100');
+               });
+
+               const dots = document.getElementById('progress-dots');
+               if(dots) dots.style.opacity = '1';
+
+               const step1 = document.getElementById('step-1');
+               step1.classList.remove('hidden');
+               
+               // Animate Step 1 In
+                const children = step1.children;
+                for(let child of children) {
+                    child.classList.remove('opacity-0', 'translate-y-5', '-translate-y-5');
+                    child.classList.add('opacity-100', 'translate-y-0');
+                }
+               
+               currentStep = 1;
+               updateDots(1);
+               focusInput(1);
+            };
+
+            function updateDots(step) {
+                // Tailwind Active: bg-gold shadow...
+                // Inactive: bg-white/10
+                for (let i = 1; i <= totalSteps; i++) {
+                    const dot = document.getElementById(`dot-${i}`);
+                    if(!dot) continue;
+
+                    // Reset to base
+                    dot.className = 'progress-dot w-12 h-1 rounded-full transition-all duration-500';
+                    
+                    if (i === step) {
+                        dot.className += ' bg-gold shadow-[0_0_15px_rgba(197,164,126,0.4)]';
+                    } else if (i < step) {
+                        dot.className += ' bg-slate-600'; // Completed
+                    } else {
+                        dot.className += ' bg-white/10'; // Inactive
+                    }
+                }
+            }
+            
+            // Initial Animation Trigger for Step 1
+            setTimeout(() => {
+                 const step1 = document.getElementById('step-1');
+                 if(step1) {
+                    const children = step1.querySelectorAll('.question-text, .velocity-input, .nav-controls');
+                    children.forEach((child) => {
+                         child.classList.remove('opacity-0', 'translate-y-5');
+                         child.classList.add('opacity-100', 'translate-y-0');
+                    });
+                     // Force remove overrides from HTML if any
+                     // The HTML had classes 'opacity-0 translate-y-5'. We remove them.
+                 }
+            }, 100);
+
+        })();
+    </script>
 
     <!-- Footer -->
     <footer class="bg-surface/90 py-16 border-t border-contrast/5 transition-colors duration-500 relative z-10">
         <div class="max-w-[90%] mx-auto grid grid-cols-1 md:grid-cols-5 gap-12">
             <div class="md:col-span-2">
-                <a href="#" class="text-lg font-serif font-bold tracking-widest uppercase text-contrast block mb-6">Trilight<span class="text-silver">.</span></a>
+                <a href="#" class="magnetic-target block mb-6">
+                    <img src="Assests/Trilight.png" 
+                         loading="lazy" 
+                         alt="Trilight Group" 
+                         class="h-10 md:h-12 w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100 transition-opacity"
+                         width="150"
+                         height="48">
+                </a>
                 <p class="text-muted text-sm font-light max-w-xs">Visionary developments for the modern era. Crafting the skyline of tomorrow, today.</p>
             </div>
             <div>
@@ -1324,6 +1737,7 @@
     </div>
 
     <!-- Hidden Chat Modal -->
+    
     <div id="chat-modal" class="fixed bottom-24 right-8 w-80 bg-surface border border-contrast/10 shadow-2xl p-4 hidden transition-colors duration-500">
         <div class="flex justify-between items-center mb-4">
             <span class="text-xs uppercase tracking-widest text-silver">Concierge</span>
@@ -1455,15 +1869,18 @@
                 canvas.height = height;
                 
                 stars = [];
-                // Increased stars for more constellations
-                for(let i=0; i<150; i++) {
+                // Adaptive star count based on device
+                const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                const starCount = isMobile ? 75 : 150; // Reduced from 150 on mobile
+                
+                for(let i=0; i<starCount; i++) {
                     stars.push({
                         x: Math.random() * width,
                         y: Math.random() * height,
                         radius: Math.random() * 2 + 1,
                         vx: (Math.random() - 0.5) * 0.2, // Velocity X
                         vy: (Math.random() - 0.5) * 0.2, // Velocity Y
-                        alpha: Math.random(),
+                        alpha: Math.random() * 0.5 + 0.5, // Brighter stars (0.5 - 1.0)
                         color: starColors[Math.floor(Math.random() * starColors.length)]
                     });
                 }
@@ -1527,7 +1944,7 @@
                 });
 
                 // Silver lines
-                ctx.strokeStyle = 'rgba(226, 232, 240, 0.15)'; 
+                ctx.strokeStyle = 'rgba(226, 232, 240, 0.3)'; // Brighter lines 
                 
                 stars.forEach((star, index) => {
                     star.x += star.vx;
@@ -1535,7 +1952,7 @@
 
                     if(star.x < 0 || star.x > width) star.vx *= -1;
                     if(star.y < 0 || star.y > height) star.vy *= -1;
-
+                    
                     ctx.beginPath();
                     ctx.globalAlpha = star.alpha;
                     ctx.fillStyle = star.color;
@@ -1549,9 +1966,9 @@
                         let dy = star.y - other.y;
                         let dist = Math.sqrt(dx*dx + dy*dy);
 
-                        if(dist < 120) { 
+                        if(dist < 180) { // Increased distance
                             ctx.beginPath();
-                            ctx.globalAlpha = 1 - (dist / 120); 
+                            ctx.globalAlpha = 1 - (dist / 180); 
                             ctx.lineWidth = 0.5;
                             ctx.moveTo(star.x, star.y);
                             ctx.lineTo(other.x, other.y);
@@ -1636,8 +2053,10 @@
                     drawingLine.style.height = `${progress * 100}%`;
                     pathfinderStar.style.top = `${progress * 100}%`;
                 } else if (progress <= 0) {
-                    pathfinderStar.style.opacity = '0';
+                    // Show it at the top waiting for the wave
+                    pathfinderStar.style.opacity = '1';
                     drawingLine.style.height = '0%';
+                    pathfinderStar.style.top = '0%';
                 } else {
                     // When capped
                     pathfinderStar.style.opacity = '1'; 
@@ -1931,7 +2350,168 @@
         // Fallback if already loaded
         initWaterfall();
 
+        // --- Global Wave Path & Revolving Stars Logic ---
+        const waveContainer = document.getElementById('global-wave-container');
+        const wavePathBg = document.getElementById('wave-path-bg');
+        const wavePathDraw = document.getElementById('wave-path-draw');
+        const starCluster = document.getElementById('star-cluster');
+        const revolvingGroup = document.getElementById('revolving-group');
+
+        if (waveContainer && wavePathBg && wavePathDraw && starCluster) {
+            let pathLength = 0;
+
+            function initWave() {
+                // Determine height: Stop at the "Constellation Container" (where the star starts)
+                const pSection = document.getElementById('projects');
+                const cContainer = document.getElementById('constellation-container');
+                
+                let limitHeight = Math.max(
+                    document.body.scrollHeight, document.documentElement.scrollHeight
+                );
+
+                if (pSection && cContainer) {
+                    // Calculate absolute top position
+                    // pSection.offsetTop gives top relative to body (usually)
+                    // cContainer is inside pSection. cContainer.offsetTop is relative to pSection (if pSection is relative)
+                    // limitHeight = pSection.offsetTop + cContainer.offsetTop;
+                    // To be safe, use getBoundingClientRect + scrollY
+                    const rect = cContainer.getBoundingClientRect();
+                    limitHeight = rect.top + window.scrollY;
+                }
+
+                // Fallback if something is wrong
+                if (limitHeight < window.innerHeight) limitHeight = window.innerHeight * 2;
+                
+                const winWidth = document.documentElement.clientWidth;
+                const winHeight = window.innerHeight;
+
+                // Set container height to the limit
+                waveContainer.style.position = 'absolute';
+                waveContainer.style.height = `${limitHeight}px`;
+
+                // Generate Path: A nice gentle sine wave down the center
+                const amplitude = winWidth < 768 ? winWidth * 0.3 : 150; // Smaller wave on mobile
+                const frequency = 0.002; // Adjust for wave tightness
+                const centerX = winWidth / 2;
+
+                let d = `M ${centerX} 0`;
+                const steps = 50; // Resolution
+                
+                for (let y = 0; y <= limitHeight; y += steps) {
+                    // Taper amplitude: Full amplitude at top, 0 at bottom (limitHeight)
+                    // We can start tapering halfway down or just linear taper from the start
+                    // Let's taper it drastically in the last 500px to ensure it aligns
+                    
+                    let currentAmp = amplitude;
+                    const remainingDist = limitHeight - y;
+                    
+                    if (remainingDist < 500) {
+                        // Linear fade out of amplitude in the last 500px
+                        currentAmp = amplitude * (remainingDist / 500);
+                    }
+                    
+                    const x = centerX + Math.sin(y * frequency) * currentAmp;
+                    d += ` L ${x} ${y}`;
+                }
+                
+                // FORCE Connection to Center at the exact end point
+                d += ` L ${centerX} ${limitHeight}`;
+
+                wavePathBg.setAttribute('d', d);
+                wavePathDraw.setAttribute('d', d);
+
+                pathLength = wavePathDraw.getTotalLength();
+                
+                // Hide the "draw" path initially
+                wavePathDraw.style.strokeDasharray = pathLength;
+                wavePathDraw.style.strokeDashoffset = pathLength;
+            }
+
+            function updateWaveScroll() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const winHeight = window.innerHeight;
+                const docHeight = waveContainer.offsetHeight; // This is valid limitHeight
+
+                // Calculate progress
+                const viewportY = scrollTop + winHeight * 0.5; 
+                
+                const winWidth = document.documentElement.clientWidth;
+                const amplitude = winWidth < 768 ? winWidth * 0.3 : 150;
+                const frequency = 0.002;
+                const centerX = winWidth / 2;
+                
+                // Move Star Cluster logic - using left/top instead of transform to avoid conflicts
+                // Offset by -24px (half of 48px container) to center on the path
+                if (viewportY <= docHeight) {
+                    const targetX = centerX + Math.sin(viewportY * frequency) * amplitude;
+                    starCluster.style.left = `${targetX - 24}px`;
+                    starCluster.style.top = `${viewportY - 24}px`;
+                } else {
+                    // Lock at end
+                    starCluster.style.left = `${centerX - 24}px`;
+                    starCluster.style.top = `${docHeight - 24}px`;
+                }
+                
+                // --- MERGE LOGIC ---
+                const pSection = document.getElementById('projects');
+                const cContainer = document.getElementById('constellation-container');
+                
+                if (pSection && revolvingGroup && cContainer) {
+                    // Start merging when we get close to the Container, not just the section top
+                    const limitTop = waveContainer.offsetHeight; // Should equal our limitHeight
+                    const mergeStart = limitTop - winHeight * 0.5; 
+                    const mergeEnd = limitTop; // Finish exactly when we hit the "wall"
+
+                    let mergeProgress = 0;
+                    if (scrollTop + winHeight * 0.5 > mergeStart) {
+                         // progress based on viewportY approach
+                         mergeProgress = (scrollTop + winHeight * 0.5 - mergeStart) / (mergeEnd - mergeStart);
+                    }
+                    
+                    mergeProgress = Math.max(0, Math.min(1, mergeProgress));
+                    
+                    const scale = 1 - (mergeProgress * 0.9); 
+                    const opacity = 1 - mergeProgress;
+
+                    revolvingGroup.style.transform = `scale(${scale})`;
+                    starCluster.style.opacity = (mergeProgress <= 0) ? 1 : ((mergeProgress >= 0.98) ? 0 : opacity);
+                }
+
+                // Update drawn path
+                // Ratio is viewportY / full path height (limitHeight)
+                let ratio = viewportY / docHeight;
+                ratio = Math.min(ratio, 1);
+                
+                wavePathDraw.style.strokeDashoffset = pathLength - (pathLength * ratio);
+            }
+
+            window.addEventListener('resize', () => {
+                initWave();
+                updateWaveScroll();
+            });
+            
+            window.addEventListener('scroll', updateWaveScroll);
+            
+            // Init
+            initWave();
+            updateWaveScroll(); // Set initial position
+        }
+
     </script>
     <script type="module" src="./galaxy.js"></script>
+    <!-- Performance Optimization Scripts -->
+    <script src="lazy-load.js" defer></script>
+    
+    <!-- Galaxy Animation - Deferred Module -->
+    <script type="module" src="galaxy.js" defer></script>
+    
+    <!-- Initialize Lucide Icons after load -->
+    <script>
+        window.addEventListener('load', function() {
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        });
+    </script>
 </body>
 </html>
