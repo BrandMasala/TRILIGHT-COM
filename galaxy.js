@@ -26,9 +26,9 @@ const isLowEnd = navigator.hardwareConcurrency <= 4;
 const qualityLevel = window.STARFIELD_QUALITY || (isMobile || isLowEnd ? 'low' : 'high');
 
 // Adaptive particle count based on device
-parameters.count = qualityLevel === 'low' ? 25000 : 50000; // Reduced from 155000
-parameters.size = 0.015;
-parameters.radius = 2.15; 
+parameters.count = qualityLevel === 'low' ? 40000 : 80000; // Increased count
+parameters.size = 0.02; // Slightly larger stars
+parameters.radius = 5.0; // Larger radius to fill screen 
 parameters.branches = 4; 
 parameters.spin = 3;
 parameters.randomness = 5;
@@ -278,88 +278,5 @@ const tick = () =>
 }
 
 tick()
-// const tick = () =>
-// {
-//     const elapsedTime = clock.getElapsedTime()
 
-//     // --- Scroll Logic ---
-//     const scrollY = window.scrollY;
-//     // Map animation to the first 1.5 screens of scrolling
-//     const maxScroll = window.innerHeight * 1.2; 
-//     let targetRatio = scrollY / maxScroll;
-//     targetRatio = Math.min(Math.max(targetRatio, 0), 0.8); 
-    
-//     // Smooth the ratio using Linear Interpolation (Lerp) to prevent jitter
-//     // If currentRatio doesn't exist yet, init it
-//     if(typeof window.currentScrollRatio === 'undefined') window.currentScrollRatio = 0;
-    
-//     // Lerp factor (0.1 = smooth, 1.0 = instant)
-//     window.currentScrollRatio += (targetRatio - window.currentScrollRatio) * 0.1;
-    
-//     // Use the smoothed ratio for animation
-//     const ratio = window.currentScrollRatio;
-
-//     // 1. Galaxy Expansion (Scroll Controlled)
-//     if(points) {
-//         // Start as Singularity (0.1) -> Explode to Universe (60.0)
-//         const baseScale = 0.1 + (ratio * 60.0); 
-//         points.scale.set(baseScale, baseScale, baseScale);
-        
-//         // Reduce Particles on Scroll (90000 -> 40000)
-//         // Ratio goes from 0 to 0.8 (as per user clamp)
-//         // Normalize ratio to 0-1 range relative to the 0.8 cap
-//         const normalizedRatio = Math.min(ratio / 0.9, 1.0);
-        
-//         // Calculate current count: Lerp from Max to Min
-//         const minParticles = 40000;
-//         const currentCount = Math.floor(parameters.count - (normalizedRatio * (parameters.count - minParticles)));
-        
-//         if(geometry) {
-//             geometry.setDrawRange(0, currentCount);
-//         }
-        
-//         // Steady rotation
-//         points.rotation.y = elapsedTime * 0.05; 
-        
-//         // Sync Constellation Lines
-//         if(linesMesh) {
-//             linesMesh.scale.set(baseScale, baseScale, baseScale);
-//             linesMesh.rotation.y = points.rotation.y;
-//             linesMesh.position.copy(points.position); 
-//         }
-//     }
-
-//     // 2. Mini Galaxies Appearance
-//     galaxyGroups.forEach((g, i) => {
-//         g.rotation.y += 0.001 * (i + 1);
-        
-//         // Intro + Scroll visibility
-//         // Start invisible until intro is partly done? Or just rely on scroll?
-//         // Let's keep them hidden until scroll to keep focus on the text/core during intro.
-        
-//         const appearThreshold = 0.05;
-//         let pRatio = (ratio - appearThreshold);
-//         pRatio = Math.max(0, pRatio); 
-        
-//         const finalScale = 2.0; 
-//         const scale = Math.min(pRatio * 2.5, 1) * finalScale;
-        
-//         g.scale.set(scale, scale, scale);
-//     });
-
-//     // Camera Orbit 
-//     // Stay relatively close (4) to feel the size of the blast passing you
-//     const camDist = 5;
-//     camera.position.x = Math.cos(elapsedTime * 0.1) * camDist;
-//     camera.position.z = Math.sin(elapsedTime * 0.1) * camDist;
-//     camera.lookAt(0, 0, 0);
-
-//     // Render
-//     renderer.render(scene, camera)
-
-//     // Call tick again on the next frame
-//     window.requestAnimationFrame(tick)
-// }
-
-// tick()
 

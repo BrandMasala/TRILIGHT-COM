@@ -347,7 +347,6 @@
             color: rgb(var(--color-contrast));
             transition: background-color 0.5s ease, color 0.5s ease;
             overflow-x: hidden;
-            cursor: none;
         }
 
         /* --- Starfield Canvas --- */
@@ -359,20 +358,9 @@
             mix-blend-mode: screen;
         }
 
-        /* --- Custom Cursor --- */
-        #cursor {
-            position: fixed; top: 0; left: 0; width: 12px; height: 12px;
-            border: 1px solid var(--color-silver);
-            background-color: rgba(226, 232, 240, 0.3);
-            border-radius: 50%; pointer-events: none; z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s, background-color 0.3s;
-            mix-blend-mode: difference;
-        } */
-        #cursor.hovered {
-            width: 50px; height: 50px;
-            background-color: rgba(226, 232, 240, 0.1); border-color: transparent;
-        }
+       
+
+       
 
         /* --- Minimal Scrollbar --- */
         ::-webkit-scrollbar { width: 4px; }
@@ -490,7 +478,6 @@
             bottom: 0;
             width: 100%;
             height: 60px;
-            background: rgba(0, 0, 0, 0.6); /* Darker background for legibility */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -657,6 +644,80 @@
         .input-group.active .input-container { transform: scale(1.02); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2); }
         .input-group.inactive { opacity: 0.5; filter: blur(0.5px); }
 
+        /* --- NEW MENU & ARCHITECTURAL STYLES --- */
+    .font-serif {
+        font-family: 'Playfair Display', serif;
+    }
+    /* --- Grid Lines --- */
+    .grid-line {
+        position: fixed;
+        background-color: rgba(255, 255, 255, 0.08);
+        z-index: 40; /* Behind fixed UI but above bg */
+        pointer-events: none;
+    }
+    .grid-vertical-left { top: 0; bottom: 0; left: 4rem; width: 1px; }
+    .grid-vertical-right { top: 0; bottom: 0; right: 4rem; width: 1px; }
+    .grid-horizontal-top { left: 0; right: 0; top: 5rem; height: 1px; }
+    .grid-horizontal-bottom { left: 0; right: 0; bottom: 5rem; height: 1px; }
+    /* --- Nav Hover Effect (Desktop Bottom Right) --- */
+    .nav-item {
+        display: block;
+        position: relative;
+        padding-right: 0;
+        transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        color: rgba(255, 255, 255, 0.5);
+    }
+    .nav-item:hover {
+        padding-right: 20px;
+        color: #fff;
+    }
+    .nav-item::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 1px;
+        background-color: #fff;
+        transition: width 0.3s ease;
+    }
+    .nav-item:hover::after {
+        width: 12px;
+    }
+/* --- Animations --- */
+    .reveal-corner {
+        opacity: 0;
+        animation: fadeIn 1.5s ease forwards;
+    }
+    @keyframes fadeIn { to { opacity: 1; } }
+    .sound-bar {
+        width: 2px;
+        background-color: white;
+        animation: soundWave 1s ease-in-out infinite;
+    }
+    @keyframes soundWave {
+        0%, 100% { height: 4px; opacity: 0.3; }
+        50% { height: 16px; opacity: 1; }
+    }
+    /* --- Menu Overlay Items --- */
+    .menu-link-item {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .menu-open .menu-link-item {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    /* Mobile specific adjustments */
+    @media (max-width: 768px) {
+        .grid-vertical-left { left: 1.5rem; }
+        .grid-vertical-right { right: 1.5rem; }
+        .grid-horizontal-top { top: 4rem; }
+        .grid-horizontal-bottom { bottom: 4rem; }
+    }
+
     </style>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -670,27 +731,27 @@
     <div id="global-wave-container" class="absolute top-0 left-0 w-full pointer-events-none z-0 overflow-hidden">
         <svg class="absolute top-0 left-0 w-full h-full">
             <path id="wave-path-bg" fill="none" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1"></path>
-            <path id="wave-path-draw" fill="none" stroke="#C5A47E" stroke-width="2" stroke-linecap="round"></path>
+            <path id="wave-path-draw" fill="none" stroke="rgba(197, 164, 126, 0.5)" stroke-width="1" stroke-linecap="round"></path>
         </svg>
-        <div id="star-cluster" class="absolute w-12 h-12 flex items-center justify-center transition-all duration-100 ease-out will-change-transform z-10" style="left: -24px; top: -24px;">
+        <!-- Star Trail Elements (rendered behind main cluster) -->
+        <div id="star-trail-container" class="absolute top-0 left-0 w-full h-full">
+            <!-- Trail stars will be dynamically positioned here -->
+        </div>
+        <div id="star-cluster" class="absolute top-0 left-0 w-12 h-12 flex items-center justify-center transition-transform duration-100 ease-out will-change-transform z-50">
              <div id="revolving-group" class="relative w-full h-full">
                 <div class="w-full h-full animate-spin-revolve">
-                    <!-- Stars positioned in perfect equilateral triangle -->
-                    <!-- Top star (0 degrees) -->
-                    <i class="fas fa-star text-gold text-[10px] absolute" style="top: 15%; left: 50%; transform: translate(-50%, -50%);"></i>
-                    <!-- Bottom right star (120 degrees) -->
-                    <i class="fas fa-star text-gold text-[10px] absolute" style="top: 58%; left: 73%; transform: translate(-50%, -50%);"></i>
-                    <!-- Bottom left star (240 degrees) -->
-                    <i class="fas fa-star text-gold text-[10px] absolute" style="top: 58%; left: 27%; transform: translate(-50%, -50%);"></i>
+                    <!-- Top star -->
+                    <i class="fas fa-star text-gold text-[12px] absolute" style="top: 0; left: 50%; transform: translate(-50%, 0);"></i>
+                    <!-- Bottom right star -->
+                    <i class="fas fa-star text-gold text-[12px] absolute" style="top: 70%; left: 70%; transform: translate(-50%, -50%);"></i>
+                    <!-- Bottom left star -->
+                    <i class="fas fa-star text-gold text-[12px] absolute" style="top: 70%; left: 30%; transform: translate(-50%, -50%);"></i>
                 </div>
              </div>
         </div>
     </div>
 
-    <!-- Custom Cursor -->
-    <div id="cursor" class="hidden md:block"></div>
-
-    <!-- Navigation -->
+    <!-- Navigation
     <nav class="fixed w-full z-50 py-8 transition-all duration-500 bg-gradient-to-b from-navy/90 to-transparent backdrop-blur-[2px]">
         <div class="max-w-[90%] mx-auto flex justify-between items-center">
             <a href="#" class="magnetic-target block">
@@ -701,29 +762,151 @@
                      height="48">
             </a>
 
-            <div class="hidden md:flex items-center space-x-12 text-[10px] uppercase tracking-[0.2em] font-medium text-muted">
                 <a href="#about" class="hover:text-contrast transition-colors hover-underline-animation magnetic-target">Philosophy</a>
                 <a href="#projects" class="hover:text-contrast transition-colors hover-underline-animation magnetic-target">Collection</a>
+                <a href="#signature-collection" class="hover:text-contrast transition-colors hover-underline-animation magnetic-target">Signature</a>
                 <a href="#visionary" class="hover:text-contrast transition-colors hover-underline-animation magnetic-target">Visionary</a>
                 <a href="#journal" class="hover:text-contrast transition-colors hover-underline-animation magnetic-target">Journal</a>
+                <a href="#timeline" class="hover:text-contrast transition-colors hover-underline-animation magnetic-target">Timeline</a>
                 <a href="#contact" class="text-contrast hover:text-silver transition-colors magnetic-target">Inquire</a>
-                <!-- <button id="theme-toggle" class="magnetic-target text-lg text-contrast hover:text-silver transition-colors ml-4 focus:outline-none"><i class="fas fa-moon theme-toggle-icon"></i></button> -->
+            </div>
+            
+            <div class="md:hidden flex items-center gap-4">
+                <button class="text-xl text-contrast magnetic-target" onclick="document.getElementById('mobile-menu').classList.toggle('translate-x-full')"><i class="fas fa-bars"></i></button>
             </div>
 
-            <!-- <div class="md:hidden flex items-center gap-4">
-                <button id="mobile-theme-toggle" class="text-xl text-contrast magnetic-target"><i class="fas fa-moon"></i></button>
-                <button class="text-xl text-contrast magnetic-target" onclick="document.getElementById('mobile-menu').classList.toggle('translate-x-full')"><i class="fas fa-bars"></i></button>
-            </div> -->
         </div>
     </nav>
 
-    <!-- Mobile Menu -->
+     Mobile Menu
     <div id="mobile-menu" class="fixed inset-0 bg-navy z-50 transform translate-x-full transition-transform duration-500 flex flex-col justify-center items-center space-y-8">
         <button class="absolute top-8 right-8 text-2xl text-muted" onclick="document.getElementById('mobile-menu').classList.toggle('translate-x-full')"><i class="fas fa-times"></i></button>
         <a href="#about" class="text-2xl font-serif text-contrast hover:text-silver transition-colors" onclick="document.getElementById('mobile-menu').classList.add('translate-x-full')">Philosophy</a>
         <a href="#projects" class="text-2xl font-serif text-contrast hover:text-silver transition-colors" onclick="document.getElementById('mobile-menu').classList.add('translate-x-full')">Collection</a>
+        <a href="#signature-collection" class="text-2xl font-serif text-contrast hover:text-silver transition-colors" onclick="document.getElementById('mobile-menu').classList.add('translate-x-full')">Signature</a>
         <a href="#visionary" class="text-2xl font-serif text-contrast hover:text-silver transition-colors" onclick="document.getElementById('mobile-menu').classList.add('translate-x-full')">Visionary</a>
+        <a href="#journal" class="text-2xl font-serif text-contrast hover:text-silver transition-colors" onclick="document.getElementById('mobile-menu').classList.add('translate-x-full')">Journal</a>
+        <a href="#timeline" class="text-2xl font-serif text-contrast hover:text-silver transition-colors" onclick="document.getElementById('mobile-menu').classList.add('translate-x-full')">Timeline</a>
         <a href="#contact" class="text-2xl font-serif text-silver" onclick="document.getElementById('mobile-menu').classList.add('translate-x-full')">Inquire</a>
+    </div> -->
+
+     <!-- CORNER 1: TOP LEFT (Identity) -->
+    <header class="fixed top-6 left-6 md:top-8 md:left-12 z-50 reveal-corner pointer-events-auto" style="animation-delay: 0.1s;">
+        <div class="flex items-center gap-4">
+            <a href="#" class="magnetic-target block">
+                <img src="Assests/Trilight.png" 
+                     alt="Trilight Group" 
+                     class="h-10 md:h-12 w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100 transition-opacity"
+                     width="150"
+                     height="48">
+            </a>
+        </div>
+    </header>
+
+    <!-- CORNER 2: TOP RIGHT (Action) -->
+    <div class="fixed top-0 right-0 z-50 p-6 md:p-8 reveal-corner pointer-events-auto" style="animation-delay: 0.2s;">
+        <a href="#contact" class="group flex items-center gap-3 mix-blend-difference text-white">
+            <span class="text-[10px] uppercase tracking-[0.3em] font-light group-hover:tracking-[0.4em] transition-all duration-500">Inquire</span>
+            <div class="w-10 h-10 border border-white/20 rounded-full flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-500">
+                <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            </div>
+        </a>
+    </div>
+
+    <!-- CORNER 4: BOTTOM RIGHT (Navigation Stack) -->
+    <nav class="fixed bottom-6 right-6 md:bottom-12 md:right-12 z-[70] text-right mb-4 md:mb-0 reveal-corner pointer-events-auto" style="animation-delay: 0.4s;">
+        <!-- Menu Trigger -->
+        <button id="menu-trigger" class="flex flex-col gap-1.5 group cursor-pointer p-2 relative outline-none">
+            <div class="flex items-center gap-4">
+                <span class="hidden md:block text-[10px] uppercase tracking-[0.3em] font-medium text-white/50 group-hover:text-white transition-colors">Menu</span>
+                <div class="flex flex-col gap-1.5 items-end">
+                    <span class="w-8 h-[1px] bg-white group-hover:w-6 transition-all duration-300 menu-bar origin-center"></span>
+                    <span class="w-5 h-[1px] bg-white group-hover:w-8 transition-all duration-300 menu-bar origin-center"></span>
+                    <span class="w-8 h-[1px] bg-white group-hover:w-4 transition-all duration-300 menu-bar origin-center"></span>
+                </div>
+            </div>
+        </button>
+    </nav>
+
+    <!-- ================= UNIQUE FULL MENU OVERLAY ================= -->
+    <div id="full-menu" class="fixed inset-0 bg-[#080808] z-[60] transform translate-y-full transition-transform duration-700 cubic-bezier(0.76, 0, 0.24, 1) flex items-center overflow-hidden">
+        
+        <!-- Internal Grid Lines (For "Same Layout" continuity) -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="grid-line grid-vertical-left hidden md:block opacity-20"></div>
+            <div class="grid-line grid-vertical-right hidden md:block opacity-20"></div>
+            <div class="grid-line grid-horizontal-top opacity-20"></div>
+            <div class="grid-line grid-horizontal-bottom opacity-20"></div>
+        </div>
+
+        <!-- Huge Background Watermark (Interactive) -->
+        <div id="watermark" class="absolute right-[-10%] bottom-[-20%] text-[50vh] md:text-[80vh] font-serif leading-none text-white/[0.03] select-none transition-all duration-700 ease-out pointer-events-none">
+            T
+        </div>
+
+        <!-- Content Container -->
+        <div class="w-full max-w-[1400px] mx-auto px-6 md:px-20 relative z-10 flex flex-col md:flex-row md:items-end justify-between h-full py-32 md:py-24">
+            
+            <!-- Left: Giant Index List -->
+            <div class="flex flex-col justify-center space-y-4 md:space-y-2 w-full">
+                
+                <a href="#about" class="menu-link-item group relative flex items-baseline gap-4 md:gap-8 py-2 md:py-4 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="P" style="transition-delay: 0.1s;">
+                    <span class="text-xs md:text-sm font-mono text-gray-600 group-hover:text-gold transition-colors">01</span>
+                    <span class="text-5xl md:text-8xl font-serif text-gray-500 group-hover:text-white transition-all duration-500 ease-out">Philosophy</span>
+                </a>
+
+                <a href="#projects" class="menu-link-item group relative flex items-baseline gap-4 md:gap-8 py-2 md:py-4 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="C" style="transition-delay: 0.2s;">
+                    <span class="text-xs md:text-sm font-mono text-gray-600 group-hover:text-gold transition-colors">02</span>
+                    <span class="text-5xl md:text-8xl font-serif text-gray-500 group-hover:text-white transition-all duration-500 ease-out">Collection</span>
+                </a>
+
+                <a href="#signature-collection" class="menu-link-item group relative flex items-baseline gap-4 md:gap-8 py-2 md:py-4 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="S" style="transition-delay: 0.3s;">
+                    <span class="text-xs md:text-sm font-mono text-gray-600 group-hover:text-gold transition-colors">03</span>
+                    <span class="text-5xl md:text-8xl font-serif text-gray-500 group-hover:text-white transition-all duration-500 ease-out">Signature</span>
+                </a>
+
+                <a href="#virtual-tour" class="menu-link-item group relative flex items-baseline gap-4 md:gap-8 py-2 md:py-4 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="E" style="transition-delay: 0.4s;">
+                    <span class="text-xs md:text-sm font-mono text-gray-600 group-hover:text-gold transition-colors">04</span>
+                    <span class="text-5xl md:text-8xl font-serif text-gray-500 group-hover:text-white transition-all duration-500 ease-out">Experience</span>
+                </a>
+
+                <a href="#testimonials" class="menu-link-item group relative flex items-baseline gap-4 md:gap-8 py-2 md:py-4 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="V" style="transition-delay: 0.5s;">
+                    <span class="text-xs md:text-sm font-mono text-gray-600 group-hover:text-gold transition-colors">05</span>
+                    <span class="text-5xl md:text-8xl font-serif text-gray-500 group-hover:text-white transition-all duration-500 ease-out">Visual Stories</span>
+                </a>
+
+                <a href="#visionary" class="menu-link-item group relative flex items-baseline gap-4 md:gap-8 py-2 md:py-4 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="L" style="transition-delay: 0.6s;">
+                    <span class="text-xs md:text-sm font-mono text-gray-600 group-hover:text-gold transition-colors">06</span>
+                    <span class="text-5xl md:text-8xl font-serif text-gray-500 group-hover:text-white transition-all duration-500 ease-out">Leadership</span>
+                </a>
+
+                <a href="#journal" class="menu-link-item group relative flex items-baseline gap-4 md:gap-8 py-2 md:py-4 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="J" style="transition-delay: 0.7s;">
+                    <span class="text-xs md:text-sm font-mono text-gray-600 group-hover:text-gold transition-colors">07</span>
+                    <span class="text-5xl md:text-8xl font-serif text-gray-500 group-hover:text-white transition-all duration-500 ease-out">Journal</span>
+                </a>
+
+                <a href="#timeline" class="menu-link-item group relative flex items-baseline gap-4 md:gap-8 py-2 md:py-4 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="T" style="transition-delay: 0.8s;">
+                    <span class="text-xs md:text-sm font-mono text-gray-600 group-hover:text-gold transition-colors">08</span>
+                    <span class="text-5xl md:text-8xl font-serif text-gray-500 group-hover:text-white transition-all duration-500 ease-out">Timeline</span>
+                </a>
+
+                <a href="#contact" class="menu-link-item group relative flex items-baseline gap-4 md:gap-8 py-2 md:py-4 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="I" style="transition-delay: 0.9s;">
+                    <span class="text-xs md:text-sm font-mono text-gray-600 group-hover:text-gold transition-colors">09</span>
+                    <span class="text-5xl md:text-8xl font-serif text-gray-500 group-hover:text-white transition-all duration-500 ease-out">Inquire</span>
+                </a>
+            </div>
+
+            <!-- Right: Secondary Info (Hidden on small mobile) -->
+            <div class="hidden md:block text-right pb-4 menu-link-item" style="transition-delay: 0.7s;">
+                <h4 class="text-xs uppercase tracking-[0.2em] text-gray-500 mb-4">Connect</h4>
+                <p class="text-sm text-gray-400 hover:text-white cursor-pointer transition-colors">+91 40 1234 5678</p>
+                <p class="text-sm text-gray-400 hover:text-white cursor-pointer transition-colors mt-2">hello@trilight.com</p>
+                <div class="mt-8 flex justify-end gap-4">
+                    <a href="#" class="w-8 h-8 border border-white/20 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+                    <a href="#" class="w-8 h-8 border border-white/20 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Hero Section -->
@@ -735,9 +918,12 @@
             
             <div class="z-10 text-center px-4">
                 <p class="text-[10px] md:text-xs uppercase tracking-[0.4em] text-silver mb-6 animate-fade-in-up" style="animation-delay: 0.2s;">The Trilight Group</p>
-                <h1 class="font-serif text-5xl md:text-7xl lg:text-9xl text-contrast leading-tight mb-8 mix-blend-overlay animate-fade-in-up" style="animation-delay: 0.4s;">
-                    Beyond <br> <span class="italic font-light">Horizons</span>
+                <h1 class="font-serif text-4xl md:text-6xl lg:text-7xl text-contrast leading-relaxed mb-8 mix-blend-overlay animate-fade-in-up font-light" style="animation-delay: 0.4s;">
+                    We Have Changed <br> <span class="italic font-extralight">The Game.</span>
                 </h1>
+                <h2 class="text-sm md:text-base text-silver/80 font-light tracking-wide">
+                    The rules of luxury in Hyderabad have been rewritten. 3 Towers. 3 Clubhouses. 0 Compromises.
+                </h2>
             </div>
         </div>
     </header>
@@ -745,27 +931,27 @@
     <!-- Philosophy -->
     <section id="about" class="py-32 md:py-48 bg-transparent relative transition-colors duration-500 z-10">
         <div class="max-w-4xl mx-auto px-6 text-center">
-            <span class="block text-gold text-[10px] uppercase tracking-widest mb-8 reveal-on-scroll">Our Philosophy</span>
+            <span class="block text-gold text-[10px] uppercase tracking-widest mb-8 reveal-on-scroll">The New Standard</span>
             <p class="font-serif text-2xl md:text-4xl leading-relaxed text-contrast/90 reveal-on-scroll">
-                We believe that <span class="text-silver italic">luxury</span> is not just about excess, but about the absence of friction. We craft spaces that breathe, merging structural innovation with the tranquility of nature.
+                We changed the <span class="text-silver italic">geometry of living</span>. Rejecting crowded floors, we engineered a vertical ecosystem of privacy and luxury at three altitudes. The game has changed
             </p>
             
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-24 border-t border-contrast/5 pt-12">
                 <div class="reveal-on-scroll magnetic-target p-4 rounded-lg hover:bg-contrast/5 transition-colors duration-500">
-                    <span class="block text-3xl font-serif text-contrast mb-2 counter" data-target="15">0</span>
-                    <span class="text-[9px] uppercase tracking-widest text-gold">Years Experience</span>
+                    <span class="block text-3xl font-serif text-contrast mb-2"><span class="counter" data-target="45"></span>+</span>
+                    <span class="text-[9px] uppercase tracking-widest text-gold">Years Legacy</span>
                 </div>
                 <div class="reveal-on-scroll magnetic-target p-4 rounded-lg hover:bg-contrast/5 transition-colors duration-500" style="transition-delay: 100ms">
-                    <span class="block text-3xl font-serif text-contrast mb-2 counter" data-target="12">0</span>
-                    <span class="text-[9px] uppercase tracking-widest text-gold">Awards Won</span>
+                    <span class="block text-3xl font-serif text-contrast mb-2 counter" data-target="3">0</span>
+                    <span class="text-[9px] uppercase tracking-widest text-gold"> Iconic Towers</span>
                 </div>
                 <div class="reveal-on-scroll magnetic-target p-4 rounded-lg hover:bg-contrast/5 transition-colors duration-500" style="transition-delay: 200ms">
-                    <span class="block text-3xl font-serif text-contrast mb-2">$<span class="counter" data-target="2">0</span>B+</span>
-                    <span class="text-[9px] uppercase tracking-widest text-gold">Project Value</span>
+                    <span class="block text-3xl font-serif text-contrast mb-2"><span class="counter" data-target="462"></span></span>
+                    <span class="text-[9px] uppercase tracking-widest text-gold">Limited Units</span>
                 </div>
                 <div class="reveal-on-scroll magnetic-target p-4 rounded-lg hover:bg-contrast/5 transition-colors duration-500" style="transition-delay: 300ms">
-                    <span class="block text-3xl font-serif text-contrast mb-2 counter" data-target="4">0</span>
-                    <span class="text-[9px] uppercase tracking-widest text-gold">Global Cities</span>
+                    <span class="block text-3xl font-serif text-contrast mb-2"><span class="counter" data-target="5.5"></span>M+</span>
+                    <span class="text-[9px] uppercase tracking-widest text-gold">Sq. Ft. Portfolio</span>
                 </div>
             </div>
         </div>
@@ -775,8 +961,9 @@
     <section id="projects" class="bg-transparent pt-32 pb-32 transition-colors duration-500 relative z-10">
         <div class="max-w-[95%] mx-auto relative">
             <div class="mb-24 text-center">
-                <span class="block text-gold text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Our Portfolio</span>
+                <span class="block text-gold text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">The Portfolio</span>
                 <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">The Constellations</h2>
+                <p class="text-muted text-lg font-light mt-6 reveal-on-scroll">Three Towers. One Vision.</p>
                 <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
             </div>
         </div>
@@ -792,9 +979,7 @@
 
             <!-- Project 1 -->
             <div class="project-row group relative mb-32 md:mb-48 z-10" data-project="1">
-                <!-- <div class="absolute left-4 md:left-1/2 top-1/2 transform -translate-y-1/2 md:-translate-x-1/2 star-node w-8 h-8 rounded-full flex items-center justify-center -ml-[15px] md:ml-0">
-                    <i class="fas fa-star text-[10px]"></i>
-                </div> -->
+              
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pl-12 md:pl-0">
                     <div class="order-2 lg:order-1 px-6 lg:pl-20 md:text-right md:pr-20 project-card">
                         <img src="Assests/Trilight_Logo_Final.png" 
@@ -804,9 +989,10 @@
                              width="300"
                              height="80">
                         <p class="text-muted font-light text-sm leading-7 max-w-sm mb-8 md:ml-auto">
-                            Three landmark towers in Kokapet, redefining luxury living with generous spaces, elite amenities and commanding skyline presence.                             </p>
+                            Rising 200 meters above the Golden Mile, The Trilight creates a commanding skyline presence with three distinct stars: Canopus (56 Floors), Vega (46 Floors), and Rigel (49 Floors). We have partnered with TATA Projects to ensure that our structural innovation matches our visionary design. This is where 11-foot 4-inch ceilings meet absolute precision.
+                        </p>
                         <a href="thetrilight.com" class="magnetic-target inline-flex items-center text-[10px] uppercase tracking-widest text-contrast border-b border-contrast/20 pb-1 hover:border-silver hover:text-silver transition-all">
-                            View Residence <i class="fas fa-arrow-right ml-4 text-silver text-[8px]"></i>
+                            View Residences <i class="fas fa-arrow-right ml-4 text-silver text-[8px]"></i>
                         </a>
                     </div>
                     <div class="order-1 lg:order-2 parallax-container project-card" style="transition-delay: 200ms;">
@@ -843,26 +1029,46 @@
                         </a>
                     </div>
                 </div>
-            </div>
 
-            <!-- Project 3 (Centered & Separate from Timeline)
-            <div class="project-row group relative z-10 mt-32 md:mt-48 text-center flex flex-col items-center" data-project="3">
-                <div class="max-w-3xl mx-auto px-6">
-                    <h3 class="text-5xl md:text-7xl font-serif text-contrast mb-6 group-hover:text-silver transition-colors duration-500">Upcoming Projects</h3>
-                    <p class="text-muted font-light text-sm leading-7 max-w-sm mx-auto mb-8">
-                        A coastal masterpiece currently in development. Bridging the gap between the serenity of the ocean and the vibrancy of urban life.
-                    </p>
-                        <span class="text-[10px] uppercase tracking-widest text-gold border border-gold/30 px-3 py-1 rounded-full">Coming 2026</span>
-                        </div>
-                     <div class="order-1 lg:order-2 h-[60vh] lg:h-[80vh] parallax-container project-card" style="transition-delay: 200ms;">
-                        <div class="absolute inset-0 bg-navy/20 z-10 flex items-center justify-center">
-                            <span class="text-stroke font-serif text-6xl opacity-30">SOON</span>
+            <!-- Project 3 -->
+            <div class="project-row group relative mb-32 md:mb-48 z-10" data-project="3">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pl-12 md:pl-0">
+                     <div class="order-2 lg:order-1 px-6 lg:pl-20 md:text-right md:pr-20 project-card">
+                         <span class="text-[10px] uppercase tracking-widest text-gold border border-gold/30 px-3 py-1 rounded-full mb-6 inline-block">Coming Soon</span>
+                        <h3 class="text-3xl font-serif text-contrast mb-4"> Trise</h3>
+                        <p class="text-muted font-light text-sm leading-7 max-w-sm mb-8 md:ml-auto">
+                            A coastal masterpiece currently in development. Bridging the gap between the serenity of the ocean and the vibrancy of urban life.
+                        </p>
                     </div>
-                       <img src="https://images.unsplash.com/photo-1512958779353-9152f257915b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
-                             class="parallax-img grayscale" alt="Apex"> 
+                    <div class="order-1 lg:order-2 parallax-container project-card" style="transition-delay: 200ms;">
+                         <div class="w-full h-[400px] bg-navy/30 border border-white/5 flex items-center justify-center relative overflow-hidden group-hover:border-gold/30 transition-colors">
+                            <span class="text-xs uppercase tracking-[0.2em] text-silver/50">Confidential</span>
+                             <div class="absolute inset-0 bg-gradient-to-tr from-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            </div> -->
+
+            <!-- Project 4 -->
+            <div class="project-row group relative mb-32 md:mb-48 z-10" data-project="4">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pl-12 md:pl-0">
+                     <div class="parallax-container project-card">
+                        <div class="w-full h-[400px] bg-navy/30 border border-white/5 flex items-center justify-center relative overflow-hidden group-hover:border-gold/30 transition-colors">
+                             <span class="text-xs uppercase tracking-[0.2em] text-silver/50">Confidential</span>
+                            <div class="absolute inset-0 bg-gradient-to-tr from-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+                        </div>
+                    </div>
+                    <div class="px-6 lg:pl-20 project-card" style="transition-delay: 200ms;">
+                         <span class="text-[10px] uppercase tracking-widest text-gold border border-gold/30 px-3 py-1 rounded-full mb-6 inline-block">Coming Soon</span>
+                        <h3 class="text-3xl font-serif text-contrast mb-4">Project Kompally</h3>
+                        <p class="text-muted font-light text-sm leading-7 max-w-sm mb-8">
+                             Another masterpiece in the making. Redefining the skyline of the future.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            </div>
+
         </div>
     </section>
 
@@ -870,24 +1076,24 @@
     <section id="signature-collection" class="py-32 bg-transparent relative z-10 transition-colors duration-500 overflow-hidden">
         <div class="max-w-[95%] mx-auto px-6 mb-12 text-center">
             <span class="block text-gold text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Exclusive Listings</span>
-            <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">The Signature Collection</h2>
+            <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">Signature Collection</h2>
             <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
         </div>
 
         <div class="deck-container reveal-on-scroll">
             <!-- Card 1 (Left) -->
-            <div data-text="Thrive" style="--r:-15;" class="deck-glass group">
-                <img src="Assests/T1.webp" loading="lazy" alt="Thrive" width="280" height="420">
+            <div style="--r:-15;" class="deck-glass group">
+                <img src="Assests/T1.webp" loading="lazy" width="280" height="420">
             </div>
             
             <!-- Card 2 (Center) -->
-            <div data-text="Trust" style="--r:0;" class="deck-glass group z-10">
-                <img src="Assests/T2.webp" loading="lazy" alt="Trust" width="280" height="420">
+            <div style="--r:0;" class="deck-glass group z-10">
+                <img src="Assests/T2.webp" loading="lazy" width="280" height="420">
             </div>
             
             <!-- Card 3 (Right) -->
-            <div data-text="Team" style="--r:15;" class="deck-glass group">
-                <img src="Assests/T3.webp" loading="lazy" alt="Team" width="280" height="420">
+            <div style="--r:15;" class="deck-glass group">
+                <img src="Assests/T3.webp" loading="lazy"   width="280" height="420">
             </div>
         </div>
     </section>
@@ -910,8 +1116,8 @@
                     <div class="w-16 h-16 rounded-full border border-silver/30 flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform duration-500 mb-6">
                         <i class="fas fa-cube text-silver text-xl"></i>
                     </div>
-                    <h3 class="text-2xl font-serif text-contrast mb-2 group-hover:text-gold group-hover:border-gold transition-all pb-1">Grand Lobby</h3>
-                    <span class="text-[9px] uppercase tracking-widest text-silver border-b border-transparent group-hover:text-gold group-hover:border-gold transition-all pb-1">Start Tour</span>
+                    <h3 class="text-2xl font-serif text-contrast mb-2 group-hover:text-gold group-hover:border-gold transition-all pb-1">The White Gloves (Ground Lobby)</h3>
+                    <span class="text-[9px] uppercase tracking-widest text-silver border-b border-transparent group-hover:text-gold group-hover:border-gold transition-all pb-1">Start Virtual Tour</span>
                  </div>
             </div>
 
@@ -924,8 +1130,8 @@
                     <div class="w-16 h-16 rounded-full border border-silver/30 flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform duration-500 mb-6">
                         <i class="fas fa-cube text-silver text-xl"></i>
                     </div>
-                    <h3 class="text-2xl font-serif text-contrast mb-2  group-hover:text-gold group-hover:border-gold transition-all pb-1">Sky Residence</h3>
-                    <span class="text-[9px] uppercase tracking-widest text-silver border-b border-transparent group-hover:text-gold group-hover:border-gold transition-all pb-1">Start Tour</span>
+                    <h3 class="text-2xl font-serif text-contrast mb-2  group-hover:text-gold group-hover:border-gold transition-all pb-1">Thousands of Stars (Sky Lounge)</h3>
+                    <span class="text-[9px] uppercase tracking-widest text-silver border-b border-transparent group-hover:text-gold group-hover:border-gold transition-all pb-1">Start Virtual Tour</span>
                  </div>
             </div>
         </div>
@@ -936,7 +1142,7 @@
     <section id="testimonials" class="py-20 md:py-32 bg-transparent relative z-10 transition-colors duration-500">
         <!-- Old Header -->
         <div class="max-w-[95%] mx-auto px-6 mb-12 text-center">
-            <span class="block text-gold text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Client Experiences</span>
+            <span class="block text-gold text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Visual Stories</span>
             <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">Community Voices</h2>
             <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
         </div>
@@ -950,23 +1156,24 @@
                 </div>
 
                 <!-- Testimonial 2 (Video) -->
-                <div class="relative p-0 aspect-video md:aspect-[9/16] bg-navy/20 backdrop-blur-sm rounded-sm mx-4 md:mx-8 reveal-on-scroll magnetic-target min-w-[300px] md:min-w-[400px] group overflow-hidden" style="transition-delay: 200ms">
-                    <!-- Video Background -->
-                    <video id="testimonial-video" autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500">
-                         <source src="/Assests/TESTIMONAL1920_V2.mp4" type="video/mp4">
-                    </video>
-
-                    <!-- Mute/Unmute Button -->
-                    <button onclick="toggleMute()" class="absolute bottom-6 right-6 z-20 w-10 h-10 rounded-full bg-navy/50 backdrop-blur-md border border-silver/30 flex items-center justify-center text-silver hover:bg-navy/80 transition-all group/btn">
-                        <i id="mute-icon" class="fas fa-volume-mute text-sm group-hover/btn:scale-110 transition-transform"></i>
-                    </button>
-                    
-                    <!-- Overlay Text (Optional, keeping clean for video focus) -->
-                    <div class="absolute bottom-6 left-6 z-20">
+                <div class="relative overflow-hidden h-full rounded-sm bg-navy/20 reveal-on-scroll" style="transition-delay: 200ms">
+                    <!-- Overlay Text (Optional, keeping clean for video focus) -->  
+                    <div class="absolute bottom-14 left-6 z-20 pointer-events-none">
                          <h4 class="text-xs uppercase tracking-widest text-white font-bold mb-1">Visual Stories</h4>
                          <span class="text-[9px] uppercase tracking-widest text-silver/80">Experience the vibe</span>
                     </div>
-                </div>
+                    
+                    <!-- Mute Toggle Button -->
+                    <div class="absolute top-4 right-4 z-30">
+                        <button onclick="toggleMute()" class="w-10 h-10 rounded-full bg-black/50 border border-white/10 backdrop-blur-sm flex items-center justify-center text-white hover:bg-gold hover:text-black transition-all duration-300 group">
+                            <i id="mute-icon" class="fas fa-volume-mute text-sm"></i>
+                        </button>
+                    </div>
+
+                    <div style="padding:177.78% 0 0 0;position:relative; overflow: hidden; background: #000;">
+                        <iframe id="testimonial-video" src="https://player.vimeo.com/video/1158688767?autoplay=1&loop=1&muted=1&title=0&byline=0&portrait=0&controls=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%; pointer-events:none;" title="Testimonal1920 V2_FOR WEB"></iframe>
+                    </div>
+                    <script src="https://player.vimeo.com/api/player.js"></script>                </div>
 
                 <!-- Right Waterfall -->
                 <div id="waterfall-right" class="relative overflow-hidden h-full rounded-sm mask-fade-vertical bg-navy/20  hidden md:block">
@@ -983,7 +1190,7 @@
         <div class="max-w-6xl mx-auto px-6 relative">
             <div class="mb-32 text-center">
                 <span class="block text-gold text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Leadership</span>
-                <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">The Visionaries</h2>
+                <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">The Game Changers</h2>
                 <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
             </div>
             
@@ -993,7 +1200,7 @@
                 <div class="w-full md:w-5/12 relative reveal-on-scroll">
                     <div class="absolute -inset-4 border border-silver/20 rounded-sm z-0 transform translate-x-2 translate-y-2 transition-transform duration-700 group-hover:translate-x-4 group-hover:translate-y-4"></div>
                     <div class="h-[500px] w-full overflow-hidden relative z-10">
-                        <img src="Assests/23.webp" 
+                        <img src="Assests/36.png" 
                              loading="lazy"
                              class="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-105" 
                              alt="J Sanjeeva Reddy"
@@ -1008,8 +1215,17 @@
                     <div class="relative">
                         <i class="fas fa-quote-left text-4xl text-contrast/5 absolute -top-6 -left-4"></i>
                         <p class="text-muted text-lg font-light leading-relaxed pl-6 border-l border-gold/20">
-                            "The Trilight Residences isn't in the business of mere square foot; we're sculpting the very horizon of aspiration. Every detail is a testament to our relentless pursuit of perfection."
+                            "Suvarna Durga Group was born from a vision to consolidate the efforts of hard-working entrepreneurs. Today, with 55 lakh sq. ft. under construction, we promise greater appreciation and an uber-quality lifestyle."
                         </p>
+                    </div>
+                    <!-- Additional Image -->
+                    <div class="mt-8">
+                        <img src="Assests/361.png" 
+                             loading="lazy"
+                             class="max-w-xs h-auto rounded-sm" 
+                             alt="J Sanjeeva Reddy Additional"
+                             width="200"
+                             height="auto">
                     </div>
                 </div>
             </div>
@@ -1020,7 +1236,7 @@
                 <div class="w-full md:w-5/12 relative reveal-on-scroll">
                     <div class="absolute -inset-4 border border-silver/20 rounded-sm z-0 transform -translate-x-2 translate-y-2 transition-transform duration-700 group-hover:-translate-x-4 group-hover:translate-y-4"></div>
                     <div class="h-[500px] w-full overflow-hidden relative z-10">
-                        <img src="Assests/24.webp" 
+                        <img src="Assests/37.png" 
                              loading="lazy"
                              class="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-105" 
                              alt="Sanjay Mangatram"
@@ -1035,8 +1251,17 @@
                     <div class="relative md:flex md:justify-end">
                         <i class="fas fa-quote-left text-4xl text-contrast/5 absolute -top-6 -left-4 md:left-auto md:-right-4 md:rotate-180"></i>
                         <p class="text-muted text-lg font-light leading-relaxed pl-6 md:pl-0 md:pr-6 md:border-l-0 md:border-r border-l border-gold/20">
-                            "Born from a lineage that refused to settle for enough, we are the visionaries who burn the blueprints of convention to forge a new legacy of excellence."
+                            "Growth never stops. Our vision is to deliver unique developments in exciting times. The Trilight is our vision of bringing luxury and togetherness, influenced by European aesthetics and refined sophistication."
                         </p>
+                    </div>
+                    <!-- Additional Image -->
+                    <div class="mt-8 flex justify-end">
+                        <img src="Assests/371.png" 
+                             loading="lazy"
+                             class="max-w-xs h-auto rounded-sm" 
+                             alt="Sanjay Mangatram Additional"
+                             width="200"
+                             height="auto">
                     </div>
                 </div>
             </div>
@@ -1332,7 +1557,7 @@
                     <span class="timeline-connector"></span>
                     <span class="timeline-year">2026</span>
                     <span class="timeline-title">Completion</span>
-                    <p class="timeline-desc">Projected completion and grand handover. A new era of luxury living begins as The Trilight redefines the Kokapet skyline.</p>
+                    <p class="timeline-desc">A New Era Begins Handover of 462 ultra-luxury residences. The game has officially changed in Kokapet.</p>
                 </div>
             </div>
 
@@ -1342,8 +1567,8 @@
                 <div class="timeline-content">
                     <span class="timeline-connector"></span>
                     <span class="timeline-year">2025</span>
-                    <span class="timeline-title">Structure Rise</span>
-                    <p class="timeline-desc">Superstructure completion for all three towers. Interior finishing works commence, bringing the vision to life floor by floor.</p>
+                    <span class="timeline-title">Structure</span>
+                    <p class="timeline-desc">The Vertical Rise Superstructure completion of Canopus, Vega, and Rigel towers.</p>
                 </div>
             </div>
 
@@ -1353,8 +1578,8 @@
                 <div class="timeline-content">
                     <span class="timeline-connector"></span>
                     <span class="timeline-year">2024</span>
-                    <span class="timeline-title">The Launch</span>
-                    <p class="timeline-desc">Official launch of The Trilight. Groundbreaking ceremony and commencement of deep foundation works.</p>
+                    <span class="timeline-title">Execution</span>
+                    <p class="timeline-desc"> TATA Projects Onboard Construction management led by TATA Projects ensures world-class quality and timely delivery.</p>
                 </div>
             </div>
 
@@ -1365,7 +1590,7 @@
                     <span class="timeline-connector"></span>
                     <span class="timeline-year">2023</span>
                     <span class="timeline-title">Inception</span>
-                    <p class="timeline-desc">Conceptualization and architectural design phase. Partnering with world-class consultants to blueprint the future of luxury.</p>
+                    <p class="timeline-desc">The Vision Conceptualization of a biophilic, single-loaded corridor design that defies market norms.</p>
                 </div>
             </div>
 
@@ -1373,7 +1598,7 @@
     </section>
 
     <!-- === VELOCITY INQUIRY SECTION === -->
-    <section id="velocity-contact" class="relative w-full h-screen overflow-hidden  text-white">
+    <section id="contact" class="relative w-full h-screen overflow-hidden  text-white">
         
         <!-- Ambient Overlay -->
         <div class="absolute inset-0 bg-gradient-to-tr from-indigo-900/10 via-transparent to-rose-900/10 pointer-events-none z-0"></div>
@@ -1688,8 +1913,9 @@
 
     <!-- Footer -->
     <footer class="bg-surface/90 py-16 border-t border-contrast/5 transition-colors duration-500 relative z-10">
-        <div class="max-w-[90%] mx-auto grid grid-cols-1 md:grid-cols-5 gap-12">
-            <div class="md:col-span-2">
+        <div class="max-w-[90%] mx-auto grid grid-cols-1 md:grid-cols-3 gap-16">
+            <!-- Logo Section - Left -->
+            <div>
                 <a href="#" class="magnetic-target block mb-6">
                     <img src="Assests/Trilight.png" 
                          loading="lazy" 
@@ -1700,100 +1926,42 @@
                 </a>
                 <p class="text-muted text-sm font-light max-w-xs">Visionary developments for the modern era. Crafting the skyline of tomorrow, today.</p>
             </div>
-            <div>
+            
+            <!-- Visit Us Section - Center -->
+            <div class="md:text-center">
                  <h4 class="text-contrast text-xs uppercase tracking-widest mb-6">Visit Us</h4>
                  <address class="text-muted text-sm font-light leading-7 not-italic">
-                    Trilight Experience Center,<br>
-                    Kokapet, Hyderabad<br>
-                    <a href="tel:+91400000000" class="hover:text-silver transition-colors mt-4 block">+91 40 0000 0000</a>
+                    <strong class="text-contrast block mb-2">Experience Center:</strong>
+                    Plot 1, Golden Mile,<br>
+                    Kokapet, Hyderabad - 500 075,<br>
+                    Telangana<br>
+
+                    <span class="text-gold text-xs block mt-4">RERA ID: P02400005390</span><br>
+                    <!-- <a href="tel:+91400000000" class="hover:text-silver transition-colors mt-4 block">+91 40 0000 0000</a> -->
                  </address>
             </div>
-            <div>
+            
+            <!-- Social Section - Right -->
+            <div class="md:text-right">
                 <h4 class="text-contrast text-xs uppercase tracking-widest mb-6">Social</h4>
-                <div class="flex flex-col space-y-4 text-sm text-muted">
+                <div class="flex flex-col space-y-4 text-sm text-muted md:items-end">
                     <a href="#" class="hover:text-silver transition-colors magnetic-target w-fit">Instagram</a>
                     <a href="#" class="hover:text-silver transition-colors magnetic-target w-fit">LinkedIn</a>
                     <a href="#" class="hover:text-silver transition-colors magnetic-target w-fit">Twitter</a>
                 </div>
             </div>
-            <div>
-                <h4 class="text-contrast text-xs uppercase tracking-widest mb-6">Newsletter</h4>
-                <form class="flex border-b border-contrast/10 pb-2">
-                    <input type="email" placeholder="Your Email" class="bg-transparent w-full text-contrast text-sm focus:outline-none placeholder-muted">
-                    <button class="text-silver uppercase text-[10px] tracking-widest magnetic-target">Join</button>
-                </form>
-            </div>
         </div>
         <div class="mt-16 text-center border-t border-contrast/5 pt-8">
-            <p class="text-[10px] uppercase tracking-[0.2em] text-muted">&copy; 2024 Trilight Group. All Rights Reserved.</p>
+            <p class="text-[10px] uppercase tracking-[0.2em] text-muted">&copy; 2026 Trilight Group. All Rights Reserved.</p>
         </div>
     </footer>
 
-    <!-- Chat Button -->
-    <div class="fixed bottom-8 right-8 z-50">
-        <button id="chat-toggle" class="w-12 h-12 bg-contrast rounded-full flex items-center justify-center shadow-lg hover:bg-silver transition-colors magnetic-target">
-            <i class="fas fa-comment text-navy"></i>
-        </button>
-    </div>
-
-    <!-- Hidden Chat Modal -->
     
-    <div id="chat-modal" class="fixed bottom-24 right-8 w-80 bg-surface border border-contrast/10 shadow-2xl p-4 hidden transition-colors duration-500">
-        <div class="flex justify-between items-center mb-4">
-            <span class="text-xs uppercase tracking-widest text-silver">Concierge</span>
-            <button id="chat-close" class="text-muted hover:text-contrast"><i class="fas fa-times"></i></button>
-        </div>
-        <div id="chat-messages" class="h-48 overflow-y-auto mb-4 text-xs font-light text-muted space-y-2">
-            <div class="bg-contrast/5 p-3">Welcome to Trilight. How may I assist you?</div>
-        </div>
-        <form id="chat-form" class="flex border-t border-contrast/10 pt-2">
-            <input type="text" id="chat-input" class="w-full bg-transparent text-xs text-contrast focus:outline-none" placeholder="Type...">
-            <button type="submit" class="text-silver text-xs"><i class="fas fa-arrow-right"></i></button>
-        </form>
-    </div>
 
     <script>
-        // --- Dark/Light Mode Toggle Logic ---
-        // const themeToggle = document.getElementById('theme-toggle');
-        // const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
-        // const html = document.documentElement;
         
-        // const savedTheme = localStorage.getItem('theme');
-        // if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
-        //     html.classList.add('light-mode');
-        //     updateIcons(true);
-        // } else {
-        //     updateIcons(false);
-        // }
 
-        // function updateIcons(isLight) {
-        //     const iconClass = isLight ? 'fa-sun' : 'fa-moon';
-        //     if(themeToggle) themeToggle.innerHTML = `<i class="fas ${iconClass} theme-toggle-icon"></i>`;
-        //     if(mobileThemeToggle) mobileThemeToggle.innerHTML = `<i class="fas ${iconClass}"></i>`;
-        // }
-
-        // function toggleTheme() {
-        //     html.classList.toggle('light-mode');
-        //     const isLight = html.classList.contains('light-mode');
-        //     localStorage.setItem('theme', isLight ? 'light' : 'dark');
-        //     updateIcons(isLight);
-        // }
-
-        // themeToggle.addEventListener('click', toggleTheme);
-        // mobileThemeToggle.addEventListener('click', toggleTheme);
-
-        // --- Custom Cursor ---
-        const cursor = document.getElementById('cursor');
         
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-
-        document.querySelectorAll('a, button, .magnetic-target').forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
-        });
 
         // --- Intersection Observer for Reveals ---
         const observer = new IntersectionObserver((entries) => {
@@ -1827,24 +1995,7 @@
 
 
 
-        // --- Magnetic Buttons Logic ---
-        // Removed as per user request
-        /*
-        document.querySelectorAll('.magnetic-target').forEach(btn => {
-            btn.addEventListener('mousemove', (e) => {
-                const rect = btn.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
-                btn.style.transition = 'transform 0.1s linear';
-            });
-            
-            btn.addEventListener('mouseleave', () => {
-                btn.style.transform = 'translate(0, 0)';
-                btn.style.transition = 'transform 0.5s cubic-bezier(0.19, 1, 0.22, 1)';
-            });
-        });
-        */
+        
 
         // --- Global Constellation Starfield ---
         const canvas = document.getElementById('starfield');
@@ -1952,7 +2103,7 @@
 
                     if(star.x < 0 || star.x > width) star.vx *= -1;
                     if(star.y < 0 || star.y > height) star.vy *= -1;
-                    
+
                     ctx.beginPath();
                     ctx.globalAlpha = star.alpha;
                     ctx.fillStyle = star.color;
@@ -2020,28 +2171,28 @@
         // --- Constellation Scroll Logic (Pathfinder) ---
         const pathfinderStar = document.getElementById('pathfinder-star');
         const drawingLine = document.getElementById('drawing-line');
-        const projectSection = document.getElementById('projects');
+        const constellationContainer = document.getElementById('constellation-container');
         const projectRows = document.querySelectorAll('.project-row');
 
-        if(projectSection && pathfinderStar) {
+        if(constellationContainer && pathfinderStar) {
             window.addEventListener('scroll', () => {
-                const rect = projectSection.getBoundingClientRect();
-                const sectionHeight = projectSection.offsetHeight;
+                const rect = constellationContainer.getBoundingClientRect();
+                const sectionHeight = constellationContainer.offsetHeight;
                 const windowHeight = window.innerHeight;
                 
-                // Start calculating when section enters view
+                // Start calculating when section enters view (matches global wave landing)
                 const startOffset = windowHeight / 2;
                 let scrollDist = -rect.top + startOffset;
                 let progress = scrollDist / sectionHeight;
                 
-                // Calculate dynamic safe limit (top of Project 3 minus buffer)
-                const project3 = document.querySelector('[data-project="3"]');
-                let maxProgress = 1.0; // Default to full height if Project 3 is missing
+                // Calculate dynamic safe limit (bottom of last project minus buffer)
+                const lastProject = document.querySelector('[data-project="6"]');
+                let maxProgress = 1.0; // Default to full height if last project is missing
                 
-                if(project3) {
-                    const project3Top = project3.offsetTop;
-                    // Stop ~35px before to account for star radius (12px) + 10px gap
-                    maxProgress = (project3Top - 35) / sectionHeight;
+                if(lastProject) {
+                    const lastProjectBottom = lastProject.offsetTop + lastProject.offsetHeight;
+                    // Stop at the bottom of the last project
+                    maxProgress = lastProjectBottom / sectionHeight;
                 }
 
                 // Cap progress
@@ -2053,8 +2204,8 @@
                     drawingLine.style.height = `${progress * 100}%`;
                     pathfinderStar.style.top = `${progress * 100}%`;
                 } else if (progress <= 0) {
-                    // Show it at the top waiting for the wave
-                    pathfinderStar.style.opacity = '1';
+                    // Hide it until the wave arrives
+                    pathfinderStar.style.opacity = '0';
                     drawingLine.style.height = '0%';
                     pathfinderStar.style.top = '0%';
                 } else {
@@ -2075,38 +2226,7 @@
             });
         }
 
-        // --- Chat Logic ---
-        const chatToggle = document.getElementById('chat-toggle');
-        const chatModal = document.getElementById('chat-modal');
-        const chatClose = document.getElementById('chat-close');
         
-        chatToggle.addEventListener('click', () => chatModal.classList.remove('hidden'));
-        chatClose.addEventListener('click', () => chatModal.classList.add('hidden'));
-
-        const apiKey = "";
-        document.getElementById('chat-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const input = document.getElementById('chat-input');
-            const msg = input.value;
-            if(!msg) return;
-            
-            const msgs = document.getElementById('chat-messages');
-            msgs.innerHTML += `<div class="text-right text-contrast mb-2">${msg}</div>`;
-            input.value = '';
-            
-            setTimeout(() => {
-                msgs.innerHTML += `<div class="bg-contrast/5 p-3">Thank you for your interest. A representative will contact you shortly.</div>`;
-                msgs.scrollTop = msgs.scrollHeight;
-            }, 1000);
-        });
-
-        async function draftInquiry() {
-            const msgBox = document.getElementById('message');
-            msgBox.value = "Drafting...";
-            setTimeout(() => {
-                msgBox.value = "Dear Trilight Team,\n\nI am interested in learning more about your residential opportunities at The Trilight. Please provide information regarding availability and pricing.\n\nSincerely,\n[Name]";
-            }, 1500);
-        }
 
 
         document.addEventListener("DOMContentLoaded", () => {
@@ -2165,19 +2285,43 @@
         });
 
         // --- Video Mute Toggle ---
-        function toggleMute() {
-            const video = document.getElementById('testimonial-video');
-            const icon = document.getElementById('mute-icon');
-            
-            if(video.muted) {
-                video.muted = false;
-                icon.classList.remove('fa-volume-mute');
-                icon.classList.add('fa-volume-up');
-            } else {
-                video.muted = true;
-                icon.classList.remove('fa-volume-up');
-                icon.classList.add('fa-volume-mute');
+        // --- Video Mute Toggle (Vimeo API version) ---
+        let vimeoPlayer = null;
+
+        function initVideoPlayer() {
+            const iframe = document.getElementById('testimonial-video');
+            if(iframe && window.Vimeo) {
+                vimeoPlayer = new Vimeo.Player(iframe);
+                vimeoPlayer.setVolume(0); // Ensure muted start
             }
+        }
+
+        // Initialize when Vimeo API is loaded
+        window.addEventListener('load', initVideoPlayer);
+
+        function toggleMute() {
+            const icon = document.getElementById('mute-icon');
+            if(!vimeoPlayer) {
+                // Try init again if missed
+                initVideoPlayer();
+                if(!vimeoPlayer) return;
+            }
+            
+            vimeoPlayer.getMuted().then(function(muted) {
+                if(muted) {
+                    vimeoPlayer.setMuted(false);
+                    vimeoPlayer.setVolume(1);
+                    icon.classList.remove('fa-volume-mute');
+                    icon.classList.add('fa-volume-up');
+                } else {
+                    vimeoPlayer.setMuted(true);
+                    vimeoPlayer.setVolume(0);
+                    icon.classList.remove('fa-volume-up');
+                    icon.classList.add('fa-volume-mute');
+                }
+            }).catch(function(error) {
+                console.error('Error toggling mute:', error);
+            });
         }
 
         // --- Waterfall Testimonials Data & Logic ---
@@ -2393,6 +2537,25 @@
                 const amplitude = winWidth < 768 ? winWidth * 0.3 : 150; // Smaller wave on mobile
                 const frequency = 0.002; // Adjust for wave tightness
                 const centerX = winWidth / 2;
+                
+                // On mobile, constellation line is at left-4 (1rem = 16px) relative to its container
+                // We need to calculate the actual position from viewport left
+                const isMobile = winWidth < 768;
+                let constellationX = centerX;
+                
+                if (isMobile) {
+                    // Get the constellation container to calculate its left offset
+                    const constellationContainer = document.getElementById('constellation-container');
+                    if (constellationContainer) {
+                        const containerRect = constellationContainer.getBoundingClientRect();
+                        // left-4 = 1rem = 16px from container's left edge
+                        constellationX = containerRect.left + 16;
+                    } else {
+                        // Fallback: estimate based on max-w-[95%] mx-auto
+                        const containerMargin = (winWidth * 0.05) / 2; // 2.5% on each side
+                        constellationX = containerMargin + 16;
+                    }
+                }
 
                 let d = `M ${centerX} 0`;
                 const steps = 50; // Resolution
@@ -2410,12 +2573,19 @@
                         currentAmp = amplitude * (remainingDist / 500);
                     }
                     
-                    const x = centerX + Math.sin(y * frequency) * currentAmp;
+                    // Gradually move from centerX to constellationX in the last 500px
+                    let targetX = centerX;
+                    if (remainingDist < 500) {
+                        const transitionProgress = 1 - (remainingDist / 500);
+                        targetX = centerX + (constellationX - centerX) * transitionProgress;
+                    }
+                    
+                    const x = targetX + Math.sin(y * frequency) * currentAmp;
                     d += ` L ${x} ${y}`;
                 }
                 
-                // FORCE Connection to Center at the exact end point
-                d += ` L ${centerX} ${limitHeight}`;
+                // FORCE Connection to constellation line position at the exact end point
+                d += ` L ${constellationX} ${limitHeight}`;
 
                 wavePathBg.setAttribute('d', d);
                 wavePathDraw.setAttribute('d', d);
@@ -2440,42 +2610,67 @@
                 const frequency = 0.002;
                 const centerX = winWidth / 2;
                 
-                // Move Star Cluster logic - using left/top instead of transform to avoid conflicts
-                // Offset by -24px (half of 48px container) to center on the path
+                // On mobile, constellation line is at left-4 (1rem = 16px) relative to its container
+                const isMobile = winWidth < 768;
+                let constellationX = centerX;
+                
+                if (isMobile) {
+                    const constellationContainer = document.getElementById('constellation-container');
+                    if (constellationContainer) {
+                        const containerRect = constellationContainer.getBoundingClientRect();
+                        constellationX = containerRect.left + 16;
+                    } else {
+                        const containerMargin = (winWidth * 0.05) / 2;
+                        constellationX = containerMargin + 16;
+                    }
+                }
+                
+                // Move Star Cluster logic - center the 48px container on the wave path
+                let targetX = centerX; // Default to center
+
                 if (viewportY <= docHeight) {
-                    const targetX = centerX + Math.sin(viewportY * frequency) * amplitude;
-                    starCluster.style.left = `${targetX - 24}px`;
-                    starCluster.style.top = `${viewportY - 24}px`;
+                    // Apply the SAME amplitude tapering as the wave path
+                    let currentAmp = amplitude;
+                    const remainingDist = docHeight - viewportY;
+                    
+                    if (remainingDist < 500) {
+                        currentAmp = amplitude * (remainingDist / 500);
+                    }
+                    
+                    // Gradually move from centerX to constellationX in the last 500px
+                    let baseX = centerX;
+                    if (remainingDist < 500) {
+                        const transitionProgress = 1 - (remainingDist / 500);
+                        baseX = centerX + (constellationX - centerX) * transitionProgress;
+                    }
+                    
+                    targetX = baseX + Math.sin(viewportY * frequency) * currentAmp;
+                    
+                    starCluster.style.left = `${targetX}px`;
+                    starCluster.style.top = `${viewportY}px`;
+                    starCluster.style.marginLeft = '-24px';
+                    starCluster.style.marginTop = '-24px';
+                    
+                    // Reset Transition for smooth movement
+                    starCluster.style.transition = 'transform 0.1s ease-out'; 
+                    starCluster.style.opacity = '1';
+                    starCluster.style.transform = 'scale(1)';
+
                 } else {
-                    // Lock at end
-                    starCluster.style.left = `${centerX - 24}px`;
-                    starCluster.style.top = `${docHeight - 24}px`;
+                    // Lock at end AND Disappear into the constellation
+                    starCluster.style.left = `${constellationX}px`;
+                    starCluster.style.top = `${docHeight}px`;
+                    starCluster.style.marginLeft = '-24px';
+                    starCluster.style.marginTop = '-24px';
+                    
+                    // Disappear effect
+                    starCluster.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                    starCluster.style.opacity = '0';
+                    starCluster.style.transform = 'scale(0.1)';
                 }
                 
                 // --- MERGE LOGIC ---
-                const pSection = document.getElementById('projects');
-                const cContainer = document.getElementById('constellation-container');
-                
-                if (pSection && revolvingGroup && cContainer) {
-                    // Start merging when we get close to the Container, not just the section top
-                    const limitTop = waveContainer.offsetHeight; // Should equal our limitHeight
-                    const mergeStart = limitTop - winHeight * 0.5; 
-                    const mergeEnd = limitTop; // Finish exactly when we hit the "wall"
-
-                    let mergeProgress = 0;
-                    if (scrollTop + winHeight * 0.5 > mergeStart) {
-                         // progress based on viewportY approach
-                         mergeProgress = (scrollTop + winHeight * 0.5 - mergeStart) / (mergeEnd - mergeStart);
-                    }
-                    
-                    mergeProgress = Math.max(0, Math.min(1, mergeProgress));
-                    
-                    const scale = 1 - (mergeProgress * 0.9); 
-                    const opacity = 1 - mergeProgress;
-
-                    revolvingGroup.style.transform = `scale(${scale})`;
-                    starCluster.style.opacity = (mergeProgress <= 0) ? 1 : ((mergeProgress >= 0.98) ? 0 : opacity);
-                }
+                // Trail removed as requested
 
                 // Update drawn path
                 // Ratio is viewportY / full path height (limitHeight)
@@ -2497,8 +2692,71 @@
             updateWaveScroll(); // Set initial position
         }
 
+        // Initialize Lucide Icons
+lucide.createIcons();
+
+const menuTrigger = document.getElementById('menu-trigger');
+const fullMenu = document.getElementById('full-menu');
+const watermark = document.getElementById('watermark');
+const menuLinks = document.querySelectorAll('.menu-link-item');
+const menuBars = document.querySelectorAll('.menu-bar');
+
+let isMenuOpen = false;
+
+function toggleMenu() {
+    isMenuOpen = !isMenuOpen;
+    
+    if (isMenuOpen) {
+        // Open Menu
+        fullMenu.classList.remove('translate-y-full');
+        setTimeout(() => fullMenu.classList.add('menu-open'), 100); // Trigger staggering
+        
+        // Animate Hamburger to X
+        menuBars[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
+        menuBars[1].style.opacity = '0';
+        menuBars[2].style.transform = 'rotate(-45deg) translate(5px, -6px)';
+        menuBars.forEach(bar => bar.style.width = '30px');
+    } else {
+        // Close Menu
+        fullMenu.classList.remove('menu-open');
+        setTimeout(() => fullMenu.classList.add('translate-y-full'), 300); // Wait for fade out
+        
+        // Animate X back to Hamburger
+        menuBars[0].style.transform = 'none';
+        menuBars[1].style.opacity = '1';
+        menuBars[2].style.transform = 'none';
+        menuBars[0].style.width = '32px'; // Reset widths
+        menuBars[1].style.width = '20px';
+        menuBars[2].style.width = '32px';
+    }
+}
+
+    menuTrigger.addEventListener('click', toggleMenu);
+
+    // Watermark Interaction
+    menuLinks.forEach(link => {
+        link.addEventListener('mouseenter', () => {
+            const letter = link.getAttribute('data-letter');
+            if(letter) {
+                watermark.innerText = letter;
+                watermark.style.opacity = '0.1';
+                watermark.style.transform = 'translateX(-20px) scale(1.1)';
+            }
+        });
+
+        link.addEventListener('mouseleave', () => {
+            watermark.style.opacity = '0.03';
+            watermark.style.transform = 'translateX(0) scale(1)';
+        });
+        
+        // Close menu on click
+        link.addEventListener('click', () => {
+            if (isMenuOpen) toggleMenu();
+        });
+    });
+
     </script>
-    <script type="module" src="./galaxy.js"></script>
+
     <!-- Performance Optimization Scripts -->
     <script src="lazy-load.js" defer></script>
     
