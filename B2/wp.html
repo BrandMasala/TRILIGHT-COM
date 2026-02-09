@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trilight Group | Visionary Developments</title>
+    
+    <!-- Performance Optimizations -->
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="https://unpkg.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://cdn.skypack.dev">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- TAILWIND CONFIG -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-navy text-contrast selection:bg-silver selection:text-navy">
+
+    <!-- Global Background Starfield -->
+    <canvas id="starfield"></canvas>
+
+    <!-- Global Wave Container -->
+    <div id="global-wave-container" class="absolute top-0 left-0 w-full pointer-events-none z-0 overflow-hidden">
+        <svg class="absolute top-0 left-0 w-full h-full">
+            <path id="wave-path-bg" fill="none" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1"></path>
+            <path id="wave-path-draw" fill="none" stroke="rgba(197, 164, 126, 0.5)" stroke-width="1" stroke-linecap="round"></path>
+        </svg>
+        <!-- Star Trail Elements (rendered behind main cluster) -->
+        <div id="star-trail-container" class="absolute top-0 left-0 w-full h-full">
+            <!-- Trail stars will be dynamically positioned here -->
+        </div>
+        <div id="star-cluster" class="absolute top-0 left-0 w-12 h-12 flex items-center justify-center transition-transform duration-100 ease-out will-change-transform z-50">
+             <div id="revolving-group" class="relative w-full h-full">
+                <div class="w-full h-full animate-spin-revolve">
+                    <!-- Top star -->
+                    <i class="fas fa-star text-gold text-[12px] absolute" style="top: 0; left: 50%; transform: translate(-50%, 0);"></i>
+                    <!-- Bottom right star -->
+                    <i class="fas fa-star text-gold text-[12px] absolute" style="top: 70%; left: 70%; transform: translate(-50%, -50%);"></i>
+                    <!-- Bottom left star -->
+                    <i class="fas fa-star text-gold text-[12px] absolute" style="top: 70%; left: 30%; transform: translate(-50%, -50%);"></i>
+                </div>
+             </div>
+        </div>
+    </div>
+
+
+     <!-- CORNER 1: TOP LEFT (Identity) -->
+    <header class="fixed top-6 left-6 md:top-8 md:left-12 z-50 reveal-corner pointer-events-auto" style="animation-delay: 0.1s;">
+        <div class="flex items-center gap-4">
+            <a href="#" class="magnetic-target block">
+                <img src="/wp-content/themes/trilight/Assests/Trilight.png" 
+                     alt="Trilight Group" 
+                     class="h-10 md:h-12 w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100 transition-opacity"
+                     width="150"
+                     height="48">
+            </a>
+        </div>
+    </header>
+
+    <!-- CORNER 2: TOP RIGHT (Action) -->
+    <div class="fixed top-0 right-0 z-50 p-6 md:p-8 reveal-corner pointer-events-auto" style="animation-delay: 0.2s;">
+        <a href="#contact" class="group flex items-center gap-3 mix-blend-difference text-white">
+            <span class="text-[10px] uppercase tracking-[0.3em] font-light group-hover:tracking-[0.4em] transition-all duration-500">Inquire</span>
+            <div class="w-10 h-10 border border-white/20 rounded-full flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-500">
+                <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            </div>
+        </a>
+    </div>
+
+    <!-- CORNER 4: BOTTOM RIGHT (Navigation Stack) -->
+    <nav class="fixed bottom-6 right-6 md:bottom-12 md:right-12 z-[70] text-right mb-4 md:mb-0 reveal-corner pointer-events-auto" style="animation-delay: 0.4s;">
+        <!-- Menu Trigger -->
+        <button id="menu-trigger" class="flex flex-col gap-1.5 group cursor-pointer p-2 relative outline-none">
+            <div class="flex items-center gap-4">
+                <span class="hidden md:block text-[10px] uppercase tracking-[0.3em] font-medium text-white/50 group-hover:text-white transition-colors">Menu</span>
+                <div class="flex flex-col gap-1.5 items-end">
+                    <span class="w-8 h-[1px] bg-white group-hover:w-6 transition-all duration-300 menu-bar origin-center"></span>
+                    <span class="w-5 h-[1px] bg-white group-hover:w-8 transition-all duration-300 menu-bar origin-center"></span>
+                    <span class="w-8 h-[1px] bg-white group-hover:w-4 transition-all duration-300 menu-bar origin-center"></span>
+                </div>
+            </div>
+        </button>
+    </nav>
+
+    <!-- ================= UNIQUE FULL MENU OVERLAY ================= -->
+    <div id="full-menu" class="fixed inset-0 bg-[#080808] z-[60] transform translate-y-full transition-transform duration-700 cubic-bezier(0.76, 0, 0.24, 1) flex items-center overflow-hidden">
+        
+        <!-- Internal Grid Lines (For "Same Layout" continuity) -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="grid-line grid-vertical-left hidden md:block opacity-20"></div>
+            <div class="grid-line grid-vertical-right hidden md:block opacity-20"></div>
+            <div class="grid-line grid-horizontal-top opacity-20"></div>
+            <div class="grid-line grid-horizontal-bottom opacity-20"></div>
+        </div>
+
+        <!-- Huge Background Watermark (Interactive) -->
+        <div id="watermark" class="absolute right-[-10%] bottom-[-20%] text-[50vh] md:text-[80vh] font-serif leading-none text-white/[0.03] select-none transition-all duration-700 ease-out pointer-events-none">
+            T
+        </div>
+
+        <!-- Content Container -->
+        <div class="w-full max-w-[1400px] mx-auto px-6 md:px-20 relative z-10 flex flex-col md:flex-row md:items-end justify-between h-full py-32 md:py-24">
+            
+            <!-- Left: Giant Index List -->
+            <div class="flex flex-col justify-center space-y-1 md:space-y-0 w-full h-full overflow-y-auto md:overflow-hidden no-scrollbar">
+                
+                <a href="#about" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="P" style="transition-delay: 0.1s;">
+                    <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">01</span>
+                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Philosophy</span>
+                </a>
+
+                <a href="#projects" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="C" style="transition-delay: 0.15s;">
+                    <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">02</span>
+                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Collection</span>
+                </a>
+
+                <a href="#signature-collection" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="S" style="transition-delay: 0.2s;">
+                    <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">03</span>
+                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Signature</span>
+                </a>
+
+                <a href="#virtual-tour" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="E" style="transition-delay: 0.25s;">
+                    <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">04</span>
+                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Experience</span>
+                </a>
+
+                <a href="#testimonials" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="V" style="transition-delay: 0.3s;">
+                    <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">05</span>
+                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Visual Stories</span>
+                </a>
+
+                <a href="#visionary" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="L" style="transition-delay: 0.35s;">
+                    <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">06</span>
+                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Leadership</span>
+                </a>
+
+                <a href="#journal" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="J" style="transition-delay: 0.4s;">
+                    <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">07</span>
+                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Journal</span>
+                </a>
+
+                <a href="#timeline" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="T" style="transition-delay: 0.45s;">
+                    <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">08</span>
+                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Timeline</span>
+                </a>
+
+                <a href="#contact" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="I" style="transition-delay: 0.5s;">
+                    <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">09</span>
+                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Inquire</span>
+                </a>
+            </div>
+
+            <!-- Right: Secondary Info (Hidden on small mobile) -->
+            <div class="hidden md:block text-right pb-4 menu-link-item" style="transition-delay: 0.7s;">
+                <h4 class="text-xs uppercase tracking-[0.2em] text-gray-500 mb-4">Connect</h4>
+                <p class="text-sm text-gray-400 hover:text-white cursor-pointer transition-colors">+91 40 1234 5678</p>
+                <p class="text-sm text-gray-400 hover:text-white cursor-pointer transition-colors mt-2">hello@trilight.com</p>
+                <div class="mt-8 flex justify-end gap-4">
+                    <a href="#" class="w-8 h-8 border border-white/20 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+                    <a href="#" class="w-8 h-8 border border-white/20 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="h-[250vh] w-full relative">
+        <div class="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0 z-0 hero-video-wrapper">
+            </div>
+            
+            <div class="z-10 text-center px-4">
+                <p class="text-[10px] md:text-xs uppercase tracking-[0.4em] text-silver mb-6 animate-fade-in-up" style="animation-delay: 0.2s;">The Trilight Group</p>
+                <h1 class="font-serif text-4xl md:text-6xl lg:text-7xl text-contrast leading-relaxed mb-8 mix-blend-overlay animate-fade-in-up font-light" style="animation-delay: 0.4s;">
+                    We Have Changed <br> <span class="italic font-extralight">The Game.</span>
+                </h1>
+                <h2 class="text-sm md:text-base text-silver/80 font-light tracking-wide">
+                    The rules of luxury in Hyderabad have been rewritten.
+                </h2>
+            </div>
+        </div>
+    </header>
+
+    <!-- Philosophy -->
+    <section id="about" class="py-32 md:py-48 bg-transparent relative transition-colors duration-500 z-10">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <span class="block text-gold text-[10px] uppercase tracking-widest mb-8 reveal-on-scroll">The New Standard</span>
+            <p class="font-serif text-2xl md:text-4xl leading-relaxed text-contrast/90 reveal-on-scroll">
+                We changed the <span class="text-silver italic">geometry of living</span>. Rejecting crowded floors, we engineered a vertical ecosystem of privacy and luxury at three altitudes. The game has changed
+            </p>
+        </div>
+    </section>
+
+    <!-- Projects Collection: CONSTELLATION SCROLL -->
+    <section id="projects" class="bg-transparent pt-32 pb-32 transition-colors duration-500 relative z-10">
+        <div class="max-w-[95%] mx-auto relative">
+            <div class="mb-24 text-center">
+                <span class="block text-gold text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">The Portfolio</span>
+                <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">The Constellations</h2>
+                <p class="text-muted text-lg font-light mt-6 reveal-on-scroll">Two Visions.</p>
+                <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
+            </div>
+        </div>
+
+        <div id="constellation-container" class="max-w-[95%] mx-auto relative">
+            <!-- Vertical Timeline Line (Grows on scroll) -->
+            <div class="absolute left-4 md:left-1/2 top-0 w-[1px] transform md:-translate-x-1/2 project-line" id="drawing-line"></div>
+            
+            <!-- The Pathfinder Star (Moves on scroll) -->
+            <div id="pathfinder-star" class="absolute left-4 md:left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8">
+                <i class="fas fa-star text-2xl animate-spin-slow"></i>
+            </div>
+
+            <!-- Project 1 -->
+            <div class="project-row group relative mb-32 md:mb-48 z-10" data-project="1">
+              
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pl-12 md:pl-0">
+                    <div class="order-2 lg:order-1 px-6 lg:pl-20 md:text-right md:pr-20 project-card">
+                        <img src="/wp-content/themes/trilight/Assests/Trilight_Logo_Final.png" 
+                             loading="lazy" 
+                             alt="The Trilight" 
+                             class="h-16 md:h-20 w-auto md:ml-auto mb-6 object-contain"
+                             width="300"
+                             height="80">
+                        <p class="text-muted font-light text-sm leading-7 max-w-sm mb-8 md:ml-auto">
+                            Rising 200 meters above the Golden Mile, The Trilight creates a commanding skyline presence with three distinct stars: Canopus (56 Floors), Vega (46 Floors), and Rigel (49 Floors). 
+                        </p>
+                        <a href="thetrilight.com" class="magnetic-target inline-flex items-center text-[10px] uppercase tracking-widest text-contrast border-b border-contrast/20 pb-1 hover:border-silver hover:text-silver transition-all">
+                            View Residences <i class="fas fa-arrow-right ml-4 text-silver text-[8px]"></i>
+                        </a>
+                    </div>
+                    <div class="order-1 lg:order-2 parallax-container project-card" style="transition-delay: 200ms;">
+                        <img src="/wp-content/themes/trilight/Assests/Trilight.jpg" 
+                             class="w-full h-auto  group-hover:grayscale-0 transition-all duration-1000" alt="Trilight">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-row group relative mb-32 md:mb-48 z-10" data-project="2">
+                <!-- <div class="absolute left-4 md:left-1/2 top-1/2 transform -translate-y-1/2 md:-translate-x-1/2 star-node w-8 h-8 rounded-full flex items-center justify-center -ml-[15px] md:ml-0">
+                    <i class="fas fa-star text-[10px]"></i>
+                </div> -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pl-12 md:pl-0">
+                    <div class="parallax-container project-card">
+                        <img src="/wp-content/themes/trilight/Assests/Risewith9.jpeg" 
+                             loading="lazy"
+                             class="w-full h-auto group-hover:grayscale-0 transition-all duration-1000" 
+                             alt="Rise with 9"
+                             width="1200"
+                             height="800">
+                    </div>
+                    <div class="px-6 lg:pl-20 project-card" style="transition-delay: 200ms;">
+                        <img src="/wp-content/themes/trilight/Assests/RW9.png" 
+                             loading="lazy" 
+                             alt="Rise with 9" 
+                             class="h-42 md:h-20 w-auto mb-6 object-contain opacity-90"
+                             width="400"
+                             height="80">
+                        <p class="text-muted font-light text-sm leading-7 max-w-sm mb-8">
+                            A landmark high-rise in Kokapet, redefining elevated living with expansive residences, curated amenities and a commanding skyline presence.                        <a href="https://risewith9.com" target="_blank" class="magnetic-target inline-flex items-center text-[10px] uppercase tracking-widest text-contrast border-b border-contrast/20 pb-1 hover:border-silver hover:text-silver transition-all group-hover:pl-2">
+                            Visit Website <i class="fas fa-external-link-alt ml-4 text-silver text-[8px]"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Upcoming Section -->
+            <div class="mb-32 md:mb-48 relative z-1" data-project="3">
+                <!-- Outer headers REMOVED -->
+
+                <!-- The Single Box -->
+                <div class="border border-white/10 bg-navy/20 backdrop-blur-sm rounded-sm p-8 md:p-12 relative overflow-hidden max-w-3xl aspect-square mx-auto flex flex-col justify-center">
+                    
+                    <div class="group relative w-full flex flex-col items-center">
+                         <!-- Single Large Plain Image Mask Box -->
+                         <div class="w-full max-w-2xl aspect-square mx-auto bg-navy/40 border border-white/5 relative overflow-hidden group-hover:border-gold/20 transition-colors flex items-center justify-center">
+                               
+                               <!-- Image Layer (Behind) -->
+                               <img src="Assests/upcmg.png" alt="" class="absolute inset-0 w-full h-full object-contain z-0 opacity-80">
+
+                               <!-- Blur/Mask Layer -->
+                               <div class="absolute inset-0 bg-navy/60 backdrop-blur-sm z-10 transition-all duration-700 backdrop-blur-none group-hover:bg-navy/40">
+                               </div>
+                               
+                               <!-- Text Overlay -->
+                               <div class="relative z-10 text-center">
+                                    <span class="block text-gold text-[10px] uppercase tracking-widest mb-4">Future</span>
+                                    <h3 class="font-serif text-3xl md:text-5xl text-contrast">Upcoming Soon</h3>
+                               </div>
+                               
+                               <!-- Optional: Placeholder Text -->
+                               <span class="absolute bottom-4 right-6 text-[10px] uppercase tracking-[0.2em] text-white/20">Confidential</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Signature Collection: Cards -->
+    <section id="signature-collection" class="py-32 bg-transparent relative z-10 transition-colors duration-500 overflow-hidden">
+        <div class="max-w-[95%] mx-auto px-6 mb-12 text-center">
+            <span class="block text-gold text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Exclusive Listings</span>
+            <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">Signature Collection</h2>
+            <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
+        </div>
+
+        <div class="deck-container reveal-on-scroll">
+            <!-- Card 1 (Left) -->
+            <div style="--r:-15;" class="deck-glass group">
+                <img src="/wp-content/themes/trilight/Assests/T1.webp" loading="lazy" width="280" height="420">
+            </div>
+            
+            <!-- Card 2 (Center) -->
+            <div style="--r:0;" class="deck-glass group z-10">
+                <img src="/wp-content/themes/trilight/Assests/T2.webp" loading="lazy" width="280" height="420">
+            </div>
+            
+            <!-- Card 3 (Right) -->
+            <div style="--r:15;" class="deck-glass group">
+                <img src="/wp-content/themes/trilight/Assests/T3.webp" loading="lazy"   width="280" height="420">
+            </div>
+        </div>
+    </section>
+
+    <!-- Virtual Tour -->
+    <section id="virtual-tour" class="py-32 bg-transparent relative z-10 transition-colors duration-500">
+        <div class="max-w-[95%] mx-auto px-6 mb-12 text-center">
+            <span class="block text-gold text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Interactive Walkthroughs</span>
+            <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">Experience the Life</h2>
+            <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
+        </div>
+
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Tour 1: Lobby -->
+            <div class="relative h-[400px] group overflow-hidden rounded-sm border border-contrast/10 reveal-on-scroll magnetic-target">
+                 <div class="absolute inset-0 bg-navy/20 z-10 group-hover:bg-navy/10 transition-colors duration-500"></div>
+                 <img src="/wp-content/themes/trilight/Assests/Trilight.jpg" alt="Lobby 360" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                 
+                 <div class="absolute inset-0 flex flex-col justify-center items-center z-20">
+                    <div class="w-16 h-16 rounded-full border border-silver/30 flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform duration-500 mb-6">
+                        <i class="fas fa-cube text-silver text-xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif text-contrast mb-2 group-hover:text-gold group-hover:border-gold transition-all pb-1">The White Gloves (Ground Lobby)</h3>
+                    <span class="text-[9px] uppercase tracking-widest text-silver border-b border-transparent group-hover:text-gold group-hover:border-gold transition-all pb-1">Start Virtual Tour</span>
+                 </div>
+            </div>
+
+            <!-- Tour 2: Residence -->
+            <div class="relative h-[400px] group overflow-hidden rounded-sm border border-contrast/10 reveal-on-scroll magnetic-target" style="transition-delay: 200ms">
+                 <div class="absolute inset-0 bg-navy/20 z-10 group-hover:bg-navy/10 transition-colors duration-500"></div>
+                 <img src="/wp-content/themes/trilight/Assests/Risewith9.jpeg" alt="Residence 360" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                 
+                 <div class="absolute inset-0 flex flex-col justify-center items-center z-20">
+                    <div class="w-16 h-16 rounded-full border border-silver/30 flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform duration-500 mb-6">
+                        <i class="fas fa-cube text-silver text-xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif text-contrast mb-2  group-hover:text-gold group-hover:border-gold transition-all pb-1">Thousands of Stars (Sky Lounge)</h3>
+                    <span class="text-[9px] uppercase tracking-widest text-silver border-b border-transparent group-hover:text-gold group-hover:border-gold transition-all pb-1">Start Virtual Tour</span>
+                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resident Voices -->
+    <!-- Resident Voices -->
+    <section id="testimonials" class="py-20 md:py-32 bg-transparent relative z-10 transition-colors duration-500">
+        <!-- Old Header -->
+        <div class="max-w-[95%] mx-auto px-6 mb-12 text-center">
+            <span class="block text-gold text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Visual Stories</span>
+            <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">Community Voices</h2>
+            <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
+        </div>
+
+        <div class="max-w-[95%] mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 h-[900px]">
+                
+                <!-- Left Waterfall -->
+                <div id="waterfall-left" class="relative overflow-hidden h-full rounded-sm mask-fade-vertical bg-navy/20 ">
+                    <!-- JS Injected -->
+                </div>
+
+                <!-- Testimonial 2 (Video) -->
+                <div class="relative overflow-hidden h-full rounded-sm bg-navy/20 reveal-on-scroll" style="transition-delay: 200ms">
+                    <!-- Overlay Text (Optional, keeping clean for video focus) -->  
+                    <div class="absolute bottom-14 left-6 z-20 pointer-events-none">
+                         <h4 class="text-xs uppercase tracking-widest text-white font-bold mb-1">Visual Stories</h4>
+                         <span class="text-[9px] uppercase tracking-widest text-silver/80">Experience the vibe</span>
+                    </div>
+                    
+                    <!-- Mute Toggle Button -->
+                    <div class="absolute top-4 right-4 z-30">
+                        <button onclick="toggleMute()" class="w-10 h-10 rounded-full bg-black/50 border border-white/10 backdrop-blur-sm flex items-center justify-center text-white hover:bg-gold hover:text-black transition-all duration-300 group">
+                            <i id="mute-icon" class="fas fa-volume-mute text-sm"></i>
+                        </button>
+                    </div>
+
+                    <div style="padding:177.78% 0 0 0;position:relative; overflow: hidden; background: #000;">
+                        <iframe id="testimonial-video" src="https://player.vimeo.com/video/1158688767?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1&autopause=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%; pointer-events:none;" title="Testimonal1920 V2_FOR WEB"></iframe>
+                    </div>
+                    <script src="https://player.vimeo.com/api/player.js"></script>                </div>
+
+                <!-- Right Waterfall -->
+                <div id="waterfall-right" class="relative overflow-hidden h-full rounded-sm mask-fade-vertical bg-navy/20  hidden md:block">
+                    <!-- JS Injected -->
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Visionary -->
+    <!-- Visionary -->
+    <section id="visionary" class="py-32 bg-surface/90 transition-colors duration-500 relative z-10 overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6 relative">
+            <div class="mb-32 text-center">
+                <span class="block text-gold text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Leadership</span>
+                <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">The Game Changers</h2>
+                <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
+            </div>
+            
+            <!-- Visionary 1: J Sanjeeva Reddy -->
+            <div class="flex flex-col md:flex-row items-center gap-12 md:gap-24 mb-32 group">
+                <!-- Image -->
+                <div class="w-full md:w-5/12 relative reveal-on-scroll">
+                    <div class="absolute -inset-4 border border-silver/20 rounded-sm z-0 transform translate-x-2 translate-y-2 transition-transform duration-700 group-hover:translate-x-4 group-hover:translate-y-4"></div>
+                    <div class="h-[500px] w-full overflow-hidden relative z-10">
+                        <img src="/wp-content/themes/trilight/Assests/36.png" 
+                             loading="lazy"
+                             class="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-105" 
+                             alt="J Sanjeeva Reddy"
+                             width="600"
+                             height="500">
+                    </div>
+                </div>
+                <!-- Content -->
+                <div class="w-full md:w-7/12 text-left reveal-on-scroll" style="transition-delay: 200ms">
+                    <h4 class="text-3xl md:text-4xl font-serif text-contrast mb-2">J Sanjeeva Reddy</h4>
+                    <span class="text-[10px] uppercase tracking-widest text-silver mb-8 block">Founder & Chairman</span>
+                    <div class="relative">
+                        <i class="fas fa-quote-left text-4xl text-contrast/5 absolute -top-6 -left-4"></i>
+                        <p class="text-muted text-lg font-light leading-relaxed pl-6 border-l border-gold/20">
+                            "Suvarna Durga Group was born from a vision to consolidate the efforts of hard-working entrepreneurs. Today, with 55 lakh sq. ft. under construction, we promise greater appreciation and an uber-quality lifestyle."
+                        </p>
+                    </div>
+                    <!-- Additional Image -->
+                    <div class="mt-8">
+                        <img src="/wp-content/themes/trilight/Assests/361.png" 
+                             loading="lazy"
+                             class="max-w-xs h-auto rounded-sm" 
+                             alt="J Sanjeeva Reddy Additional"
+                             width="200"
+                             height="auto">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visionary 2: Sanjay Mangatram -->
+            <div class="flex flex-col md:flex-row-reverse items-center gap-12 md:gap-24 group">
+                <!-- Image -->
+                <div class="w-full md:w-5/12 relative reveal-on-scroll">
+                    <div class="absolute -inset-4 border border-silver/20 rounded-sm z-0 transform -translate-x-2 translate-y-2 transition-transform duration-700 group-hover:-translate-x-4 group-hover:translate-y-4"></div>
+                    <div class="h-[500px] w-full overflow-hidden relative z-10">
+                        <img src="/wp-content/themes/trilight/Assests/37.png" 
+                             loading="lazy"
+                             class="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-105" 
+                             alt="Sanjay Mangatram"
+                             width="600"
+                             height="500">
+                    </div>
+                </div>
+                <!-- Content -->
+                <div class="w-full md:w-7/12 text-left md:text-right reveal-on-scroll" style="transition-delay: 200ms">
+                    <h4 class="text-3xl md:text-4xl font-serif text-contrast mb-2">Sanjay Mangatram</h4>
+                    <span class="text-[10px] uppercase tracking-widest text-silver mb-8 block">Director</span>
+                    <div class="relative md:flex md:justify-end">
+                        <i class="fas fa-quote-left text-4xl text-contrast/5 absolute -top-6 -left-4 md:left-auto md:-right-4 md:rotate-180"></i>
+                        <p class="text-muted text-lg font-light leading-relaxed pl-6 md:pl-0 md:pr-6 md:border-l-0 md:border-r border-l border-gold/20">
+                            "Growth never stops. Our vision is to deliver unique developments in exciting times. The Trilight is our vision of bringing luxury and togetherness, influenced by European aesthetics and refined sophistication."
+                        </p>
+                    </div>
+                    <!-- Additional Image -->
+                    <div class="mt-8 flex justify-end">
+                        <img src="/wp-content/themes/trilight/Assests/371.png" 
+                             loading="lazy"
+                             class="max-w-xs h-auto rounded-sm" 
+                             alt="Sanjay Mangatram Additional"
+                             width="200"
+                             height="auto">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Journal -->
+    <!-- Main Content Wrapper -->
+    <section id="journal" class="relative z-10 mx-auto max-w-[1400px] px-6 md:px-12 lg:px-16 py-12 lg:py-24 font-inter">
+        
+        <!-- Header -->
+        <div class="mb-16 md:mb-24 text-center opacity-0 animate-fade-in-up reveal-on-scroll" id="main-header" style="animation: fadeInUp 0.8s forwards;">
+            <span class="block text-gold text-[10px] uppercase tracking-widest mb-4">Updates</span>
+            <h2 class="font-serif text-4xl md:text-5xl text-contrast">Press & Journal</h2>
+            <div class="w-12 h-[1px] bg-silver mx-auto mt-8"></div>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-12 lg:gap-24">
+            
+            <!-- LEFT PANEL: Sticky "Lens" Detail View -->
+            <div class="lg:w-1/2 lg:h-[34rem] flex flex-col justify-center order-2 lg:order-1 relative min-h-[400px]">
+                
+                <!-- Dynamic Content Container -->
+                <div id="lens-container" class="lens-content flex flex-col justify-center h-full w-full">
+                    
+                    <!-- Meta Tags -->
+                    <div class="flex items-center gap-4 mb-8">
+                        <span id="lens-type" class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border transition-colors border-gold/30 text-gold bg-gold/10">
+                            Journal
+                        </span>
+                        
+                        <div class="flex items-center gap-2 text-xs text-gray-500 font-mono">
+                            <i data-lucide="calendar" class="w-3 h-3"></i>
+                            <span id="lens-date">OCT 12, 2025</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-2 text-xs text-gray-500 font-mono">
+                            <i data-lucide="sparkles" class="w-3 h-3"></i>
+                            <span id="lens-readTime">5 min read</span>
+                        </div>
+                    </div>
+
+                    <!-- Big Title -->
+                    <h2 id="lens-title" class="text-4xl md:text-5xl lg:text-7xl font-light leading-[1.1] mb-8 text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-gray-500">
+                        The Vertical Oasis: Redefining Skyline Esthetics
+                    </h2>
+
+                    <!-- Excerpt -->
+                    <p id="lens-excerpt" class="text-lg text-gray-400 leading-relaxed mb-10 max-w-xl border-l-2 border-gold/30 pl-6">
+                        An exclusive look into how Trilight's latest tower integrates biophilic design at 40 stories high, merging nature with concrete.
+                    </p>
+
+                    <!-- CTA -->
+                    <div>
+                        <a id="lens-link" href="#" target="_blank" class="group flex items-center gap-3 text-sm font-medium text-white hover:text-gold transition-colors">
+                            <span class="border-b border-white/20 pb-1 group-hover:border-gold transition-colors">
+                                Read Full Story
+                            </span>
+                            <i data-lucide="arrow-up-right" class="w-4 h-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT PANEL: Scrollable List -->
+            <div class="lg:w-1/2 flex flex-col gap-2 order-1 lg:order-2 pb-24 lg:pb-0 lg:h-[25rem]">
+                
+                <!-- Desktop List Header -->
+                <div class="hidden lg:flex items-center justify-between mb-8 pb-4 border-b border-white/10 shrink-0">
+                    <span class="text-xs font-bold tracking-[0.2em] uppercase text-gray-500">Index</span>
+                    <span class="text-xs font-bold tracking-[0.2em] uppercase text-gray-500">Hover to View</span>
+                </div>
+
+                <!-- Articles List Container -->
+                <div id="articles-list" class="flex flex-col gap-2 lg:flex-1 lg:overflow-y-auto pr-2 journal-scroll">
+                    <!-- Items will be injected here by JS -->
+                </div>
+
+                <!-- Load More Removed -->
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- Amenities -->
+    <!-- Timeline -->
+    <section class="timeline-section" id="timeline">
+        
+        <div class="timeline-header">
+            <span>Construction Updates</span>
+            <h2>Milestones</h2>
+        </div>
+
+        <div class="timeline-container">
+            <!-- Vertical Track -->
+            <div class="timeline-line"></div>
+            <!-- Animated Beam -->
+            <div class="timeline-line-fill" id="progressLine"></div>
+
+            <!-- 2026 -->
+            <div class="timeline-item">
+                <div class="timeline-node"></div>
+                <div class="timeline-content">
+                    <span class="timeline-connector"></span>
+                    <span class="timeline-year">2026</span>
+                    <span class="timeline-title">Completion</span>
+                    <p class="timeline-desc">A New Era Begins Handover of 462 ultra-luxury residences. The game has officially changed in Kokapet.</p>
+                </div>
+            </div>
+
+            <!-- 2025 -->
+            <div class="timeline-item">
+                <div class="timeline-node"></div>
+                <div class="timeline-content">
+                    <span class="timeline-connector"></span>
+                    <span class="timeline-year">2025</span>
+                    <span class="timeline-title">Structure</span>
+                    <p class="timeline-desc">The Vertical Rise Superstructure completion of Canopus, Vega, and Rigel towers.</p>
+                </div>
+            </div>
+
+            <!-- 2024 -->
+            <div class="timeline-item">
+                <div class="timeline-node"></div>
+                <div class="timeline-content">
+                    <span class="timeline-connector"></span>
+                    <span class="timeline-year">2024</span>
+                    <span class="timeline-title">Execution</span>
+                    <p class="timeline-desc"> TATA Projects Onboard Construction management led by TATA Projects ensures world-class quality and timely delivery.</p>
+                </div>
+            </div>
+
+            <!-- 2023 -->
+            <div class="timeline-item">
+                <div class="timeline-node"></div>
+                <div class="timeline-content">
+                    <span class="timeline-connector"></span>
+                    <span class="timeline-year">2023</span>
+                    <span class="timeline-title">Inception</span>
+                    <p class="timeline-desc">The Vision Conceptualization of a biophilic, single-loaded corridor design that defies market norms.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- === VELOCITY INQUIRY SECTION === -->
+    <section id="contact" class="relative w-full h-screen overflow-hidden  text-white">
+        
+        <!-- Ambient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-tr from-indigo-900/10 via-transparent to-rose-900/10 pointer-events-none z-0"></div>
+
+        <!-- 2. Interface Layer -->
+        <div id="interface-layer" class="relative z-10 w-full h-full flex flex-col justify-center align-center pointer-events-none">
+            
+           
+
+            <!-- Dynamic Form -->
+            <form id="velocity-form" class="interactive-area w-full max-w-3xl mx-auto px-8 pointer-events-auto" onsubmit="return false;">
+                
+                <!-- STEP 1: NAME -->
+                <div class="form-step step-active transition-all duration-700 ease-out" id="step-1">
+                    <div class="question-text text-4xl md:text-6xl font-extrabold tracking-tight mb-8 opacity-0 translate-y-5 transition-all duration-700 delay-100 bg-clip-text text-transparent bg-gradient-to-br from-white to-slate-400">
+                        Let's begin.<br>
+                        What is your <span class="text-gold">full name?</span>
+                    </div>
+                    <input type="text" id="input-name" class="velocity-input w-full bg-transparent border-b-2 border-white/10 text-3xl md:text-5xl text-gold py-4 font-light outline-none opacity-0 translate-y-5 transition-all duration-700 delay-200 focus:border-gold focus:shadow-[0_10px_30px_-10px_rgba(197,164,126,0.1)] placeholder:text-slate-600 font-sans" placeholder="Type your name here..." autocomplete="off">
+                    <div class="nav-controls flex gap-4 mt-12 opacity-0 translate-y-5 transition-all duration-700 delay-300">
+                        <button type="button" class="nav-btn primary group flex items-center gap-2 bg-gold/10 border border-gold/30 text-gold px-8 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-gold/20 hover:border-gold/60 transition-all shadow-[0_4px_10px_rgba(0,0,0,0.2)] hover:shadow-[0_0_20px_rgba(197,164,126,0.2)]" onclick="nextStep(1)">
+                            Next <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                        <div class="text-xs text-slate-500 flex items-center ml-4">Press Enter ↵</div>
+                    </div>
+                </div>
+
+                <!-- STEP 2: EMAIL -->
+                <div class="form-step hidden transition-all duration-700 ease-out" id="step-2">
+                    <div class="question-text text-4xl md:text-6xl font-extrabold tracking-tight mb-8 opacity-0 translate-y-5 transition-all duration-700 delay-100 bg-clip-text text-transparent bg-gradient-to-br from-white to-slate-400">
+                        Pleasure to meet you, <span id="display-name" class="text-indigo-300">Guest</span>.<br>
+                        Where should we send your <span class="text-gold">invite?</span>
+                    </div>
+                    <input type="email" id="input-email" class="velocity-input w-full bg-transparent border-b-2 border-white/10 text-3xl md:text-5xl text-gold py-4 font-light outline-none opacity-0 translate-y-5 transition-all duration-700 delay-200 focus:border-gold focus:shadow-[0_10px_30px_-10px_rgba(197,164,126,0.1)] placeholder:text-slate-600 font-sans" placeholder="name@example.com" autocomplete="off">
+                    <div class="nav-controls flex gap-4 mt-12 opacity-0 translate-y-5 transition-all duration-700 delay-300">
+                        <button type="button" class="nav-btn bg-slate-800/40 border border-white/5 text-slate-300 px-8 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-white/5 hover:text-white transition-all backdrop-blur-md" onclick="prevStep(2)">Back</button>
+                        <button type="button" class="nav-btn primary group flex items-center gap-2 bg-gold/10 border border-gold/30 text-gold px-8 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-gold/20 hover:border-gold/60 transition-all shadow-[0_4px_10px_rgba(0,0,0,0.2)] hover:shadow-[0_0_20px_rgba(197,164,126,0.2)]" onclick="nextStep(2)">
+                            Next <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 3: MESSAGE -->
+                <div class="form-step hidden transition-all duration-700 ease-out" id="step-3">
+                    <div class="question-text text-4xl md:text-6xl font-extrabold tracking-tight mb-8 opacity-0 translate-y-5 transition-all duration-700 delay-100 bg-clip-text text-transparent bg-gradient-to-br from-white to-slate-400">
+                        Finally.<br>
+                        Tell us about your <span class="text-gold">vision.</span>
+                    </div>
+                    <input type="text" id="input-message" class="velocity-input w-full bg-transparent border-b-2 border-white/10 text-3xl md:text-5xl text-gold py-4 font-light outline-none opacity-0 translate-y-5 transition-all duration-700 delay-200 focus:border-gold focus:shadow-[0_10px_30px_-10px_rgba(197,164,126,0.1)] placeholder:text-slate-600 font-sans" placeholder="I am looking for a penthouse..." autocomplete="off">
+                    <div class="nav-controls flex gap-4 mt-12 opacity-0 translate-y-5 transition-all duration-700 delay-300">
+                        <button type="button" class="nav-btn bg-slate-800/40 border border-white/5 text-slate-300 px-8 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-white/5 hover:text-white transition-all backdrop-blur-md" onclick="prevStep(3)">Back</button>
+                        <button type="button" class="nav-btn primary group flex items-center gap-2 bg-gold/10 border border-gold/30 text-gold px-8 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-gold/20 hover:border-gold/60 transition-all shadow-[0_4px_10px_rgba(0,0,0,0.2)] hover:shadow-[0_0_20px_rgba(197,164,126,0.2)]" onclick="submitForm()">
+                            Initialize Request <i data-lucide="send" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SUCCESS STATE -->
+                <div class="form-step hidden text-center transition-all duration-700 ease-out" id="step-success">
+                    <div class="mb-8 flex justify-center opacity-0 scale-90 transition-all duration-700 delay-100 reveal-item">
+                        <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-gold/20 to-white/20 border border-gold/50 flex items-center justify-center animate-[pulse_3s_infinite] shadow-[0_0_50px_rgba(197,164,126,0.2)]">
+                            <i data-lucide="check" class="w-10 h-10 text-gold"></i>
+                        </div>
+                    </div>
+                    <div class="question-text text-4xl md:text-5xl font-extrabold mb-6 opacity-0 translate-y-5 transition-all duration-700 delay-200 reveal-item bg-clip-text text-transparent bg-gradient-to-br from-white to-slate-400">
+                        Message <span class="text-gold">Received.</span>
+                    </div>
+                    <p class="text-slate-400 text-lg max-w-lg mx-auto mb-8 leading-relaxed opacity-0 translate-y-5 transition-all duration-700 delay-300 reveal-item">
+                        Our Team has been alerted. We will be in contact shortly.
+                    </p>
+                    <button type="button" class="nav-btn mx-auto bg-slate-800/40 border border-white/5 text-slate-300 px-8 py-3 rounded-full hover:bg-white/5 transition-all opacity-0 translate-y-5 duration-700 delay-400 reveal-item" onclick="resetForm()">
+                        Start Over
+                    </button>
+                </div>
+
+            </form>
+
+            <!-- Progress Indicators -->
+            <div class="progress-container absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-2" id="progress-dots">
+                <div class="progress-dot w-12 h-1 bg-gold rounded-full shadow-[0_0_15px_rgba(197,164,126,0.4)] transition-all duration-500" id="dot-1"></div>
+                <div class="progress-dot w-12 h-1 bg-white/10 rounded-full transition-all duration-500" id="dot-2"></div>
+                <div class="progress-dot w-12 h-1 bg-white/10 rounded-full transition-all duration-500" id="dot-3"></div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Velocity Logic Script -->
+
+    <!-- Footer -->
+    <footer class="bg-surface/90 py-16 border-t border-contrast/5 transition-colors duration-500 relative z-10">
+        <div class="max-w-[90%] mx-auto grid grid-cols-1 md:grid-cols-3 gap-16">
+            <!-- Logo Section - Left -->
+            <div>
+                <a href="#" class="magnetic-target block mb-6">
+                    <img src="/wp-content/themes/trilight/Assests/Trilight.png" 
+                         loading="lazy" 
+                         alt="Trilight Group" 
+                         class="h-10 md:h-12 w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100 transition-opacity"
+                         width="150"
+                         height="48">
+                </a>
+                <p class="text-muted text-sm font-light max-w-xs">Visionary developments for the modern era. Crafting the skyline of tomorrow, today.</p>
+            </div>
+            
+            <!-- Visit Us Section - Center -->
+            <div class="md:text-center">
+                 <h4 class="text-contrast text-xs uppercase tracking-widest mb-6">Visit Us</h4>
+                 <address class="text-muted text-sm font-light leading-7 not-italic">
+                    <strong class="text-contrast block mb-2">Experience Center:</strong>
+                    Plot 1, Golden Mile,<br>
+                    Kokapet, Hyderabad - 500 075,<br>
+                    Telangana<br>
+
+                    <span class="text-gold text-xs block mt-4">RERA ID: P02400005390</span><br>
+                    <!-- <a href="tel:+91400000000" class="hover:text-silver transition-colors mt-4 block">+91 40 0000 0000</a> -->
+                 </address>
+            </div>
+            
+            <!-- Social Section - Right -->
+            <div class="md:text-right">
+                <h4 class="text-contrast text-xs uppercase tracking-widest mb-6">Social</h4>
+                <div class="flex flex-col space-y-4 text-sm text-muted md:items-end">
+                    <a href="#" class="hover:text-silver transition-colors magnetic-target w-fit">Instagram</a>
+                    <a href="#" class="hover:text-silver transition-colors magnetic-target w-fit">LinkedIn</a>
+                    <a href="#" class="hover:text-silver transition-colors magnetic-target w-fit">Twitter</a>
+                </div>
+            </div>
+        </div>
+        <div class="mt-16 text-center border-t border-contrast/5 pt-8">
+            <p class="text-[10px] uppercase tracking-[0.2em] text-muted">&copy; 2026 Trilight Group. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    
+
+</body>
+</html>

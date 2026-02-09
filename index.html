@@ -687,12 +687,20 @@
         </div>
     </div>
 
+<<<<<<< Updated upstream
     <!-- Custom Cursor -->
     <div id="cursor" class="hidden md:block"></div>
 
     <!-- Navigation -->
     <nav class="fixed w-full z-50 py-8 transition-all duration-500 bg-gradient-to-b from-navy/90 to-transparent backdrop-blur-[2px]">
         <div class="max-w-[90%] mx-auto flex justify-between items-center">
+=======
+    <!-- Navigation -->
+
+     <!-- CORNER 1: TOP LEFT (Identity) -->
+    <header class="fixed top-6 left-6 md:top-8 md:left-12 z-50 reveal-corner pointer-events-auto" style="animation-delay: 0.1s;">
+        <div class="flex items-center gap-4">
+>>>>>>> Stashed changes
             <a href="#" class="magnetic-target block">
                 <img src="Assests/Trilight.png" 
                      alt="Trilight Group" 
@@ -700,6 +708,7 @@
                      width="150"
                      height="48">
             </a>
+<<<<<<< Updated upstream
 
             <div class="hidden md:flex items-center space-x-12 text-[10px] uppercase tracking-[0.2em] font-medium text-muted">
                 <a href="#about" class="hover:text-contrast transition-colors hover-underline-animation magnetic-target">Philosophy</a>
@@ -724,6 +733,115 @@
         <a href="#projects" class="text-2xl font-serif text-contrast hover:text-silver transition-colors" onclick="document.getElementById('mobile-menu').classList.add('translate-x-full')">Collection</a>
         <a href="#visionary" class="text-2xl font-serif text-contrast hover:text-silver transition-colors" onclick="document.getElementById('mobile-menu').classList.add('translate-x-full')">Visionary</a>
         <a href="#contact" class="text-2xl font-serif text-silver" onclick="document.getElementById('mobile-menu').classList.add('translate-x-full')">Inquire</a>
+=======
+        </div>
+    </header>
+
+    <!-- CORNER 2: TOP RIGHT (Action) -->
+    <div class="fixed top-0 right-0 z-50 p-6 md:p-8 reveal-corner pointer-events-auto" style="animation-delay: 0.2s;">
+        <a href="#contact" class="group flex items-center gap-3 mix-blend-difference text-white">
+            <span class="text-[10px] uppercase tracking-[0.3em] font-light group-hover:tracking-[0.4em] transition-all duration-500">Enquiry</span>
+            <div class="w-10 h-10 border border-white/20 rounded-full flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-500">
+                <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            </div>
+        </a>
+    </div>
+
+    <!-- CORNER 4: BOTTOM RIGHT (Navigation Stack) -->
+    <nav class="fixed bottom-6 right-6 md:bottom-12 md:right-12 z-[70] text-right mb-4 md:mb-0 reveal-corner pointer-events-auto" style="animation-delay: 0.4s;">
+        <!-- Menu Trigger -->
+        <button id="menu-trigger" class="flex flex-col gap-1.5 group cursor-pointer p-2 relative outline-none">
+            <div class="flex items-center gap-4">
+                <span class="hidden md:block text-[10px] uppercase tracking-[0.3em] font-medium text-white/50 group-hover:text-white transition-colors">Menu</span>
+                <div class="flex flex-col gap-1.5 items-end">
+                    <span class="w-8 h-[1px] bg-white group-hover:w-6 transition-all duration-300 menu-bar origin-center"></span>
+                    <span class="w-5 h-[1px] bg-white group-hover:w-8 transition-all duration-300 menu-bar origin-center"></span>
+                    <span class="w-8 h-[1px] bg-white group-hover:w-4 transition-all duration-300 menu-bar origin-center"></span>
+                </div>
+            </div>
+        </button>
+    </nav>
+
+    <!-- ================= UNIQUE FULL MENU OVERLAY ================= -->
+    <div id="full-menu" class="fixed inset-0 bg-[#080808] z-[60] transform translate-y-full transition-transform duration-700 cubic-bezier(0.76, 0, 0.24, 1) flex items-center overflow-hidden">
+        
+        <!-- Internal Grid Lines (For "Same Layout" continuity) -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="grid-line grid-vertical-left hidden md:block opacity-20"></div>
+            <div class="grid-line grid-vertical-right hidden md:block opacity-20"></div>
+            <div class="grid-line grid-horizontal-top opacity-20"></div>
+            <div class="grid-line grid-horizontal-bottom opacity-20"></div>
+        </div>
+
+        <!-- Huge Background Watermark (Interactive) -->
+        <div id="watermark" class="absolute right-[-10%] bottom-[-20%] text-[50vh] md:text-[80vh] font-serif leading-none text-white/[0.03] select-none transition-all duration-700 ease-out pointer-events-none">
+            T
+        </div>
+
+        <!-- Content Container -->
+        <div class="w-full max-w-[1400px] mx-auto px-6 md:px-20 relative z-10 flex flex-col md:flex-row md:items-end justify-between h-full py-32 md:py-24">
+            
+            <!-- Left: Giant Index List -->
+            <div class="flex flex-col justify-center space-y-1 md:space-y-0 w-full h-full overflow-y-auto md:overflow-hidden no-scrollbar">
+                
+                <a href="#about" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="P" style="transition-delay: 0.1s;">
+                    <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">01</span>
+                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Philosophy</span>
+                </a>
+
+                <a href="#projects" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="C" style="transition-delay: 0.15s;">
+                    <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">02</span>
+                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Collection</span>
+                </a>
+
+                <a href="#signature-collection" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="S" style="transition-delay: 0.2s;">
+                    <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">03</span>
+                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Signature</span>
+                </a>
+
+                <a href="#virtual-tour" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="E" style="transition-delay: 0.25s;">
+                    <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">04</span>
+                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Experience</span>
+                </a>
+
+                <a href="#testimonials" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="V" style="transition-delay: 0.3s;">
+                    <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">05</span>
+                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Visual Stories</span>
+                </a>
+
+                <a href="#visionary" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="L" style="transition-delay: 0.35s;">
+                    <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">06</span>
+                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Leadership</span>
+                </a>
+
+                <a href="#journal" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="J" style="transition-delay: 0.4s;">
+                    <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">07</span>
+                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Journal</span>
+                </a>
+
+                <a href="#timeline" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="T" style="transition-delay: 0.45s;">
+                    <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">08</span>
+                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Timeline</span>
+                </a>
+
+                <a href="#contact" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="I" style="transition-delay: 0.5s;">
+                    <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">09</span>
+                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Enquiry</span>
+                </a>
+            </div>
+
+            <!-- Right: Secondary Info (Hidden on small mobile) -->
+            <div class="hidden md:block text-right pb-4 menu-link-item" style="transition-delay: 0.7s;">
+                <h4 class="text-xs uppercase tracking-[0.2em] text-gray-500 mb-4">Connect</h4>
+                <p class="text-sm text-gray-400 hover:text-white cursor-pointer transition-colors">+91 40 1234 5678</p>
+                <p class="text-sm text-gray-400 hover:text-white cursor-pointer transition-colors mt-2">hello@trilight.com</p>
+                <div class="mt-8 flex justify-end gap-4">
+                    <a href="#" class="w-8 h-8 border border-white/20 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+                    <a href="#" class="w-8 h-8 border border-white/20 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+                </div>
+            </div>
+        </div>
+>>>>>>> Stashed changes
     </div>
 
     <!-- Hero Section -->
@@ -738,6 +856,12 @@
                 <h1 class="font-serif text-5xl md:text-7xl lg:text-9xl text-contrast leading-tight mb-8 mix-blend-overlay animate-fade-in-up" style="animation-delay: 0.4s;">
                     Beyond <br> <span class="italic font-light">Horizons</span>
                 </h1>
+<<<<<<< Updated upstream
+=======
+                <h2 class="text-sm md:text-base text-silver/80 font-light tracking-wide">
+                    The rules of luxury in Hyderabad have been rewritten.
+                </h2>
+>>>>>>> Stashed changes
             </div>
         </div>
     </header>
@@ -749,6 +873,7 @@
             <p class="font-serif text-2xl md:text-4xl leading-relaxed text-contrast/90 reveal-on-scroll">
                 We believe that <span class="text-silver italic">luxury</span> is not just about excess, but about the absence of friction. We craft spaces that breathe, merging structural innovation with the tranquility of nature.
             </p>
+<<<<<<< Updated upstream
             
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-24 border-t border-contrast/5 pt-12">
                 <div class="reveal-on-scroll magnetic-target p-4 rounded-lg hover:bg-contrast/5 transition-colors duration-500">
@@ -768,6 +893,8 @@
                     <span class="text-[9px] uppercase tracking-widest text-gold">Global Cities</span>
                 </div>
             </div>
+=======
+>>>>>>> Stashed changes
         </div>
     </section>
 
@@ -777,6 +904,10 @@
             <div class="mb-24 text-center">
                 <span class="block text-gold text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Our Portfolio</span>
                 <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">The Constellations</h2>
+<<<<<<< Updated upstream
+=======
+                <p class="text-muted text-lg font-light mt-6 reveal-on-scroll">One Vision.</p>
+>>>>>>> Stashed changes
                 <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
             </div>
         </div>
@@ -844,6 +975,7 @@
                     </div>
                 </div>
             </div>
+<<<<<<< Updated upstream
 
             <!-- Project 3 (Centered & Separate from Timeline)
             <div class="project-row group relative z-10 mt-32 md:mt-48 text-center flex flex-col items-center" data-project="3">
@@ -853,6 +985,34 @@
                         A coastal masterpiece currently in development. Bridging the gap between the serenity of the ocean and the vibrancy of urban life.
                     </p>
                         <span class="text-[10px] uppercase tracking-widest text-gold border border-gold/30 px-3 py-1 rounded-full">Coming 2026</span>
+=======
+            <!-- Upcoming Section -->
+            <div class="mb-32 md:mb-48 relative z-1" data-project="3">
+                <!-- Outer headers REMOVED -->
+
+                <!-- The Single Box -->
+                <div class="border border-white/10 bg-navy/20 backdrop-blur-sm rounded-sm p-8 md:p-12 relative overflow-hidden max-w-3xl aspect-square mx-auto flex flex-col justify-center">
+                    
+                    <div class="group relative w-full flex flex-col items-center">
+                         <!-- Single Large Plain Image Mask Box -->
+                         <div class="w-full max-w-2xl aspect-square mx-auto bg-navy/40 border border-white/5 relative overflow-hidden group-hover:border-gold/20 transition-colors flex items-center justify-center">
+                               
+                               <!-- Image Layer (Behind) -->
+                               <img src="Assests/upcmg.png" alt="" class="absolute inset-0 w-full h-full object-contain z-0 opacity-80">
+
+                               <!-- Blur/Mask Layer -->
+                               <div class="absolute inset-0 bg-navy/60 backdrop-blur-sm z-10 transition-all duration-700 backdrop-blur-none group-hover:bg-navy/40">
+                               </div>
+                               
+                               <!-- Text Overlay -->
+                               <div class="relative z-10 text-center">
+                                    <span class="block text-gold text-[10px] uppercase tracking-widest mb-4">Future</span>
+                                    <h3 class="font-serif text-3xl md:text-5xl text-contrast">Upcoming Soon</h3>
+                               </div>
+                               
+                               <!-- Optional: Placeholder Text -->
+                               <span class="absolute bottom-4 right-6 text-[10px] uppercase tracking-[0.2em] text-white/20">Confidential</span>
+>>>>>>> Stashed changes
                         </div>
                      <div class="order-1 lg:order-2 h-[60vh] lg:h-[80vh] parallax-container project-card" style="transition-delay: 200ms;">
                         <div class="absolute inset-0 bg-navy/20 z-10 flex items-center justify-center">
@@ -862,7 +1022,11 @@
                              class="parallax-img grayscale" alt="Apex"> 
                 </div>
             </div>
+<<<<<<< Updated upstream
             </div> -->
+=======
+
+>>>>>>> Stashed changes
         </div>
     </section>
 
@@ -1091,12 +1255,12 @@
 
                     <!-- CTA -->
                     <div>
-                        <button class="group flex items-center gap-3 text-sm font-medium text-white hover:text-gold transition-colors">
+                        <a id="lens-link" href="#" target="_blank" class="group flex items-center gap-3 text-sm font-medium text-white hover:text-gold transition-colors">
                             <span class="border-b border-white/20 pb-1 group-hover:border-gold transition-colors">
                                 Read Full Story
                             </span>
                             <i data-lucide="arrow-up-right" class="w-4 h-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1"></i>
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -1107,7 +1271,7 @@
                 <!-- Desktop List Header -->
                 <div class="hidden lg:flex items-center justify-between mb-8 pb-4 border-b border-white/10 shrink-0">
                     <span class="text-xs font-bold tracking-[0.2em] uppercase text-gray-500">Index</span>
-                    <span class="text-xs font-bold tracking-[0.2em] uppercase text-gray-500">Select to View</span>
+                    <span class="text-xs font-bold tracking-[0.2em] uppercase text-gray-500">Hover to View</span>
                 </div>
 
                 <!-- Articles List Container -->
@@ -1129,56 +1293,92 @@
                 {
                     id: 1,
                     type: 'journal',
-                    category: 'Architecture',
-                    date: 'OCT 12, 2025',
-                    title: 'The Vertical Oasis: Redefining Skyline Esthetics',
-                    excerpt: 'An exclusive look into how Trilight\'s latest tower integrates biophilic design at 40 stories high, merging nature with concrete.',
-                    readTime: '5 min read'
+                    category: 'Zoya Tata Product',
+                    date: 'AUG, 2024',
+                    title: 'August Edition 24',
+                    excerpt: 'Stay updated with the latest from The Trilight – where luxury living meets unparalleled exclusivity. In this edition, we bring you exciting community news, exclusive events, and insider updates on our exquisite residences. Dive in and explore what’s new this month!',
+                    readTime: '2 min read',
+                    link: 'https://thetrilight.com/wp-content/uploads/2024/09/trilight-Newsletter-Aug2024.pdf'
                 },
                 {
                     id: 2,
-                    type: 'press',
-                    category: 'Awards',
-                    date: 'SEP 28, 2025',
-                    title: 'Trilight Wins \'Best Luxury Development\' 2025',
-                    excerpt: 'Recognized for sustainable innovation and uncompromising luxury by the Global Architecture Forum.',
-                    readTime: '2 min read'
+                    type: 'journal',
+                    category: 'Winning Architecture & Innovation',
+                    date: 'JUL, 2024',
+                    title: 'July Edition 24',
+                    excerpt: "We are excited to share the news that The Trilight, in Kokapet, has been honored with two prestigious Golden Brick Awards from Dubai. Recognized for 'Innovative Concept of the Year' and 'Emerging Developer of the Year (Regional)'. Also, the Construction is progressing smoothly, promising a timely completion to deliver a life beyond experience.",
+                    readTime: '4 min read',
+                    link: 'https://thetrilight.com/wp-content/uploads/2024/07/Newsletter-July-Awards-2.pdf'
                 },
                 {
                     id: 3,
                     type: 'journal',
-                    category: 'Interior',
-                    date: 'SEP 15, 2025',
-                    title: 'Minimalism in the Dark: A Design Study',
-                    excerpt: 'Why dark palettes are becoming the new standard for luxury interiors. A conversation with our lead designer.',
-                    readTime: '4 min read'
+                    category: 'Flash Back of Sucessful Year',
+                    date: 'JAN, 2024',
+                    title: 'January Edition 24',
+                    excerpt: 'We are excited to update you on the progress of The Trilight project. Our construction team has been working tirelessly to ensure that the project is completed on time and to the highest quality standards',
+                    readTime: '3 min read',
+                    link: 'https://thetrilight.com/wp-content/uploads/2024/01/Trilight-Newsletter-2024.pdf'
                 },
                 {
                     id: 4,
-                    type: 'press',
-                    category: 'Community',
-                    date: 'AUG 30, 2025',
-                    title: 'The Trilight Gala: A Night of Stars',
-                    excerpt: 'Highlights from our annual charity gala hosting the city\'s architectural elite and raising $2M for urban greening.',
-                    readTime: '3 min read'
+                    type: 'journal',
+                    category: 'Media validation',
+                    date: 'SEP, 2023',
+                    title: 'September Edition',
+                    excerpt: 'The Trilight Towers will contribute to the flourishing and rapidly evolving community in and around Kokapet, which is rapidly establishing itself as the gold standard. Our commitment is to ensure that the construction of your new dream home not only meets but exceeds your expectations in terms of quality. We are delighted to announce that the construction progress has been consistently on course, and we are well-positioned to bring your vision to life within the scheduled timeline.',
+                    readTime: '6 min read',
+                    link: 'https://thetrilight.com/wp-content/uploads/2023/10/September-Newsletter.pdf' 
                 },
                 {
                     id: 5,
                     type: 'journal',
-                    category: 'Sustainability',
-                    date: 'AUG 12, 2025',
-                    title: 'Zero Carbon: The Future of Concrete',
-                    excerpt: 'Exploring new materials that reduce our footprint without compromising strength. The science behind our foundations.',
-                    readTime: '6 min read'
+                    category: 'Saviour of Society',
+                    date: 'JUL, 2023',
+                    title: 'July Edition',
+                    excerpt: 'The Trilight team has diligently adhered to the project schedule to ensure that the construction of your dream home not only meets but possibly exceeds your expectations in terms of quality. We are thrilled to convey that construction progress has remained steady, and we are right on track to realize your vision as per the scheduled timeline.',
+                    readTime: '2 min read',
+                    link: 'https://thetrilight.com/wp-content/uploads/2023/08/July-Newsletter.pdf'
                 },
                 {
                     id: 6,
-                    type: 'press',
+                    type: 'journal',
+                    category: 'Monthly Construction Updates',
+                    date: 'MAY, 2023',
+                    title: 'May Edition',
+                    excerpt: 'The Trilight team has been working on schedule to make sure that the construction procedure of your new dream abode is able to match or even surpass the level of your expectations in the realm of quality. Our team is delighted to inform you that the progress on the construction has been consistent, and we are at par with the schedule for achieving your vision on time',
+                    readTime: '2 min read',
+                    link: 'https://thetrilight.com/wp-content/uploads/2023/06/Newsletter-May23.pdf'
+                },
+                {
+                    id: 7,
+                    type: 'journal',
+                    category: 'Real Estate Marketing Collateral',
+                    date: 'MAR, 2023',
+                    title: 'March Edition',
+                    excerpt: 'We are excited to update you on the progress of The Trilight project. Our construction team has been working tirelessly to ensure that the project is completed on time and to the highest quality standards',
+                    readTime: '2 min read',
+                    link: 'https://thetrilight.com/wp-content/uploads/2023/04/Trilight-Newsletter_March23.pdf'
+                },
+                {
+                    id: 8,
+                    type: 'journal',
+                    category: 'Property Development Newsletter',
+                    date: 'FEB, 2023',
+                    title: 'February Edition',
+                    excerpt: 'The Trilight towers will add to the grandeur and fast-growing community in and around the Kokapet which is quickly becoming the gold standard for the major real estate players in Hyderabad.',
+                    readTime: '2 min read',
+                    link: 'https://thetrilight.com/wp-content/uploads/2023/04/Newsletter_Feb23.pdf'
+                },
+                {
+                    id: 9,
+                    type: 'journal',
                     category: 'Launch',
-                    date: 'JUL 22, 2025',
-                    title: 'Trilight Announces Expansion to Dubai',
-                    excerpt: 'Bringing our signature celestial aesthetic to the Middle East. New projects confirmed for 2027.',
-                    readTime: '2 min read'
+                    date: 'JAN, 2023',
+                    title: 'January Edition',
+                    excerpt: 'We look forward to the next phase of the project and will keep you posted with regular updates. In the meantime, we are grateful for your trust in us, and wish you good health and warm wishes for 2023.',
+                    readTime: '2 min read',
+                    link: 'https://thetrilight.com/wp-content/uploads/2023/04/Trilight_Newsletter_Jan23.pdf'
                 }
             ];
 
@@ -1192,6 +1392,7 @@
             const lensReadTime = document.getElementById('lens-readTime');
             const lensTitle = document.getElementById('lens-title');
             const lensExcerpt = document.getElementById('lens-excerpt');
+            const lensLink = document.getElementById('lens-link');
 
             let currentActiveId = 1;
 
@@ -1297,6 +1498,12 @@
                             if (lensReadTime) lensReadTime.textContent = item.readTime;
                             if (lensTitle) lensTitle.textContent = item.title;
                             if (lensExcerpt) lensExcerpt.textContent = item.excerpt;
+                            
+                            // Update Link
+                            if (lensLink) {
+                                lensLink.href = item.link || '#';
+                                // Optional: Hide button if no link? For now just default to #
+                            }
                         }
                         
                         // Remove class to trigger fade in
@@ -1534,18 +1741,9 @@
 
                 if(!currentEl || !nextEl) return;
 
-                // Animate Out: Slide up and fade out
-                // Using Tailwind utility classes for transitions defined in HTML
-                // Remove 'step-active' to revert to base state (hidden/opacity 0)
                 currentEl.classList.remove('step-active'); 
                 currentEl.classList.add('hidden'); // Add hidden after transition? 
-                // We need to wait for transition.
-                // But the helper classes in the user CSS were convenient. 
-                // Let's manually manage classes for Tailwind transition.
-                
-                // My Tailwind classes:
-                // Active: opacity-100 translate-y-0
-                // Inactive: opacity-0 translate-y-5
+               
                 
                 // Logic:
                 // 1. Fade out current
@@ -2018,6 +2216,7 @@
         }
 
         // --- Constellation Scroll Logic (Pathfinder) ---
+<<<<<<< Updated upstream
         const pathfinderStar = document.getElementById('pathfinder-star');
         const drawingLine = document.getElementById('drawing-line');
         const projectSection = document.getElementById('projects');
@@ -2063,7 +2262,52 @@
                     drawingLine.style.height = `${maxProgress * 100}%`;
                     pathfinderStar.style.top = `${maxProgress * 100}%`;
                 }
+=======
+    const pathfinderStar = document.getElementById('pathfinder-star');
+    const drawingLine = document.getElementById('drawing-line');
+    const constellationContainer = document.getElementById('constellation-container');
+    const projectRows = document.querySelectorAll('.project-row');
 
+    if(constellationContainer && pathfinderStar) {
+        window.addEventListener('scroll', () => {
+            const rect = constellationContainer.getBoundingClientRect();
+            const sectionHeight = constellationContainer.offsetHeight;
+            const windowHeight = window.innerHeight;
+            
+            // Start calculating when section enters view (matches global wave landing)
+            const startOffset = windowHeight / 2;
+            let scrollDist = -rect.top + startOffset;
+            let progress = scrollDist / sectionHeight;
+            
+            // Calculate dynamic safe limit (stop ABOVE the Upcoming Box)
+            const lastProject = document.querySelector('[data-project="3"]');
+            let maxProgress = 1.0; // Default to full height if target is missing
+            
+            if(lastProject) {
+                // Stop at the TOP of the Upcoming Box
+                maxProgress = lastProject.offsetTop / sectionHeight;
+            }
+
+            // Cap progress
+            progress = Math.max(0, Math.min(maxProgress, progress));
+>>>>>>> Stashed changes
+
+            // Update Line & Star
+            if (progress > 0 && progress < maxProgress) {
+                pathfinderStar.style.opacity = '1';
+                if(drawingLine) drawingLine.style.height = `${progress * 100}%`;
+                pathfinderStar.style.top = `${progress * 100}%`;
+            } else if (progress <= 0) {
+                // Hide it until the wave arrives
+                pathfinderStar.style.opacity = '0';
+                if(drawingLine) drawingLine.style.height = '0%';
+                pathfinderStar.style.top = '0%';
+            } else {
+                // When capped
+                pathfinderStar.style.opacity = '1'; 
+                if(drawingLine) drawingLine.style.height = `${maxProgress * 100}%`;
+                pathfinderStar.style.top = `${maxProgress * 100}%`;
+            }
                 // Activate Projects
                 projectRows.forEach(row => {
                     const rowTop = row.offsetTop;
@@ -2182,42 +2426,41 @@
 
         // --- Waterfall Testimonials Data & Logic ---
         const reviews = [
-            {
-                id: 1, type: "video", name: "Sarah Chen", role: "Lead Designer, Flow",
-                thumbnailGradient: "from-pink-900/50 to-purple-900/50",
-                content: "The workflow integration is seamless. It's a game changer.", tag: "Design Story"
-            },
-            {
-                id: 2, type: "text", name: "Alex Rivera", role: "CTO, Nexus",
-                content: "The animation fluidity is unlike anything else. It transformed our conversion rates overnight.", rating: 5, tag: "Enterprise"
-            },
-            {
-                id: 3, type: "text", name: "David Park", role: "Frontend Dev, Stripe",
-                content: "Incredible attention to detail. The glow effects are pure joy.", rating: 5, tag: "UI/UX"
-            },
-            {
-                id: 4, type: "text", name: "Marcus Thorne", role: "Founder, Zenith",
-                content: "I've used every tool in the book. This one stands out for its sheer performance and visual fidelity.", rating: 5, tag: "SaaS"
-            },
-            {
-                id: 5, type: "video", name: "Jessica Wu", role: "Director, Trilight Inc",
-                thumbnailGradient: "from-violet-900/50 to-indigo-900/50",
-                content: "A must-have for any modern web application.", tag: "Founder Talk"
-            },
-            {
-                id: 6, type: "text", name: "Elena Vost", role: "Product Manager",
-                content: "We shipped 3x faster using the component library.", rating: 5, tag: "Product"
-            },
-            {
-                id: 7, type: "text", name: "James Wilson", role: "Indie Hacker",
-                content: "The dark mode implementation is flawless. Saved me weeks of work.", rating: 5, tag: "Indie"
-            },
-            {
-                id: 8, type: "video", name: "Anna K.", role: "Creative Director",
-                thumbnailGradient: "from-blue-900/50 to-cyan-900/50",
-                content: "Visually stunning and incredibly robust.", tag: "Creative"
-            },
-        ];
+    {
+        id: 1, type: "video", 
+        // content: "A design that stands apart, making the project impossible to ignore.",
+        videoEmbed: `<div style="padding:42.19% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1161472686?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;muted=1&amp;loop=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="TESTMONIAL"></iframe></div>`
+    },
+    {
+        id: 2, type: "text", 
+        content: "Years of experience taught me one thing—this project’s potential and honest team are rare.", rating: 5, 
+    },
+    {
+        id: 3, type: "text", 
+        content: "A distinctive design in a rapidly growing neighborhood makes this opportunity exceptional.", rating: 5,   
+    },
+    {
+        id: 4, type: "text", 
+        content: "One visit to the model home, and I knew it had to be ours.", rating: 5, 
+    },
+    {
+        id: 5, type: "video", 
+        // content: "Perfect location, premium amenities, and a community that feels like home.", rating: 5, 
+        videoEmbed: `<div style="padding:42.19% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1162425490?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;muted=1&amp;loop=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="testicopy"></iframe></div><script src="https://player.vimeo.com/api/player.js"><\/script>`
+    },
+    {
+        id: 6, type: "text", 
+        content: "The moment we saw the model home, the decision was already made.", rating: 5, 
+    },
+    {
+        id: 7, type: "text", 
+        content: "Strong commitment, genuine leadership, and unwavering delivery confidence made us choose this project.", rating: 5, 
+    },
+    {
+        id: 8, type: "video",
+        content: "Celebrating progress even before handover reflects a refreshing, forward-thinking vision.", rating: 5, 
+    },
+];
 
         // --- Render Functions ---
 
@@ -2228,37 +2471,45 @@
         }
 
         function createCard(item) {
-            const isVideo = item.type === 'video';
+            // Only treat as video if embed exists
+            const isVideo = item.type === 'video' && item.videoEmbed;
+            const gradient = item.thumbnailGradient || 'from-gray-900 to-black';
             
             // Common wrapper
             let cardContent = '';
 
             if (isVideo) {
-                cardContent = `
-                    <div class="flex flex-col gap-4">
-                        <!-- Video Thumbnail -->
-                        <div class="relative w-full h-40 rounded-xl overflow-hidden bg-black/50 border border-white/5 group-hover:border-white/20 transition-colors">
-                            <div class="absolute inset-0 bg-gradient-to-br ${item.thumbnailGradient} opacity-60"></div>
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center group-hover:scale-110 transition-transform">
-                                    <i data-lucide="play" class="w-4 h-4 fill-white ml-1"></i>
-                                </div>
+                if (item.videoEmbed) {
+                    cardContent = `
+                        <div class="flex flex-col gap-4">
+                            <!-- Video Embed -->
+                            <div class="relative w-full rounded-xl overflow-hidden border border-white/5 bg-black">
+                                ${item.videoEmbed}
                             </div>
-                            <div class="absolute top-2 right-2 px-2 py-0.5 bg-black/60 rounded text-[10px] font-mono border border-white/10 text-gray-300">0:45</div>
+                            
+                            
                         </div>
-                        
-                        <div>
-                            <p class="text-lg font-medium leading-snug text-gray-200">"${item.content}"</p>
-                            <div class="mt-4 flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold">${item.name[0]}</div>
-                                <div class="text-xs text-muted">
-                                    <span class="text-white block font-medium">${item.name}</span>
-                                    ${item.role}
+                    `;
+                } else {
+                    cardContent = `
+                        <div class="flex flex-col gap-4">
+                            <!-- Video Thumbnail -->
+                            <div class="relative w-full h-40 rounded-xl overflow-hidden bg-black/50 border border-white/5 group-hover:border-white/20 transition-colors">
+                                <div class="absolute inset-0 bg-gradient-to-br ${gradient} opacity-60"></div>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i data-lucide="play" class="w-4 h-4 fill-white ml-1"></i>
+                                    </div>
                                 </div>
+                                <div class="absolute top-2 right-2 px-2 py-0.5 bg-black/60 rounded text-[10px] font-mono border border-white/10 text-gray-300">0:45</div>
+                            </div>
+                            
+                            <div>
+                                <p class="text-lg font-medium leading-snug text-gray-200">"${item.content}"</p>
                             </div>
                         </div>
-                    </div>
-                `;
+                    `;
+                }
             } else {
                 cardContent = `
                     <div class="flex flex-col h-full justify-between gap-6">
@@ -2273,16 +2524,6 @@
                             <span class="text-purple-400 font-serif text-2xl mr-1">“</span>
                             ${item.content}
                         </p>
-
-                        <div class="flex items-center gap-3 border-t border-white/5 pt-4">
-                            <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-gray-800 to-black border border-white/10 flex items-center justify-center text-xs font-bold shadow-inner">
-                                ${item.name[0]}
-                            </div>
-                            <div>
-                                <h4 class="text-sm font-medium text-white">${item.name}</h4>
-                                <p class="text-xs text-muted">${item.role}</p>
-                            </div>
-                        </div>
                     </div>
                 `;
             }
@@ -2327,9 +2568,9 @@
             const leftCol = document.getElementById('waterfall-left');
             const rightCol = document.getElementById('waterfall-right');
             
-            // Split data
+            // Split data (Ensure all 8 items are used uniquely)
             const col1 = [reviews[0], reviews[3], reviews[6], reviews[1]];
-            const col3 = [reviews[2], reviews[5], reviews[0], reviews[3]];
+            const col3 = [reviews[2], reviews[5], reviews[4], reviews[7]];
 
             // Inject Columns if container exists
             if (leftCol) {
@@ -2370,11 +2611,6 @@
                 );
 
                 if (pSection && cContainer) {
-                    // Calculate absolute top position
-                    // pSection.offsetTop gives top relative to body (usually)
-                    // cContainer is inside pSection. cContainer.offsetTop is relative to pSection (if pSection is relative)
-                    // limitHeight = pSection.offsetTop + cContainer.offsetTop;
-                    // To be safe, use getBoundingClientRect + scrollY
                     const rect = cContainer.getBoundingClientRect();
                     limitHeight = rect.top + window.scrollY;
                 }
