@@ -14,11 +14,11 @@ const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/
 const count = isMobile ? 20000 : 105000;
 
 const params = {
-    size: 0.018,
-    radius: 3.5,
+    size: 0.020,
+    radius: 4.5,
     branches: 4,
-    spin: 3,
-    randomness: 7,
+    spin: 2.5,
+    randomness: 8,
     randomnessPower: 4,
     insideColor: "#4e54c8",
     midColor: "#6a73ee",
@@ -251,7 +251,7 @@ const tick = () => {
     const disperseStart = window.innerHeight * 0.5;
     const disperseEnd = heroHeight;
     const scrollY = window.scrollY;
-    
+
     const targetDisperse = Math.max(0, Math.min(1, (scrollY - disperseStart) / (disperseEnd - disperseStart)));
     smoothDisperse += (targetDisperse - smoothDisperse) * 0.08;
 
@@ -273,13 +273,13 @@ const tick = () => {
 
     // Camera: orbit + mouse influence + drag
     // Closer base distance for "larger" feel
-    const baseDist = 3 - smoothDisperse * 1.5; // Changed from 4 to 3
+    const baseDist = 4.0 - smoothDisperse * 1.5;
     const camDist = Math.max(baseDist, 1.2);
     const orbitSpeed = 0.05;
 
     camera.position.x = Math.cos(elapsed * orbitSpeed + dragRotY) * camDist + mouse.x * 0.5;
     camera.position.z = Math.sin(elapsed * orbitSpeed + dragRotY) * camDist;
-    camera.position.y = 1.2 + dragRotX * 2 - mouse.y * 0.3; // Lowered Y slightly
+    camera.position.y = 1.8 + dragRotX * 2 - mouse.y * 0.3;
     camera.lookAt(0, 0, 0);
 
     renderer.render(scene, camera);
