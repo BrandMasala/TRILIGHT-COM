@@ -11,10 +11,10 @@ const scene = new THREE.Scene()
 
 // Device detection
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
-const count = isMobile ? 20000 : 105000;
+const count = isMobile ? 45000 : 105000;
 
 const params = {
-    size: 0.018,
+    size: isMobile ? 0.025 : 0.018,
     radius: 3.5,
     branches: 4,
     spin: 3,

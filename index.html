@@ -34,10 +34,9 @@
                         gold: '#C5A47E',
                     },
                     fontFamily: {
-                        serif: ['Playfair Display', 'serif'],
-                        serif: ['Playfair Display', 'serif'],
-                        sans: ['Montserrat', 'sans-serif'],
-                        inter: ['Inter', 'sans-serif'],
+                        serif: ['Optima', 'Segoe UI', 'sans-serif'],
+                        avenir: ['Avenir Next', 'Avenir', 'sans-serif'],
+                        sans: ['Dosis', 'sans-serif'],
                     },
                     letterSpacing: {
                         tightest: '-.05em',
@@ -105,9 +104,7 @@
     </script>
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&display=swap');
         
         :root {
             /* DARK MODE (Navy & Silver) */
@@ -125,8 +122,14 @@
             --c-bg-card: #141b2d;
             --c-gold: #C5A47E;        
             --c-gold-glow: rgba(197, 164, 126, 0.25);
-            --font-head: 'Playfair Display', serif; 
-            --font-body: 'Manrope', sans-serif;
+            --font-head: 'Optima', 'Segoe UI', sans-serif; 
+            --font-sub: 'Avenir Next', 'Avenir', sans-serif;
+            --font-body: 'Dosis', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 300;
         }
 
         /* --- TIMELINE STYLES --- */
@@ -154,7 +157,7 @@
 
         .timeline-header span {
             color: var(--c-gold);
-            font-family: var(--font-body);
+            font-family: var(--font-sub);
             font-size: 0.8rem;
             letter-spacing: 3px;
             text-transform: uppercase;
@@ -342,7 +345,7 @@
         
 
         body {
-            font-family: 'Montserrat', sans-serif;
+            font-family: var(--font-body);
             background-color: rgb(var(--color-navy));
             color: rgb(var(--color-contrast));
             transition: background-color 0.5s ease, color 0.5s ease;
@@ -482,7 +485,7 @@
             justify-content: center;
             align-items: center;
             color: #fff;
-            font-family: 'Playfair Display', serif;
+            font-family: var(--font-head);
             letter-spacing: 1px;
             z-index: 10;
         }
@@ -646,7 +649,7 @@
 
         /* --- NEW MENU & ARCHITECTURAL STYLES --- */
     .font-serif {
-        font-family: 'Playfair Display', serif;
+        font-family: var(--font-head);
     }
     /* --- Grid Lines --- */
     .grid-line {
@@ -773,7 +776,6 @@
         <!-- Menu Trigger -->
         <button id="menu-trigger" class="flex flex-col gap-1.5 group cursor-pointer p-2 relative outline-none">
             <div class="flex items-center gap-4">
-                <span class="hidden md:block text-[10px] uppercase tracking-[0.3em] font-medium text-white/50 group-hover:text-white transition-colors">Menu</span>
                 <div class="flex flex-col gap-1.5 items-end">
                     <span class="w-8 h-[1px] bg-white group-hover:w-6 transition-all duration-300 menu-bar origin-center"></span>
                     <span class="w-5 h-[1px] bg-white group-hover:w-8 transition-all duration-300 menu-bar origin-center"></span>
@@ -807,47 +809,47 @@
                 
                 <a href="#about" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="P" style="transition-delay: 0.1s;">
                     <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">01</span>
-                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Philosophy</span>
+                    <span class="text-xl md:text-2xl lg:text-3xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Philosophy</span>
                 </a>
 
                 <a href="#projects" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="C" style="transition-delay: 0.15s;">
                     <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">02</span>
-                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Collection</span>
+                    <span class="text-xl md:text-2xl lg:text-3xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Collection</span>
                 </a>
 
                 <a href="#signature-collection" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="S" style="transition-delay: 0.2s;">
                     <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">03</span>
-                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Foundation</span>
+                    <span class="text-xl md:text-2xl lg:text-3xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Foundation</span>
                 </a>
 
                 <a href="#virtual-tour" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="E" style="transition-delay: 0.25s;">
                     <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">04</span>
-                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Experience</span>
+                    <span class="text-xl md:text-2xl lg:text-3xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Experience</span>
                 </a>
 
                 <a href="#testimonials" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="V" style="transition-delay: 0.3s;">
                     <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">05</span>
-                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Visual Stories</span>
+                    <span class="text-xl md:text-2xl lg:text-3xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Visual Stories</span>
                 </a>
 
                 <a href="#visionary" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="L" style="transition-delay: 0.35s;">
                     <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">06</span>
-                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Leadership</span>
+                    <span class="text-xl md:text-2xl lg:text-3xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Leadership</span>
                 </a>
 
                 <a href="#journal" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="J" style="transition-delay: 0.4s;">
                     <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">07</span>
-                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Journal</span>
+                    <span class="text-xl md:text-2xl lg:text-3xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Journal</span>
                 </a>
 
                 <a href="#timeline" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="T" style="transition-delay: 0.45s;">
                     <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">08</span>
-                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Timeline</span>
+                    <span class="text-xl md:text-2xl lg:text-3xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Timeline</span>
                 </a>
 
                 <a href="#contact" class="menu-link-item group relative flex items-baseline gap-4 md:gap-6 py-2 md:py-1 border-b border-white/5 hover:border-white/20 transition-colors" data-letter="I" style="transition-delay: 0.5s;">
                     <span class="text-xs md:text-xs font-mono text-gray-600 group-hover:text-gold transition-colors">09</span>
-                    <span class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Enquiry</span>
+                    <span class="text-xl md:text-2xl lg:text-3xl font-serif text-gray-500 group-hover:text-white transition-all duration-300 ease-out">Enquiry</span>
                 </a>
             </div>
 
@@ -866,15 +868,24 @@
 
     <!-- Hero Section -->
     <header class="h-[250vh] w-full relative">
-        <div class="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+        <div class="sticky top-0 h-screen flex flex-col items-start justify-center overflow-hidden">
+            <!-- Galaxy Background -->
             <div class="absolute inset-0 z-0 hero-video-wrapper">
                  <canvas class="webgl absolute inset-0 w-full h-full block"></canvas>
             </div>
             
-            <div class="z-10 text-center px-4">
+            <div class="z-10 text-left px-8 md:px-24 max-w-4xl pointer-events-none">
                 <h1 class="font-serif text-4xl md:text-6xl lg:text-7xl text-contrast leading-relaxed mb-8 mix-blend-overlay animate-fade-in-up font-light" style="animation-delay: 0.4s;">
-                    We Have Changed <br> <span class="italic font-extralight">The Game.</span>
+                    We Have Changed <br> <span class="font-extralight">The Game.</span>
                 </h1>
+            </div>
+
+            <!-- Absolute Bottom Hint -->
+            <div class="absolute bottom-12 left-0 w-full text-center z-20 pointer-events-none animate-fade-in-up" style="animation-delay: 1.2s;">
+                <p class="text-[9px] uppercase tracking-[0.4em] text-silver/30 font-mono">
+                    Hold & Interact with the Galaxy
+                </p>
+                <div class="w-[1px] h-8 bg-gradient-to-b from-gold/40 to-transparent mx-auto mt-4"></div>
             </div>
         </div>
     </header>
@@ -882,7 +893,7 @@
     <!-- Philosophy -->
     <section id="about" class="py-32 md:py-48 bg-transparent relative transition-colors duration-500 z-10">
         <div class="max-w-4xl mx-auto px-6 text-center">
-            <span class="block text-gold text-[10px] uppercase tracking-widest mb-8 reveal-on-scroll">The New Standard</span>
+            <span class="block text-gold text-[10px] uppercase tracking-widest font-avenir mb-8 reveal-on-scroll">The New Standard</span>
             <p class="font-serif text-2xl md:text-4xl leading-relaxed text-contrast/90 reveal-on-scroll">
                 We changed the <span class="text-silver italic">geometry of living</span>. Rejecting crowded floors, we engineered a vertical ecosystem of privacy and luxury at three altitudes. The game has changed
             </p>
@@ -893,8 +904,8 @@
     <section id="projects" class="bg-transparent pt-32 pb-32 transition-colors duration-500 relative z-10">
         <div class="max-w-[95%] mx-auto relative">
             <div class="mb-24 text-center">
-                <span class="block text-gold text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">The Portfolio</span>
-                <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">The Constellations</h2>
+                <span class="block text-gold text-[10px] uppercase tracking-widest font-avenir mb-4 reveal-on-scroll">The Portfolio</span>
+                <h2 class="font-serif font-light text-4xl md:text-5xl text-contrast reveal-on-scroll">The Constellations</h2>
                 <p class="text-muted text-lg font-light mt-6 reveal-on-scroll">One Vision.</p>
                 <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
             </div>
@@ -923,7 +934,7 @@
                         <p class="text-muted font-light text-sm leading-7 max-w-sm mb-8 md:ml-auto">
                             Rising 200 meters above the Golden Mile, The Trilight creates a commanding skyline presence with three distinct stars: Canopus (56 Floors), Vega (46 Floors), and Rigel (49 Floors). We have partnered with TATA Projects to ensure that our structural innovation matches our visionary design. This is where 11-foot 4-inch ceilings meet absolute precision.
                         </p>
-                        <a href="thetrilight.com" class="magnetic-target inline-flex items-center text-[10px] uppercase tracking-widest text-contrast border-b border-contrast/20 pb-1 hover:border-silver hover:text-silver transition-all">
+                        <a href="thetrilight.com" class="magnetic-target inline-flex items-center text-[10px] uppercase tracking-widest font-avenir text-contrast border-b border-contrast/20 pb-1 hover:border-silver hover:text-silver transition-all">
                             View Residences <i class="fas fa-arrow-right ml-4 text-silver text-[8px]"></i>
                         </a>
                     </div>
@@ -941,22 +952,18 @@
                 </div> -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pl-12 md:pl-0">
                     <div class="parallax-container project-card">
-                        <img src="Assests/Risewith9.jpeg" 
-                             loading="lazy"
-                             class="w-full h-auto group-hover:grayscale-0 transition-all duration-1000" 
-                             alt="Rise with 9"
-                             width="1200"
-                             height="800">
+                        <div style="padding:56.25% 0 0 0;position:relative;"><iframe data-src="https://player.vimeo.com/video/1164915625?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;muted=1&amp;loop=1&amp;background=1" loading="lazy" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="18TH HOUR SNIP 2"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
                     </div>
                     <div class="px-6 lg:pl-20 project-card" style="transition-delay: 200ms;">
                         <img src="Assests/RW9.png" 
                              loading="lazy" 
                              alt="Rise with 9" 
-                             class="h-42 md:h-20 w-auto mb-6 object-contain opacity-90"
+                             class="h-16 md:h-20 w-auto mb-6 object-contain opacity-90"
                              width="400"
                              height="80">
                         <p class="text-muted font-light text-sm leading-7 max-w-sm mb-8">
-                            A landmark high-rise in Kokapet, redefining elevated living with expansive residences, curated amenities and a commanding skyline presence.                        <a href="https://risewith9.com" target="_blank" class="magnetic-target inline-flex items-center text-[10px] uppercase tracking-widest text-contrast border-b border-contrast/20 pb-1 hover:border-silver hover:text-silver transition-all group-hover:pl-2">
+                            A landmark high-rise in Neopolis, redefining elevated living with expansive residences, curated amenities and a commanding skyline presence.                       
+                            <a href="https://risewith9.com" target="_blank" class="magnetic-target inline-flex items-center text-[10px] uppercase tracking-widest font-avenir text-contrast border-b border-contrast/20 pb-1 hover:border-silver hover:text-silver transition-all group-hover:pl-2">
                             Visit Website <i class="fas fa-external-link-alt ml-4 text-silver text-[8px]"></i>
                         </a>
                     </div>
@@ -982,7 +989,7 @@
                                
                                <!-- Text Overlay -->
                                <div class="relative z-10 text-center">
-                                    <span class="block text-gold text-[10px] uppercase tracking-widest mb-4">Future</span>
+                                    <span class="block text-gold text-[10px] uppercase tracking-widest font-avenir mb-4">Future</span>
                                     <h3 class="font-serif text-3xl md:text-5xl text-contrast">Upcoming Soon</h3>
                                </div>
                                
@@ -999,8 +1006,8 @@
     <!-- Signature Collection: Cards -->
     <section id="signature-collection" class="py-32 bg-transparent relative z-10 transition-colors duration-500 overflow-hidden">
         <div class="max-w-[95%] mx-auto px-6 mb-12 text-center">
-            <span class="block text-gold text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Exclusive Listings</span>
-            <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">Our Foundation</h2>
+            <span class="block text-gold text-[10px] uppercase tracking-widest font-avenir mb-4 reveal-on-scroll">Exclusive Listings</span>
+            <h2 class="font-serif font-light text-4xl md:text-5xl text-contrast reveal-on-scroll">Our Foundation</h2>
             <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
         </div>
 
@@ -1025,37 +1032,37 @@
     <!-- Virtual Tour -->
     <section id="virtual-tour" class="py-32 bg-transparent relative z-10 transition-colors duration-500">
         <div class="max-w-[95%] mx-auto px-6 mb-12 text-center">
-            <span class="block text-gold text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Interactive Walkthroughs</span>
-            <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">Experience the Life</h2>
+            <span class="block text-gold text-[10px] uppercase tracking-widest font-avenir mb-4 reveal-on-scroll">Interactive Walkthroughs</span>
+            <h2 class="font-serif font-light text-4xl md:text-5xl text-contrast reveal-on-scroll">Experience the Life</h2>
             <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
         </div>
 
         <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
             <!-- Tour 1: Lobby -->
             <div class="relative h-[400px] group overflow-hidden rounded-sm border border-contrast/10 reveal-on-scroll magnetic-target">
-                 <div class="absolute inset-0 bg-navy/20 z-10 group-hover:bg-navy/10 transition-colors duration-500"></div>
+                 <div class="absolute inset-0 bg-black/60 group-hover:bg-black/30 transition-colors duration-500 z-10"></div>
                  <img src="Assests/Trilight.jpg" alt="Lobby 360" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
                  
                  <div class="absolute inset-0 flex flex-col justify-center items-center z-20">
                     <div class="w-16 h-16 rounded-full border border-silver/30 flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform duration-500 mb-6">
                         <i class="fas fa-cube text-silver text-xl"></i>
                     </div>
-                    <h3 class="text-2xl font-serif text-contrast mb-2 group-hover:text-gold group-hover:border-gold transition-all pb-1">The Trilight</h3>
-                    <span class="text-[9px] uppercase tracking-widest text-silver border-b border-transparent group-hover:text-gold group-hover:border-gold transition-all pb-1">Start Virtual Tour</span>
+                    <h3 class="text-2xl font-serif font-light text-contrast mb-2 group-hover:text-gold transition-all pb-1 drop-shadow-[0_4px_12px_rgba(0,0,0,1)]">The Trilight</h3>
+                    <span class="text-[9px] uppercase tracking-widest font-avenir text-silver border-b border-transparent group-hover:text-gold transition-all pb-1 drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">Start Virtual Tour</span>
                  </div>
             </div>
 
             <!-- Tour 2: Residence -->
             <div class="relative h-[400px] group overflow-hidden rounded-sm border border-contrast/10 reveal-on-scroll magnetic-target" style="transition-delay: 200ms">
-                 <div class="absolute inset-0 bg-navy/20 z-10 group-hover:bg-navy/10 transition-colors duration-500"></div>
+                 <div class="absolute inset-0 bg-black/60 group-hover:bg-black/30 transition-colors duration-500 z-10"></div>
                  <img src="Assests/Risewith9.jpeg" alt="Residence 360" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
                  
                  <div class="absolute inset-0 flex flex-col justify-center items-center z-20">
                     <div class="w-16 h-16 rounded-full border border-silver/30 flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform duration-500 mb-6">
                         <i class="fas fa-cube text-silver text-xl"></i>
                     </div>
-                    <h3 class="text-2xl font-serif text-contrast mb-2  group-hover:text-gold group-hover:border-gold transition-all pb-1">Rise With 9</h3>
-                    <span class="text-[9px] uppercase tracking-widest text-silver border-b border-transparent group-hover:text-gold group-hover:border-gold transition-all pb-1">Start Virtual Tour</span>
+                    <h3 class="text-2xl font-serif font-light text-contrast mb-2 group-hover:text-gold transition-all pb-1 drop-shadow-[0_4px_12px_rgba(0,0,0,1)]">Rise With 9</h3>
+                    <span class="text-[9px] uppercase tracking-widest font-avenir text-silver border-b border-transparent group-hover:text-gold transition-all pb-1 drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">Start Virtual Tour</span>
                  </div>
             </div>
         </div>
@@ -1066,8 +1073,8 @@
     <section id="testimonials" class="py-20 md:py-32 bg-transparent relative z-10 transition-colors duration-500">
         <!-- Old Header -->
         <div class="max-w-[95%] mx-auto px-6 mb-12 text-center">
-            <span class="block text-gold text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Visual Stories</span>
-            <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">Community Voices</h2>
+            <span class="block text-gold text-[10px] uppercase tracking-widest font-avenir mb-4 reveal-on-scroll">Visual Stories</span>
+            <h2 class="font-serif font-light text-4xl md:text-5xl text-contrast reveal-on-scroll">Community Voices</h2>
             <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
         </div>
 
@@ -1083,8 +1090,8 @@
                 <div class="relative overflow-hidden h-full rounded-sm bg-navy/20 reveal-on-scroll" style="transition-delay: 200ms">
                     <!-- Overlay Text (Optional, keeping clean for video focus) -->  
                     <div class="absolute bottom-14 left-6 z-20 pointer-events-none">
-                         <h4 class="text-xs uppercase tracking-widest text-white font-bold mb-1">Visual Stories</h4>
-                         <span class="text-[9px] uppercase tracking-widest text-silver/80">Experience the vibe</span>
+                         <h4 class="text-xs uppercase tracking-widest font-avenir text-white font-bold mb-1">Visual Stories</h4>
+                         <span class="text-[9px] uppercase tracking-widest font-avenir text-silver/80">Experience the vibe</span>
                     </div>
                     
                     <!-- Mute Toggle Button -->
@@ -1113,8 +1120,8 @@
     <section id="visionary" class="py-32 bg-surface/90 transition-colors duration-500 relative z-10 overflow-hidden">
         <div class="max-w-6xl mx-auto px-6 relative">
             <div class="mb-32 text-center">
-                <span class="block text-gold text-[10px] uppercase tracking-widest mb-4 reveal-on-scroll">Leadership</span>
-                <h2 class="font-serif text-4xl md:text-5xl text-contrast reveal-on-scroll">The Game Changers</h2>
+                <span class="block text-gold text-[10px] uppercase tracking-widest font-avenir mb-4 reveal-on-scroll">Leadership</span>
+                <h2 class="font-serif font-light text-4xl md:text-5xl text-contrast reveal-on-scroll">The Game Changers</h2>
                 <div class="w-12 h-[1px] bg-silver mx-auto mt-8 reveal-on-scroll"></div>
             </div>
             
@@ -1134,8 +1141,8 @@
                 </div>
                 <!-- Content -->
                 <div class="w-full md:w-7/12 text-left reveal-on-scroll" style="transition-delay: 200ms">
-                    <h4 class="text-3xl md:text-4xl font-serif text-contrast mb-2">J Sanjeeva Reddy</h4>
-                    <span class="text-[10px] uppercase tracking-widest text-silver mb-8 block">Founder & Chairman</span>
+                    <h4 class="text-3xl md:text-4xl font-serif font-light text-contrast mb-2">J Sanjeeva Reddy</h4>
+                    <span class="text-[10px] uppercase tracking-widest font-avenir text-silver mb-8 block">Founder & Chairman</span>
                     <div class="relative">
                         <i class="fas fa-quote-left text-4xl text-contrast/5 absolute -top-6 -left-4"></i>
                         <p class="text-muted text-lg font-light leading-relaxed pl-6 border-l border-gold/20">
@@ -1170,8 +1177,8 @@
                 </div>
                 <!-- Content -->
                 <div class="w-full md:w-7/12 text-left md:text-right reveal-on-scroll" style="transition-delay: 200ms">
-                    <h4 class="text-3xl md:text-4xl font-serif text-contrast mb-2">Sanjay Mangatram</h4>
-                    <span class="text-[10px] uppercase tracking-widest text-silver mb-8 block">Director</span>
+                    <h4 class="text-3xl md:text-4xl font-serif font-light text-contrast mb-2">Sanjay Mangatram</h4>
+                    <span class="text-[10px] uppercase tracking-widest font-avenir text-silver mb-8 block">Director</span>
                     <div class="relative md:flex md:justify-end">
                         <i class="fas fa-quote-left text-4xl text-contrast/5 absolute -top-6 -left-4 md:left-auto md:-right-4 md:rotate-180"></i>
                         <p class="text-muted text-lg font-light leading-relaxed pl-6 md:pl-0 md:pr-6 md:border-l-0 md:border-r border-l border-gold/20">
@@ -1179,7 +1186,7 @@
                         </p>
                     </div>
                     <!-- Additional Image -->
-                    <div class="mt-8 flex justify-end">
+                    <div class="mt-8 flex justify-start md:justify-end">
                         <img src="Assests/371.png" 
                              loading="lazy"
                              class="max-w-xs h-auto rounded-sm" 
@@ -1198,22 +1205,22 @@
         
         <!-- Header -->
         <div class="mb-16 md:mb-24 text-center opacity-0 animate-fade-in-up reveal-on-scroll" id="main-header" style="animation: fadeInUp 0.8s forwards;">
-            <span class="block text-gold text-[10px] uppercase tracking-widest mb-4">Updates</span>
-            <h2 class="font-serif text-4xl md:text-5xl text-contrast">Press & Journal</h2>
+            <span class="block text-gold text-[10px] uppercase tracking-widest font-avenir mb-4">Updates</span>
+            <h2 class="font-serif font-light text-4xl md:text-5xl text-contrast">Press & Journal</h2>
             <div class="w-12 h-[1px] bg-silver mx-auto mt-8"></div>
         </div>
 
         <div class="flex flex-col lg:flex-row gap-12 lg:gap-24">
             
             <!-- LEFT PANEL: Sticky "Lens" Detail View -->
-            <div class="lg:w-1/2 lg:h-[34rem] flex flex-col justify-center order-2 lg:order-1 relative min-h-[400px]">
+            <div class="lg:w-1/2 lg:h-[34rem] flex flex-col justify-center lg:order-1 relative min-h-[400px]">
                 
                 <!-- Dynamic Content Container -->
                 <div id="lens-container" class="lens-content flex flex-col justify-center h-full w-full">
                     
                     <!-- Meta Tags -->
                     <div class="flex items-center gap-4 mb-8">
-                        <span id="lens-type" class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border transition-colors border-gold/30 text-gold bg-gold/10">
+                        <span id="lens-type" class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest font-avenir border transition-colors border-gold/30 text-gold bg-gold/10">
                             Journal
                         </span>
                         
@@ -1251,17 +1258,35 @@
             </div>
 
             <!-- RIGHT PANEL: Scrollable List -->
-            <div class="lg:w-1/2 flex flex-col gap-2 order-1 lg:order-2 pb-24 lg:pb-0 lg:h-[25rem]">
+            <div class="lg:w-1/2 flex flex-col gap-2 lg:order-2 pb-24 lg:pb-0 lg:h-[25rem]">
                 
-                <!-- Desktop List Header -->
-                <div class="hidden lg:flex items-center justify-between mb-8 pb-4 border-b border-white/10 shrink-0">
-                    <span class="text-xs font-bold tracking-[0.2em] uppercase text-gray-500">Index</span>
-                    <span class="text-xs font-bold tracking-[0.2em] uppercase text-gray-500">Hover to View</span>
+                <!-- Tab Navigation -->
+                <div class="flex items-center gap-6 md:gap-8 mb-6 border-b border-white/10 shrink-0">
+                    <button id="tab-trilight" class="text-sm md:text-base font-serif text-gold border-b-2 border-gold pb-3 transition-all tracking-wider" onclick="switchTab('trilight')">
+                        Trilight
+                    </button>
+                    <button id="tab-rise" class="text-sm md:text-base font-serif text-gray-500 border-b-2 border-transparent hover:text-white pb-3 transition-all tracking-wider" onclick="switchTab('rise')">
+                        Rise with 9
+                    </button>
                 </div>
 
                 <!-- Articles List Container -->
-                <div id="articles-list" class="flex flex-col gap-2 lg:flex-1 lg:overflow-y-auto pr-2 journal-scroll">
-                    <!-- Items will be injected here by JS -->
+                <div class="flex flex-col flex-1 lg:overflow-y-auto pr-2 journal-scroll min-h-[500px] lg:min-h-0">
+                    
+                    <!-- Trilight Section -->
+                    <div id="section-trilight" class="transition-opacity duration-500">
+                        <div id="trilight-list" class="grid grid-cols-2 gap-3 lg:gap-2 lg:flex lg:flex-col">
+                            <!-- Items will be injected here by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Rise with 9 Section -->
+                    <div id="section-rise" class="hidden opacity-0 transition-opacity duration-500">
+                        <div id="rise-list" class="grid grid-cols-2 gap-3 lg:gap-2 lg:flex lg:flex-col">
+                             <!-- Items will be injected here by JS -->
+                        </div>
+                    </div>
+
                 </div>
 
                 <!-- Load More Removed -->
@@ -1367,8 +1392,24 @@
                 }
             ];
 
+
+
+            const riseArticles = [
+                 {
+                    id: 101, // Start well above normal IDs
+                    type: 'journal',
+                    category: 'Rise with 9',
+                    date: 'COMING SOON',
+                    title: 'New Horizons',
+                    excerpt: 'Explore the future of luxury living with our upcoming Rise with 9 collection. Stay tuned for exclusive updates and architectural marvels.',
+                    readTime: '1 min read',
+                    link: '#' 
+                }
+            ];
+
             // --- DOM ELEMENTS ---
-            const listContainer = document.getElementById('articles-list');
+            const trilightListContainer = document.getElementById('trilight-list');
+            const riseListContainer = document.getElementById('rise-list');
             const lensContainer = document.getElementById('lens-container');
             
             // Lens Elements
@@ -1393,17 +1434,19 @@
 
             // --- RENDER LIST ---
             function renderList() {
-                if (!listContainer) return;
-                listContainer.innerHTML = '';
+                renderSection(trilightListContainer, articles);
+                renderSection(riseListContainer, riseArticles);
+            }
+
+            function renderSection(container, items) {
+                if (!container) return;
+                container.innerHTML = '';
                 
-                // Render all articles
-                const itemsToShow = articles;
-                
-                itemsToShow.forEach(item => {
+                items.forEach(item => {
                     const isActive = item.id === currentActiveId;
                     
                     const div = document.createElement('div');
-                    div.className = `group relative p-6 rounded-xl cursor-pointer transition-all duration-500 border ${
+                    div.className = `group relative p-4 md:p-6 rounded-xl cursor-pointer transition-all duration-500 border h-full ${
                         isActive ? 'bg-white/5 border-white/10' : 'bg-transparent border-transparent hover:bg-white/[0.02]'
                     }`;
                     div.setAttribute('data-id', item.id);
@@ -1421,20 +1464,20 @@
 
                     div.innerHTML = `
                         ${activeLine}
-                        <div class="flex items-start justify-between gap-4 pointer-events-none">
+                        <div class="flex flex-col h-full justify-between gap-2 pointer-events-none">
                             <div class="flex-1">
-                                <div class="flex items-center gap-3 mb-2">
-                                    <span class="text-[10px] font-bold tracking-widest uppercase text-gold">${item.category}</span>
-                                    <span class="w-1 h-1 rounded-full bg-gray-600"></span>
-                                    <span class="text-[10px] text-gray-500 font-mono">${item.date}</span>
+                                <div class="flex flex-col md:flex-row md:items-center gap-1 md:gap-3 mb-2">
+                                    <span class="text-[8px] md:text-[10px] font-bold tracking-widest uppercase text-gold">${item.category}</span>
+                                    <span class="hidden md:block w-1 h-1 rounded-full bg-gray-600"></span>
+                                    <span class="text-[8px] md:text-[10px] text-gray-500 font-mono">${item.date}</span>
                                 </div>
-                                <h3 class="text-xl font-light transition-colors duration-300 ${titleClass}">
+                                <h3 class="text-sm md:text-xl font-light transition-colors duration-300 ${titleClass} line-clamp-2">
                                     ${item.title}
                                 </h3>
                             </div>
 
-                            <div class="mt-2 transition-all duration-300 ${arrowClass}">
-                                <i data-lucide="arrow-right" class="w-5 h-5 text-gold"></i>
+                            <div class="mt-2 text-right transition-all duration-300 ${arrowClass}">
+                                <i data-lucide="arrow-right" class="w-4 h-4 md:w-5 md:h-5 text-gold ml-auto"></i>
                             </div>
                         </div>
                     `;
@@ -1443,13 +1486,11 @@
                     div.addEventListener('mouseenter', () => updateActiveItem(item.id));
                     div.addEventListener('click', () => updateActiveItem(item.id)); // For mobile
 
-                    listContainer.appendChild(div);
+                    container.appendChild(div);
                 });
-               
-                if (typeof lucide !== 'undefined') {
-                    lucide.createIcons();
-                }
             }
+               
+
 
             // --- UPDATE LOGIC ---
             function updateActiveItem(id) {
@@ -1467,16 +1508,17 @@
                     
                     // Wait for fade out, then swap data and fade in
                     setTimeout(() => {
-                        const item = articles.find(i => i.id === id);
+                        const allArticles = [...articles, ...riseArticles];
+                        const item = allArticles.find(i => i.id === id);
                         if (item) {
                             // Update Text
                             if (lensType) {
                                 lensType.textContent = item.type;
                                 // Update Badge Styles
                                 if (item.type === 'press') {
-                                    lensType.className = "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border transition-colors border-blue-500/30 text-blue-300 bg-blue-500/10";
+                                    lensType.className = "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest font-avenir border transition-colors border-blue-500/30 text-blue-300 bg-blue-500/10";
                                 } else {
-                                    lensType.className = "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border transition-colors border-blue-500/30 text-blue-300 bg-blue-500/10";
+                                    lensType.className = "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest font-avenir border transition-colors border-blue-500/30 text-blue-300 bg-blue-500/10";
                                 }
                             }
                             if (lensDate) lensDate.textContent = item.date;
@@ -1496,6 +1538,43 @@
                     }, 300); // 300ms matches the transition duration partway
                 }
             }
+
+            // --- TAB LOGIC ---
+            window.switchTab = function(tab) {
+                const trilightSection = document.getElementById('section-trilight');
+                const riseSection = document.getElementById('section-rise');
+                const tabTrilight = document.getElementById('tab-trilight');
+                const tabRise = document.getElementById('tab-rise');
+
+                // Reset Classes
+                const activeClasses = ['text-gold', 'border-gold'];
+                const inactiveClasses = ['text-gray-500', 'border-transparent'];
+
+                if (tab === 'trilight') {
+                    // Show Trilight
+                    trilightSection.classList.remove('hidden', 'opacity-0');
+                    riseSection.classList.add('hidden', 'opacity-0');
+                    
+                    // Update Buttons
+                    tabTrilight.classList.add(...activeClasses);
+                    tabTrilight.classList.remove('text-gray-500', 'border-transparent');
+                    
+                    tabRise.classList.remove('text-gold', 'border-gold');
+                    tabRise.classList.add(...inactiveClasses);
+
+                } else {
+                    // Show Rise
+                    riseSection.classList.remove('hidden', 'opacity-0');
+                    trilightSection.classList.add('hidden', 'opacity-0');
+
+                    // Update Buttons
+                    tabRise.classList.add(...activeClasses);
+                    tabRise.classList.remove('text-gray-500', 'border-transparent');
+                    
+                    tabTrilight.classList.remove('text-gold', 'border-gold');
+                    tabTrilight.classList.add(...inactiveClasses);
+                }
+            };
 
             // Start
             document.addEventListener("DOMContentLoaded", init);
@@ -1580,13 +1659,14 @@
                 
                 <!-- STEP 1: NAME -->
                 <div class="form-step step-active transition-all duration-700 ease-out" id="step-1">
-                    <div class="question-text text-4xl md:text-6xl font-extrabold tracking-tight mb-8 opacity-0 translate-y-5 transition-all duration-700 delay-100 bg-clip-text text-transparent bg-gradient-to-br from-white to-slate-400">
-                        Let's begin.<br>
-                        What is your <span class="text-gold">full name?</span>
+                    <div class="question-text text-4xl md:text-6xl font-serif font-light tracking-tight mb-8 opacity-0 translate-y-5 transition-all duration-700 delay-100 bg-clip-text text-transparent bg-gradient-to-br from-white to-slate-400">
+                        Welcome
+                        <br>
+                        We’d like to know  <span class="text-gold">who you are?</span>
                     </div>
                     <input type="text" id="input-name" class="velocity-input w-full bg-transparent border-b-2 border-white/10 text-3xl md:text-5xl text-gold py-4 font-light outline-none opacity-0 translate-y-5 transition-all duration-700 delay-200 focus:border-gold focus:shadow-[0_10px_30px_-10px_rgba(197,164,126,0.1)] placeholder:text-slate-600 font-sans" placeholder="Type your name here..." autocomplete="off">
                     <div class="nav-controls flex gap-4 mt-12 opacity-0 translate-y-5 transition-all duration-700 delay-300">
-                        <button type="button" class="nav-btn primary group flex items-center gap-2 bg-gold/10 border border-gold/30 text-gold px-8 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-gold/20 hover:border-gold/60 transition-all shadow-[0_4px_10px_rgba(0,0,0,0.2)] hover:shadow-[0_0_20px_rgba(197,164,126,0.2)]" onclick="nextStep(1)">
+                        <button type="button" class="nav-btn primary group flex items-center gap-2 bg-gold/10 border border-gold/30 text-gold px-8 py-4 rounded-full font-bold uppercase tracking-widest font-avenir hover:bg-gold/20 hover:border-gold/60 transition-all shadow-[0_4px_10px_rgba(0,0,0,0.2)] hover:shadow-[0_0_20px_rgba(197,164,126,0.2)]" onclick="nextStep(1)">
                             Next <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
                         </button>
                         <div class="text-xs text-slate-500 flex items-center ml-4">Press Enter ↵</div>
@@ -1595,14 +1675,14 @@
 
                 <!-- STEP 2: EMAIL -->
                 <div class="form-step hidden transition-all duration-700 ease-out" id="step-2">
-                    <div class="question-text text-4xl md:text-6xl font-extrabold tracking-tight mb-8 opacity-0 translate-y-5 transition-all duration-700 delay-100 bg-clip-text text-transparent bg-gradient-to-br from-white to-slate-400">
-                        Pleasure to meet you, <span id="display-name" class="text-indigo-300">Guest</span>.<br>
-                        Where should we send your <span class="text-gold">invite?</span>
+                    <div class="question-text text-4xl md:text-6xl font-serif font-light tracking-tight mb-8 opacity-0 translate-y-5 transition-all duration-700 delay-100 bg-clip-text text-transparent bg-gradient-to-br from-white to-slate-400">
+                        A pleasure, <span id="display-name" class="text-indigo-300">Guest</span>.<br>
+                        Where may we  <span class="text-gold">reach you?</span>
                     </div>
                     <input type="email" id="input-email" class="velocity-input w-full bg-transparent border-b-2 border-white/10 text-3xl md:text-5xl text-gold py-4 font-light outline-none opacity-0 translate-y-5 transition-all duration-700 delay-200 focus:border-gold focus:shadow-[0_10px_30px_-10px_rgba(197,164,126,0.1)] placeholder:text-slate-600 font-sans" placeholder="name@example.com" autocomplete="off">
                     <div class="nav-controls flex gap-4 mt-12 opacity-0 translate-y-5 transition-all duration-700 delay-300">
-                        <button type="button" class="nav-btn bg-slate-800/40 border border-white/5 text-slate-300 px-8 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-white/5 hover:text-white transition-all backdrop-blur-md" onclick="prevStep(2)">Back</button>
-                        <button type="button" class="nav-btn primary group flex items-center gap-2 bg-gold/10 border border-gold/30 text-gold px-8 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-gold/20 hover:border-gold/60 transition-all shadow-[0_4px_10px_rgba(0,0,0,0.2)] hover:shadow-[0_0_20px_rgba(197,164,126,0.2)]" onclick="nextStep(2)">
+                        <button type="button" class="nav-btn bg-slate-800/40 border border-white/5 text-slate-300 px-8 py-4 rounded-full font-bold uppercase tracking-widest font-avenir hover:bg-white/5 hover:text-white transition-all backdrop-blur-md" onclick="prevStep(2)">Back</button>
+                        <button type="button" class="nav-btn primary group flex items-center gap-2 bg-gold/10 border border-gold/30 text-gold px-8 py-4 rounded-full font-bold uppercase tracking-widest font-avenir hover:bg-gold/20 hover:border-gold/60 transition-all shadow-[0_4px_10px_rgba(0,0,0,0.2)] hover:shadow-[0_0_20px_rgba(197,164,126,0.2)]" onclick="nextStep(2)">
                             Next <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
                         </button>
                     </div>
@@ -1610,15 +1690,15 @@
 
                 <!-- STEP 3: MESSAGE -->
                 <div class="form-step hidden transition-all duration-700 ease-out" id="step-3">
-                    <div class="question-text text-4xl md:text-6xl font-extrabold tracking-tight mb-8 opacity-0 translate-y-5 transition-all duration-700 delay-100 bg-clip-text text-transparent bg-gradient-to-br from-white to-slate-400">
-                        Finally.<br>
-                        Tell us about your <span class="text-gold">vision.</span>
+                    <div class="question-text text-4xl md:text-6xl font-serif font-light tracking-tight mb-8 opacity-0 translate-y-5 transition-all duration-700 delay-100 bg-clip-text text-transparent bg-gradient-to-br from-white to-slate-400">
+                        Your Preference?<br>
+                        Tell us  <span class="text-gold">what you are looking for?</span>
                     </div>
-                    <input type="text" id="input-message" class="velocity-input w-full bg-transparent border-b-2 border-white/10 text-3xl md:text-5xl text-gold py-4 font-light outline-none opacity-0 translate-y-5 transition-all duration-700 delay-200 focus:border-gold focus:shadow-[0_10px_30px_-10px_rgba(197,164,126,0.1)] placeholder:text-slate-600 font-sans" placeholder="I am looking for a penthouse..." autocomplete="off">
+                    <input type="text" id="input-message" class="velocity-input w-full bg-transparent border-b-2 border-white/10 text-3xl md:text-5xl text-gold py-4 font-light outline-none opacity-0 translate-y-5 transition-all duration-700 delay-200 focus:border-gold focus:shadow-[0_10px_30px_-10px_rgba(197,164,126,0.1)] placeholder:text-slate-600 font-sans" placeholder="I am interested in..." autocomplete="off">
                     <div class="nav-controls flex gap-4 mt-12 opacity-0 translate-y-5 transition-all duration-700 delay-300">
-                        <button type="button" class="nav-btn bg-slate-800/40 border border-white/5 text-slate-300 px-8 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-white/5 hover:text-white transition-all backdrop-blur-md" onclick="prevStep(3)">Back</button>
-                        <button type="button" class="nav-btn primary group flex items-center gap-2 bg-gold/10 border border-gold/30 text-gold px-8 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-gold/20 hover:border-gold/60 transition-all shadow-[0_4px_10px_rgba(0,0,0,0.2)] hover:shadow-[0_0_20px_rgba(197,164,126,0.2)]" onclick="submitForm()">
-                            Initialize Request <i data-lucide="send" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                        <button type="button" class="nav-btn bg-slate-800/40 border border-white/5 text-slate-300 px-8 py-4 rounded-full font-bold uppercase tracking-widest font-avenir hover:bg-white/5 hover:text-white transition-all backdrop-blur-md" onclick="prevStep(3)">Back</button>
+                        <button type="button" class="nav-btn primary group flex items-center gap-2 bg-gold/10 border border-gold/30 text-gold px-8 py-4 rounded-full font-bold uppercase tracking-widest font-avenir hover:bg-gold/20 hover:border-gold/60 transition-all shadow-[0_4px_10px_rgba(0,0,0,0.2)] hover:shadow-[0_0_20px_rgba(197,164,126,0.2)]" onclick="submitForm()">
+                            Proceed <i data-lucide="send" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
                         </button>
                     </div>
                 </div>
@@ -1630,14 +1710,14 @@
                             <i data-lucide="check" class="w-10 h-10 text-gold"></i>
                         </div>
                     </div>
-                    <div class="question-text text-4xl md:text-5xl font-extrabold mb-6 opacity-0 translate-y-5 transition-all duration-700 delay-200 reveal-item bg-clip-text text-transparent bg-gradient-to-br from-white to-slate-400">
-                        Transmission <span class="text-gold">Received.</span>
+                    <div class="question-text text-4xl md:text-5xl font-serif font-light mb-6 opacity-0 translate-y-5 transition-all duration-700 delay-200 reveal-item bg-clip-text text-transparent bg-gradient-to-br from-white to-slate-400">
+                        Enquiry <span class="text-gold">Received.</span>
                     </div>
                     <p class="text-slate-400 text-lg max-w-lg mx-auto mb-8 leading-relaxed opacity-0 translate-y-5 transition-all duration-700 delay-300 reveal-item">
-                        Our concierge has been alerted. We will be in contact shortly.
+                        Our team will connect with you shortly
                     </p>
                     <button type="button" class="nav-btn mx-auto bg-slate-800/40 border border-white/5 text-slate-300 px-8 py-3 rounded-full hover:bg-white/5 transition-all opacity-0 translate-y-5 duration-700 delay-400 reveal-item" onclick="resetForm()">
-                        Start Over
+                       Return
                     </button>
                 </div>
 
@@ -1887,7 +1967,7 @@
             
             <!-- Visit Us Section - Center -->
             <div class="md:text-center">
-                 <h4 class="text-contrast text-xs uppercase tracking-widest mb-6">Visit Us</h4>
+                 <h4 class="text-contrast text-xs uppercase tracking-widest font-avenir mb-6">Visit Us</h4>
                  <address class="text-muted text-sm font-light leading-7 not-italic">
                     <strong class="text-contrast block mb-2">Experience Center:</strong>
                     Plot 1, Golden Mile,<br>
@@ -1901,7 +1981,7 @@
             
             <!-- Social Section - Right -->
             <div class="md:text-right">
-                <h4 class="text-contrast text-xs uppercase tracking-widest mb-6">Social</h4>
+                <h4 class="text-contrast text-xs uppercase tracking-widest font-avenir mb-6">Social</h4>
                 <div class="flex flex-col space-y-4 text-sm text-muted md:items-end">
                     <a href="#" class="hover:text-silver transition-colors magnetic-target w-fit">Instagram</a>
                     <a href="#" class="hover:text-silver transition-colors magnetic-target w-fit">LinkedIn</a>
@@ -2124,7 +2204,7 @@
             window.addEventListener('resize', initStars);
             initStars();
             drawStars();
-        }
+        } 
 
         // --- Constellation Scroll Logic (Pathfinder) ---
     const pathfinderStar = document.getElementById('pathfinder-star');

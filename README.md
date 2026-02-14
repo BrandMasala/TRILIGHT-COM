@@ -483,3 +483,29 @@ For questions or issues, contact the development team.
 
 **Last Updated:** January 30, 2026  
 **Version:** 1.0.0
+
+
+<!-- wp:html -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+/>
+<!-- /wp:html -->
+
+<!-- wp:html -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css"
+/>
+<!-- /wp:html -->
+
+<!-- wp:html -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css"
+/>
+<!-- /wp:html -->
+
+<!-- wp:html -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+<!-- /wp:html -->

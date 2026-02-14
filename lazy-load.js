@@ -89,6 +89,37 @@
     }
 
     /**
+     * Lazy load iframes (e.g. Vimeo/YouTube)
+     */
+    function initLazyIframes() {
+        const iframes = document.querySelectorAll('iframe[data-src]');
+        
+        const iframeObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const iframe = entry.target;
+                    
+                    if (iframe.dataset.src) {
+                        iframe.src = iframe.dataset.src;
+                    }
+                    
+                    iframe.addEventListener('load', () => {
+                        iframe.classList.add('loaded');
+                    });
+
+                    observer.unobserve(iframe);
+                }
+            });
+        }, {
+            rootMargin: config.videoRootMargin, // Use same margin as video
+            threshold: config.threshold
+        });
+
+        iframes.forEach(iframe => iframeObserver.observe(iframe));
+    }
+
+
+    /**
      * Pause video when out of viewport to save resources
      */
     function initVideoPauseOnExit() {
@@ -235,6 +266,8 @@
 
         initLazyImages();
         initLazyVideos();
+        initLazyIframes(); // New iframe lazy loading
+
         initVideoPauseOnExit();
         optimizeScrollHandlers();
         optimizeAnimations();
