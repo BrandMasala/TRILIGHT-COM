@@ -1012,175 +1012,111 @@ transform: translateY(0);
 
 
 /* ============================================
-   USP GRID — Unique premium stat cards
+   USP GRID — Structured Minimal Grid
    ============================================ */
 
-@keyframes uspCardReveal {
-    0%   { opacity: 0; transform: translateY(16px) scale(0.95); }
-    100% { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-@keyframes uspGoldPulse {
-    0%, 100% { opacity: 0.15; transform: scale(1); }
-    50%       { opacity: 0.40; transform: scale(1.08); }
-}
-
-@keyframes uspIconFloat {
-    0%, 100% { transform: translateY(0px); }
-    50%       { transform: translateY(-4px); }
-}
-
-@keyframes uspShimmer {
-    0%   { background-position: -200% center; }
-    100% { background-position: 200% center; }
-}
-
-/* Grid layout */
 .usp-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(4, 1fr); /* 4 columns on desktop */
+    gap: 20px 15px; /* Extremely tight gap */
     width: 100%;
-    max-width: 380px;
+    max-width: 420px; /* Very compact total width */
 }
 
-/* Individual stat card */
+/* Base item layout */
 .usp-item {
-    position: relative;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 16px 10px 14px;
-    background: rgba(255, 255, 255, 0.025);
-    border: 1px solid rgba(197, 164, 126, 0.08);
-    border-radius: 4px;
+    align-items: flex-start; /* Left aligned for structured look */
+    justify-content: flex-start;
+    gap: 4px; /* Tiny gap inside items */
+    opacity: 0.8;
+    transition: all 0.4s ease;
     cursor: default;
-    overflow: hidden;
-    animation: uspCardReveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-    transition:
-        background 0.35s ease,
-        border-color 0.35s ease,
-        transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* Staggered reveal per card */
-.usp-item:nth-child(1) { animation-delay: 0.05s; }
-.usp-item:nth-child(2) { animation-delay: 0.12s; }
-.usp-item:nth-child(3) { animation-delay: 0.19s; }
-.usp-item:nth-child(4) { animation-delay: 0.26s; }
-.usp-item:nth-child(5) { animation-delay: 0.33s; }
-.usp-item:nth-child(6) { animation-delay: 0.40s; }
-
-/* Corner gold accent glow */
-.usp-item::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 50% 0%, rgba(197, 164, 126, 0.12) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-    border-radius: inherit;
-}
-
-/* Shimmer line across top */
-.usp-item::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(197, 164, 126, 0.0) 20%,
-        rgba(197, 164, 126, 0.7) 50%,
-        rgba(197, 164, 126, 0.0) 80%,
-        transparent 100%
-    );
-    background-size: 200% auto;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    animation: uspShimmer 3s linear infinite;
-    animation-play-state: paused;
+    border-left: 1px solid rgba(197, 164, 126, 0.2); /* Subtle left border */
+    padding-left: 8px; /* Slight indent content from the border */
 }
 
 .usp-item:hover {
-    background: rgba(197, 164, 126, 0.06);
-    border-color: rgba(197, 164, 126, 0.25);
-    transform: translateY(-3px);
+    opacity: 1;
+    border-left-color: rgba(197, 164, 126, 0.8);
+    transform: translateX(3px); /* Subtle shift right */
 }
 
-.usp-item:hover::before { opacity: 1; }
-.usp-item:hover::after  { opacity: 1; animation-play-state: running; }
-
-/* Lucide icon */
+/* Icon */
 .usp-icon {
-    width: 16px;
-    height: 16px;
-    color: rgba(197, 164, 126, 0.5);
-    stroke-width: 1.5;
-    flex-shrink: 0;
-    transition: color 0.3s ease, transform 0.3s ease;
-    animation: uspIconFloat 4s ease-in-out infinite;
-}
-
-.usp-item:nth-child(even) .usp-icon {
-    animation-delay: 1.2s;
+    width: 12px; /* Micro icon */
+    height: 12px;
+    color: rgba(197, 164, 126, 0.7);
+    transition: color 0.4s ease;
+    margin-bottom: 0px;
 }
 
 .usp-item:hover .usp-icon {
-    color: rgba(197, 164, 126, 0.9);
-    transform: translateY(-2px) scale(1.15);
-    animation-play-state: paused;
+    color: rgba(197, 164, 126, 1);
 }
 
-/* Big stat number */
+/* Number */
 .usp-stat {
     font-family: var(--font-head);
-    font-size: 1.55rem;
+    font-size: 1.3rem; /* Much smaller number */
     font-weight: 300;
     line-height: 1;
-    letter-spacing: -0.03em;
-    color: rgba(248, 250, 252, 0.88);
-    transition: color 0.3s ease;
+    color: rgba(248, 250, 252, 0.95);
+    transition: color 0.4s ease;
+    letter-spacing: -0.02em;
 }
 
 .usp-item:hover .usp-stat {
-    background: linear-gradient(135deg, #f8fafc 0%, #c5a47e 50%, #f8fafc 100%);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: uspShimmer 2s linear infinite;
+    color: var(--color-silver);
 }
 
-/* Category label */
+/* Label */
 .usp-label {
     font-family: var(--font-sub);
-    font-size: 0.42rem;
+    font-size: 0.42rem; /* Micro label */
     font-weight: 400;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: rgba(197, 164, 126, 0.38);
-    text-align: center;
+    color: rgba(197, 164, 126, 0.6);
     line-height: 1.3;
-    transition: color 0.3s ease;
+    transition: color 0.4s ease;
 }
 
 .usp-item:hover .usp-label {
-    color: rgba(197, 164, 126, 0.65);
+    color: rgba(197, 164, 126, 0.9);
 }
 
-/* Mobile: 2-col grid */
-@media (max-width: 640px) {
+/* Stagger entrance fade */
+@keyframes gridSlideIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.usp-item {
+    animation: gridSlideIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.usp-item:nth-child(1) { animation-delay: 0.10s; }
+.usp-item:nth-child(2) { animation-delay: 0.15s; }
+.usp-item:nth-child(3) { animation-delay: 0.20s; }
+.usp-item:nth-child(4) { animation-delay: 0.25s; }
+.usp-item:nth-child(5) { animation-delay: 0.30s; }
+.usp-item:nth-child(6) { animation-delay: 0.35s; }
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
     .usp-grid {
-        grid-template-columns: repeat(2, 1fr);
-        max-width: 100%;
-        gap: 8px;
+        grid-template-columns: repeat(3, 1fr); /* 3 cols on tablet */
+        gap: 20px 10px;
     }
-    .usp-stat  { font-size: 1.25rem; }
+}
+
+@media (max-width: 480px) {
+    .usp-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 cols on mobile */
+        gap: 15px 8px;
+    }
+    .usp-stat { font-size: 1.1rem; }
     .usp-label { font-size: 0.38rem; }
-    .usp-item  { padding: 12px 8px 10px; }
 }
