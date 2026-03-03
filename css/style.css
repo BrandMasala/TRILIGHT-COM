@@ -743,7 +743,8 @@ transform: translateY(0);
 
 /* Second line is more ghosted */
 .hero-sub-line--ghost {
-    color: rgba(197, 164, 126, 0.6);
+    /* color: rgba(197, 164, 126, 0.6); */
+    color: rgba(248, 250, 252, 0.75);
     font-size: clamp(0.65rem, 1.1vw, 1.20rem);
     letter-spacing: 0.28em;
 }
@@ -1016,11 +1017,11 @@ transform: translateY(0);
    ============================================ */
 
 .usp-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 columns on desktop */
-    gap: 20px 15px; /* Extremely tight gap */
+    display: flex; /* Switch to flex to allow natural width based on content */
+    flex-wrap: wrap; /* Allows wrapping to new lines if needed */
+    gap: 30px 20px;
     width: 100%;
-    max-width: 420px; /* Very compact total width */
+    /* Remove max-width so it can expand horizontally */
 }
 
 /* Base item layout */
@@ -1034,7 +1035,9 @@ transform: translateY(0);
     transition: all 0.4s ease;
     cursor: default;
     border-left: 1px solid rgba(197, 164, 126, 0.2); /* Subtle left border */
-    padding-left: 8px; /* Slight indent content from the border */
+    padding-left: 10px; /* Slight indent content from the border */
+    /* Ensure items have enough room */
+    min-width: 110px;
 }
 
 .usp-item:hover {
@@ -1045,26 +1048,28 @@ transform: translateY(0);
 
 /* Icon */
 .usp-icon {
-    width: 12px; /* Micro icon */
-    height: 12px;
+    width: 14px; /* Slightly larger icon to balance */
+    height: 14px;
     color: rgba(197, 164, 126, 0.7);
     transition: color 0.4s ease;
-    margin-bottom: 0px;
+    margin-bottom: 2px; /* Small space before stat */
 }
 
 .usp-item:hover .usp-icon {
     color: rgba(197, 164, 126, 1);
 }
 
-/* Number */
+/* Number / Main Word */
 .usp-stat {
     font-family: var(--font-head);
-    font-size: 1.3rem; /* Much smaller number */
+    font-size: 1.4rem; /* Slightly larger for better legibility */
     font-weight: 300;
-    line-height: 1;
+    line-height: 1.1; /* Adjusted line height */
     color: rgba(248, 250, 252, 0.95);
     transition: color 0.4s ease;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
+    /* PREVENT AWKWARD WRAPPING */
+    white-space: nowrap; 
 }
 
 .usp-item:hover .usp-stat {
@@ -1074,13 +1079,16 @@ transform: translateY(0);
 /* Label */
 .usp-label {
     font-family: var(--font-sub);
-    font-size: 0.42rem; /* Micro label */
+    font-size: 0.45rem; /* Slightly larger for readability */
     font-weight: 400;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: rgba(197, 164, 126, 0.6);
-    line-height: 1.3;
+    line-height: 1.4;
     transition: color 0.4s ease;
+    /* Allow labels to wrap nicely, but prevent mid-word breaking if possible */
+    word-break: break-word; 
+    max-width: 130px; /* Constrain label width to force neat wraps if very long */
 }
 
 .usp-item:hover .usp-label {
@@ -1107,16 +1115,14 @@ transform: translateY(0);
 /* Responsive Adjustments */
 @media (max-width: 768px) {
     .usp-grid {
-        grid-template-columns: repeat(3, 1fr); /* 3 cols on tablet */
-        gap: 20px 10px;
+        gap: 20px 15px;
     }
 }
 
 @media (max-width: 480px) {
     .usp-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 cols on mobile */
-        gap: 15px 8px;
+        gap: 15px 10px;
     }
-    .usp-stat { font-size: 1.1rem; }
-    .usp-label { font-size: 0.38rem; }
+    .usp-stat { font-size: 1.2rem; }
+    .usp-label { font-size: 0.4rem; max-width: 100px;}
 }
