@@ -754,3 +754,100 @@ transform: translateY(0);
     .hero-vline { height: 44px; }
 }
 
+
+/* ============================================
+   PROJECT USP HIGHLIGHT GRID
+   ============================================ */
+
+.usp-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    max-width: 340px;
+}
+
+.usp-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 14px 10px;
+    border-right: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    position: relative;
+    transition: background 0.35s ease;
+    text-align: center;
+}
+
+.usp-item:nth-child(3n) {
+    border-right: none;
+}
+
+.usp-item:nth-last-child(-n+3) {
+    border-bottom: none;
+}
+
+.usp-item:hover {
+    background: rgba(197, 164, 126, 0.06);
+}
+
+.usp-item:hover .usp-icon {
+    color: #C5A47E;
+    filter: drop-shadow(0 0 6px rgba(197,164,126,0.4));
+}
+
+.usp-item:hover .usp-stat {
+    color: #f8fafc;
+}
+
+/* Icon */
+.usp-icon {
+    width: 14px;
+    height: 14px;
+    color: rgba(255, 255, 255, 0.3);
+    stroke-width: 1.5;
+    transition: color 0.3s ease, filter 0.3s ease;
+    margin-bottom: 2px;
+}
+
+/* Bold stat (the number / short label) */
+.usp-stat {
+    font-family: var(--font-head);
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: rgba(248, 250, 252, 0.85);
+    letter-spacing: -0.01em;
+    line-height: 1;
+    transition: color 0.3s ease;
+}
+
+/* Sub-descriptor */
+.usp-label {
+    font-family: var(--font-sub);
+    font-size: 0.55rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(197, 164, 126, 0.55);
+    line-height: 1.2;
+}
+
+/* Right-align variant (Project 1 is text-right on md) */
+@media (min-width: 768px) {
+    .md\:ml-auto .usp-grid,
+    .usp-grid.md\:ml-auto {
+        margin-left: auto;
+        margin-right: 0;
+    }
+}
+
+/* Mobile: full width, still 3 cols */
+@media (max-width: 640px) {
+    .usp-grid {
+        max-width: 100%;
+    }
+    .usp-stat { font-size: 0.9rem; }
+    .usp-label { font-size: 0.5rem; }
+}
