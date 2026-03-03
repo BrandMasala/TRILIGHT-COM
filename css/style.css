@@ -756,98 +756,431 @@ transform: translateY(0);
 
 
 /* ============================================
-   PROJECT USP HIGHLIGHT GRID
+   USP MARQUEE — auto-scrolling luxury ticker
    ============================================ */
 
+@keyframes uspScroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Clipping container with edge fades */
+.usp-marquee {
+    width: 100%;
+    max-width: 420px;
+    overflow: hidden;
+    position: relative;
+    /* Left + right gold fade masks */
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(0,0,0,0.8) 8%,
+        rgba(0,0,0,1) 20%,
+        rgba(0,0,0,1) 80%,
+        rgba(0,0,0,0.8) 92%,
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(0,0,0,0.8) 8%,
+        rgba(0,0,0,1) 20%,
+        rgba(0,0,0,1) 80%,
+        rgba(0,0,0,0.8) 92%,
+        transparent 100%
+    );
+    border-top: 1px solid rgba(197, 164, 126, 0.12);
+    border-bottom: 1px solid rgba(197, 164, 126, 0.12);
+    padding: 10px 0;
+}
+
+/* Scrolling inner row */
+.usp-track {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
+    white-space: nowrap;
+    animation: uspScroll 18s linear infinite;
+}
+
+.usp-marquee:hover .usp-track {
+    animation-play-state: paused;
+}
+
+/* Each stat unit: number above label */
+.usp-item {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 0 20px;
+    cursor: default;
+}
+
+/* Big number */
+.usp-item strong {
+    font-family: var(--font-head);
+    font-weight: 300;
+    font-size: 1.9rem;
+    line-height: 1;
+    color: rgba(248, 250, 252, 0.88);
+    letter-spacing: -0.04em;
+    transition: color 0.3s ease;
+}
+
+.usp-marquee:hover .usp-item:hover strong {
+    color: #C5A47E;
+}
+
+/* Superscript unit */
+.usp-item strong sup {
+    font-size: 0.38em;
+    font-family: var(--font-sub);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: rgba(197, 164, 126, 0.55);
+    vertical-align: super;
+    margin-left: 1px;
+    text-transform: lowercase;
+}
+
+/* Micro label */
+.usp-item em {
+    font-style: normal;
+    font-family: var(--font-sub);
+    font-size: 0.42rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(197, 164, 126, 0.4);
+    line-height: 1;
+}
+
+/* Em-dash separator */
+.usp-sep {
+    color: rgba(197, 164, 126, 0.2);
+    font-size: 0.8rem;
+    align-self: center;
+    padding: 0 4px;
+    flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+    .usp-marquee {
+        max-width: 100%;
+    }
+    .usp-item strong { font-size: 1.5rem; }
+    .usp-track { animation-duration: 14s; }
+}
+
+
+
+
+/* ============================================
+   USP ROSTER — editorial row-list style
+   ============================================ */
+
+.usp-roster {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 380px;
+    gap: 0;
+}
+
+.usp-roster--right {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.usp-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    transition: background 0.25s ease;
+}
+
+.usp-row:first-child {
+    border-top: 1px solid rgba(197, 164, 126, 0.15);
+}
+
+.usp-row:hover {
+    background: rgba(197, 164, 126, 0.04);
+    padding-left: 6px;
+    padding-right: 6px;
+    margin-left: -6px;
+    margin-right: -6px;
+    border-radius: 2px;
+}
+
+.usp-idx {
+    font-family: var(--font-sub);
+    font-size: 0.5rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: rgba(197, 164, 126, 0.35);
+    line-height: 1;
+    flex-shrink: 0;
+    min-width: 16px;
+    align-self: center;
+}
+
+.usp-rule {
+    flex: 1;
+    height: 1px;
+    position: relative;
+    overflow: hidden;
+    align-self: center;
+    min-width: 20px;
+}
+
+.usp-rule::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-image: repeating-linear-gradient(
+        to right,
+        rgba(197, 164, 126, 0.25) 0,
+        rgba(197, 164, 126, 0.25) 3px,
+        transparent 3px,
+        transparent 7px
+    );
+}
+
+.usp-name {
+    font-family: var(--font-sub);
+    font-size: 0.56rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.35);
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: color 0.25s ease;
+}
+
+.usp-row:hover .usp-name {
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.usp-val {
+    font-family: var(--font-head);
+    font-size: 1.55rem;
+    font-weight: 300;
+    color: rgba(248, 250, 252, 0.88);
+    letter-spacing: -0.04em;
+    line-height: 1;
+    flex-shrink: 0;
+    text-align: right;
+    transition: color 0.25s ease;
+}
+
+.usp-row:hover .usp-val {
+    color: #C5A47E;
+}
+
+.usp-val--word {
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.usp-val small {
+    font-size: 0.42rem;
+    font-family: var(--font-sub);
+    letter-spacing: 0.1em;
+    color: rgba(197, 164, 126, 0.55);
+    vertical-align: super;
+    margin-left: 1px;
+    text-transform: lowercase;
+}
+
+@media (max-width: 640px) {
+    .usp-roster {
+        max-width: 100%;
+    }
+    .usp-roster--right {
+        margin-left: 0;
+    }
+    .usp-val { font-size: 1.25rem; }
+    .usp-name { font-size: 0.5rem; }
+}
+
+
+/* ============================================
+   USP GRID — Unique premium stat cards
+   ============================================ */
+
+@keyframes uspCardReveal {
+    0%   { opacity: 0; transform: translateY(16px) scale(0.95); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes uspGoldPulse {
+    0%, 100% { opacity: 0.15; transform: scale(1); }
+    50%       { opacity: 0.40; transform: scale(1.08); }
+}
+
+@keyframes uspIconFloat {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-4px); }
+}
+
+@keyframes uspShimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+/* Grid layout */
 .usp-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    max-width: 340px;
+    gap: 10px;
+    width: 100%;
+    max-width: 380px;
 }
 
+/* Individual stat card */
 .usp-item {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 4px;
-    padding: 14px 10px;
-    border-right: 1px solid rgba(255, 255, 255, 0.07);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-    position: relative;
-    transition: background 0.35s ease;
-    text-align: center;
+    gap: 6px;
+    padding: 16px 10px 14px;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(197, 164, 126, 0.08);
+    border-radius: 4px;
+    cursor: default;
+    overflow: hidden;
+    animation: uspCardReveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+    transition:
+        background 0.35s ease,
+        border-color 0.35s ease,
+        transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.usp-item:nth-child(3n) {
-    border-right: none;
+/* Staggered reveal per card */
+.usp-item:nth-child(1) { animation-delay: 0.05s; }
+.usp-item:nth-child(2) { animation-delay: 0.12s; }
+.usp-item:nth-child(3) { animation-delay: 0.19s; }
+.usp-item:nth-child(4) { animation-delay: 0.26s; }
+.usp-item:nth-child(5) { animation-delay: 0.33s; }
+.usp-item:nth-child(6) { animation-delay: 0.40s; }
+
+/* Corner gold accent glow */
+.usp-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(197, 164, 126, 0.12) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    border-radius: inherit;
 }
 
-.usp-item:nth-last-child(-n+3) {
-    border-bottom: none;
+/* Shimmer line across top */
+.usp-item::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(197, 164, 126, 0.0) 20%,
+        rgba(197, 164, 126, 0.7) 50%,
+        rgba(197, 164, 126, 0.0) 80%,
+        transparent 100%
+    );
+    background-size: 200% auto;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    animation: uspShimmer 3s linear infinite;
+    animation-play-state: paused;
 }
 
 .usp-item:hover {
     background: rgba(197, 164, 126, 0.06);
+    border-color: rgba(197, 164, 126, 0.25);
+    transform: translateY(-3px);
+}
+
+.usp-item:hover::before { opacity: 1; }
+.usp-item:hover::after  { opacity: 1; animation-play-state: running; }
+
+/* Lucide icon */
+.usp-icon {
+    width: 16px;
+    height: 16px;
+    color: rgba(197, 164, 126, 0.5);
+    stroke-width: 1.5;
+    flex-shrink: 0;
+    transition: color 0.3s ease, transform 0.3s ease;
+    animation: uspIconFloat 4s ease-in-out infinite;
+}
+
+.usp-item:nth-child(even) .usp-icon {
+    animation-delay: 1.2s;
 }
 
 .usp-item:hover .usp-icon {
-    color: #C5A47E;
-    filter: drop-shadow(0 0 6px rgba(197,164,126,0.4));
+    color: rgba(197, 164, 126, 0.9);
+    transform: translateY(-2px) scale(1.15);
+    animation-play-state: paused;
 }
 
-.usp-item:hover .usp-stat {
-    color: #f8fafc;
-}
-
-/* Icon */
-.usp-icon {
-    width: 14px;
-    height: 14px;
-    color: rgba(255, 255, 255, 0.3);
-    stroke-width: 1.5;
-    transition: color 0.3s ease, filter 0.3s ease;
-    margin-bottom: 2px;
-}
-
-/* Bold stat (the number / short label) */
+/* Big stat number */
 .usp-stat {
     font-family: var(--font-head);
-    font-size: 1.05rem;
-    font-weight: 400;
-    color: rgba(248, 250, 252, 0.85);
-    letter-spacing: -0.01em;
+    font-size: 1.55rem;
+    font-weight: 300;
     line-height: 1;
+    letter-spacing: -0.03em;
+    color: rgba(248, 250, 252, 0.88);
     transition: color 0.3s ease;
 }
 
-/* Sub-descriptor */
+.usp-item:hover .usp-stat {
+    background: linear-gradient(135deg, #f8fafc 0%, #c5a47e 50%, #f8fafc 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: uspShimmer 2s linear infinite;
+}
+
+/* Category label */
 .usp-label {
     font-family: var(--font-sub);
-    font-size: 0.55rem;
+    font-size: 0.42rem;
     font-weight: 400;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: rgba(197, 164, 126, 0.55);
-    line-height: 1.2;
+    color: rgba(197, 164, 126, 0.38);
+    text-align: center;
+    line-height: 1.3;
+    transition: color 0.3s ease;
 }
 
-/* Right-align variant (Project 1 is text-right on md) */
-@media (min-width: 768px) {
-    .md\:ml-auto .usp-grid,
-    .usp-grid.md\:ml-auto {
-        margin-left: auto;
-        margin-right: 0;
-    }
+.usp-item:hover .usp-label {
+    color: rgba(197, 164, 126, 0.65);
 }
 
-/* Mobile: full width, still 3 cols */
+/* Mobile: 2-col grid */
 @media (max-width: 640px) {
     .usp-grid {
+        grid-template-columns: repeat(2, 1fr);
         max-width: 100%;
+        gap: 8px;
     }
-    .usp-stat { font-size: 0.9rem; }
-    .usp-label { font-size: 0.5rem; }
+    .usp-stat  { font-size: 1.25rem; }
+    .usp-label { font-size: 0.38rem; }
+    .usp-item  { padding: 12px 8px 10px; }
 }

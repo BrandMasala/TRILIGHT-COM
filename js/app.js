@@ -268,11 +268,11 @@ document.addEventListener("DOMContentLoaded", () => {
             id: 101, // Start well above normal IDs
             type: 'journal',
             category: 'Rise with 9',
-            date: 'COMING SOON',
-            title: 'New Horizons',
-            excerpt: 'Explore the future of luxury living with our upcoming Rise with 9 collection. Stay tuned for exclusive updates and architectural marvels.',
+            date: 'DEC, 2025',
+            title: 'December Edition',
+            excerpt: 'The next chapter of vertical living is taking shape. Discover the architectural vision behind Rise With 9 — where elevation becomes identity.',
             readTime: '1 min read',
-            link: '#' 
+            link: 'https://thetrilight.com/wp-content/uploads/2026/03/trilight-newsletter-2025.pdf' 
         }
     ];
 
