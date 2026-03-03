@@ -1016,12 +1016,15 @@ transform: translateY(0);
    USP GRID — Structured Minimal Grid
    ============================================ */
 
+/* ============================================
+   USP GRID — Structured Minimal Grid
+   ============================================ */
+
 .usp-grid {
-    display: flex; /* Switch to flex to allow natural width based on content */
-    flex-wrap: wrap; /* Allows wrapping to new lines if needed */
-    gap: 30px 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 4 columns on desktop (4x2 layout for 8 items, or 4+2 for 6) */
+    gap: 25px 20px;
     width: 100%;
-    /* Remove max-width so it can expand horizontally */
 }
 
 /* Base item layout */
@@ -1036,8 +1039,7 @@ transform: translateY(0);
     cursor: default;
     border-left: 1px solid rgba(197, 164, 126, 0.2); /* Subtle left border */
     padding-left: 10px; /* Slight indent content from the border */
-    /* Ensure items have enough room */
-    min-width: 110px;
+    min-width: 0; /* Let grid manage widths */
 }
 
 .usp-item:hover {
@@ -1086,9 +1088,9 @@ transform: translateY(0);
     color: rgba(197, 164, 126, 0.6);
     line-height: 1.4;
     transition: color 0.4s ease;
-    /* Allow labels to wrap nicely, but prevent mid-word breaking if possible */
+    /* Allow labels to wrap nicely */
     word-break: break-word; 
-    max-width: 130px; /* Constrain label width to force neat wraps if very long */
+    max-width: 100%; /* Constrain label width to force neat wraps if very long */
 }
 
 .usp-item:hover .usp-label {
@@ -1110,19 +1112,29 @@ transform: translateY(0);
 .usp-item:nth-child(4) { animation-delay: 0.25s; }
 .usp-item:nth-child(5) { animation-delay: 0.30s; }
 .usp-item:nth-child(6) { animation-delay: 0.35s; }
+.usp-item:nth-child(7) { animation-delay: 0.40s; }
+.usp-item:nth-child(8) { animation-delay: 0.45s; }
 
 
 /* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .usp-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
     .usp-grid {
+        grid-template-columns: repeat(2, 1fr);
         gap: 20px 15px;
     }
 }
 
 @media (max-width: 480px) {
     .usp-grid {
+        grid-template-columns: repeat(2, 1fr);
         gap: 15px 10px;
     }
     .usp-stat { font-size: 1.2rem; }
-    .usp-label { font-size: 0.4rem; max-width: 100px;}
+    .usp-label { font-size: 0.4rem; }
 }
