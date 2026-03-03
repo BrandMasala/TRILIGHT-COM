@@ -181,10 +181,24 @@
                  <canvas class="webgl absolute inset-0 w-full h-full block"></canvas>
             </div>
             
-            <div class="z-10 text-left px-8 md:px-24 max-w-4xl pointer-events-none">
-                <h1 class="font-serif text-4xl md:text-6xl lg:text-7xl text-contrast leading-relaxed mb-8 mix-blend-overlay animate-fade-in-up font-light" style="animation-delay: 0.4s;">
-                   The Unseen Horizon. <br> <span class="font-extralight">Beyond known limits. The skyline, redefined</span>
-                </h1>
+            <div class="z-10 text-left px-8 md:px-24 pointer-events-none hero-headline-block">
+
+                <!-- Main title: stroke + fill split -->
+                <div class="hero-title-wrap">
+                    <span class="hero-word hero-word--stroke" style="--d:0.05s">The</span>
+                    <span class="hero-word hero-word--fill" style="--d:0.18s">Unseen</span>
+                    <span class="hero-word hero-word--stroke hero-word--gold" style="--d:0.32s">Horizon.</span>
+                </div>
+
+                <!-- Divider + sub-copy row -->
+                <div class="hero-sub-row">
+                    <div class="hero-vline"></div>
+                    <div class="hero-sub-copy">
+                        <p class="hero-sub-line" style="--d:0.7s">Beyond known limits.</p>
+                        <p class="hero-sub-line hero-sub-line--ghost" style="--d:0.9s">The skyline, redefined.</p>
+                    </div>
+                </div>
+
             </div>
 
             <!-- Absolute Bottom Hint -->

@@ -602,10 +602,155 @@ transition: opacity 0.6s ease, transform 0.6s ease;
 opacity: 1;
 transform: translateY(0);
 }
-/* Mobile specific adjustments */
 @media (max-width: 768px) {
 .grid-vertical-left { left: 1.5rem; }
 .grid-vertical-right { right: 1.5rem; }
 .grid-horizontal-top { top: 4rem; }
 .grid-horizontal-bottom { bottom: 4rem; }
 }
+
+/* ============================================
+   HERO HEADLINE — UNIQUE EDITORIAL DISPLAY
+   ============================================ */
+
+/* Keyframes */
+@keyframes heroWordReveal {
+    0%   { opacity: 0; transform: translateY(40px) skewY(3deg); filter: blur(4px); }
+    100% { opacity: 1; transform: translateY(0) skewY(0deg); filter: blur(0); }
+}
+
+@keyframes heroLineReveal {
+    0%   { opacity: 0; transform: translateX(-20px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes vlineGrow {
+    0%   { transform: scaleY(0); }
+    100% { transform: scaleY(1); }
+}
+
+/* Outer block */
+.hero-headline-block {
+    max-width: 900px;
+}
+
+/* Title row: words displayed inline-block with overflow clipping */
+.hero-title-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25em 0.6em;
+    margin-bottom: 2.4rem;
+    line-height: 1.0;
+}
+
+/* Shared word base */
+.hero-word {
+    display: inline-block;
+    font-family: var(--font-head);
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    opacity: 0;
+    animation: heroWordReveal 1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+    animation-delay: var(--d, 0s);
+    will-change: transform, opacity;
+}
+
+/* "The" — ultra-thin outline only */
+.hero-word--stroke {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(248, 250, 252, 0.55);
+}
+
+/* "Unseen" — solid fill with luminous gradient */
+.hero-word--fill {
+    background: linear-gradient(135deg,
+        #f8fafc 0%,
+        #c5a47e 45%,
+        #f8fafc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 40px rgba(197, 164, 126, 0.25));
+}
+
+/* "Horizon." — gold stroke, slightly larger */
+.hero-word--gold {
+    -webkit-text-stroke: 1px rgba(197, 164, 126, 0.8);
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    font-size: clamp(2.6rem, 6vw, 5.8rem);
+    position: relative;
+}
+
+/* Subtle shimmer line under Horizon */
+.hero-word--gold::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(197,164,126,0.6), transparent);
+    animation: heroLineReveal 1s ease forwards;
+    animation-delay: 0.9s;
+    opacity: 0;
+}
+
+/* Sub-copy row: vertical line + text */
+.hero-sub-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.4rem;
+    margin-top: 0.5rem;
+    padding-left: 4px;
+}
+
+/* Vertical gold hairline */
+.hero-vline {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, rgba(197,164,126,0.9), rgba(197,164,126,0));
+    transform-origin: top;
+    transform: scaleY(0);
+    animation: vlineGrow 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: 0.65s;
+    flex-shrink: 0;
+    margin-top: 4px;
+}
+
+/* Sub-copy block */
+.hero-sub-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+/* Sub-lines */
+.hero-sub-line {
+    font-family: var(--font-sub);
+    font-size: clamp(0.95rem, 1.3vw, 1.45rem);
+    font-weight: 300;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(248, 250, 252, 0.75);
+    opacity: 0;
+    animation: heroLineReveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: var(--d, 0s);
+    margin: 0;
+}
+
+/* Second line is more ghosted */
+.hero-sub-line--ghost {
+    color: rgba(197, 164, 126, 0.6);
+    font-size: clamp(0.65rem, 1.1vw, 1.20rem);
+    letter-spacing: 0.28em;
+}
+
+/* Mobile tweaks */
+@media (max-width: 640px) {
+    .hero-title-wrap { gap: 0.15em 0.4em; }
+    .hero-vline { height: 44px; }
+}
+
