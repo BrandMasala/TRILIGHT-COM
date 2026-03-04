@@ -11,10 +11,10 @@ const scene = new THREE.Scene()
 
 // Device detection
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
-const count = isMobile ? 45000 : 105000;
+const count = isMobile ? 15000 : 105000;
 
 const params = {
-    size: isMobile ? 0.025 : 0.018,
+    size: isMobile ? 0.035 : 0.018,
     radius: 3.5,
     branches: 4,
     spin: 3,
@@ -59,8 +59,8 @@ const onTouchMove = (e) => {
     mouse.targetX = (t.clientX / window.innerWidth - 0.5) * 2;
     mouse.targetY = (t.clientY / window.innerHeight - 0.5) * 2;
     if (isDragging) {
-        dragRotY += (t.clientX - prevMouseX) * 0.005;
-        dragRotX += (t.clientY - prevMouseY) * 0.005;
+        dragRotY += (t.clientX - prevMouseX) * 0.002;
+        dragRotX += (t.clientY - prevMouseY) * 0.0005;
         dragRotX = Math.max(-1, Math.min(1, dragRotX));
         prevMouseX = t.clientX;
         prevMouseY = t.clientY;
