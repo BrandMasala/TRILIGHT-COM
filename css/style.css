@@ -137,7 +137,7 @@ body {
 
 .timeline-year {
     font-family: var(--font-head);
-    font-size: 5rem;
+    font-size: clamp(1.8rem, 4vw, 3rem);
     color: rgba(255, 255, 255, 0.03);
     position: absolute;
     top: -30px;
@@ -161,17 +161,43 @@ body {
     color: var(--c-gold);
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    margin-bottom: 15px;
+    /* margin-bottom: 65px; */
     display: block;
     font-weight: 500;
 }
 
 .timeline-desc {
-    font-size: 1.05rem;
+    /* font-size: 1.05rem;
     color: var(--color-accent);
     line-height: 1.7;
     margin: 0;
-    font-weight: 300;
+    font-weight: 300; */
+    font-family: var(--font-body);
+    font-size: 1.25rem;
+    color: var(--c-gold);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    display: block;
+    font-weight: 500;
+    line-height: 3.7;
+
+}
+.timeline-desc1 {
+    /* font-size: 1.05rem;
+    color: var(--color-accent);
+    line-height: 1.7;
+    margin: 0;
+    font-weight: 300; */
+    font-family: var(--font-body);
+    font-size: 1.25rem;
+    color: var(--c-gold);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    display: block;
+    font-weight: 500;
+    line-height: 1;
+    margin-top: 70px;
+
 }
 
 .timeline-node {
@@ -230,7 +256,7 @@ body {
     .timeline-line, .timeline-line-fill { left: 20px; transform: translateX(0); }
     .timeline-item { flex-direction: column !important; align-items: flex-start; margin-bottom: 80px; padding-left: 50px; }
     .timeline-item:nth-child(odd) .timeline-content, .timeline-item:nth-child(even) .timeline-content { margin: 0; width: 100%; text-align: left; transform: none; padding: 0 20px 0 0; }
-    .timeline-year { font-size: 4rem; left: 0 !important; right: auto !important; top: -40px; opacity: 0.5; z-index: -1; }
+    .timeline-year { font-size: clamp(1rem, 4.5vw, 1.8rem); left: 0 !important; right: auto !important; top: -40px; opacity: 0.5; z-index: -1; white-space: nowrap; line-height: 1; }
     .timeline-node { left: 20px; }
     .timeline-connector { display: none; }
 }

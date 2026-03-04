@@ -77,6 +77,42 @@ window.addEventListener('load', function() {
     }, 10);
 });
 
+// --- SMOOTH SCROLLING WITH LENIS ---
+const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // standard ease-out expo
+    direction: 'vertical',
+    gestureDirection: 'vertical',
+    smooth: true,
+    mouseMultiplier: 1,
+    smoothTouch: false,
+    touchMultiplier: 2,
+    infinite: false,
+});
+
+// Handle Anchor Links for Lenis
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') {
+            lenis.scrollTo(0);
+        } else {
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                lenis.scrollTo(targetElement);
+            }
+        }
+    });
+});
+
+function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+}
+
+requestAnimationFrame(raf);
+
 // --- PROJECT 2 VIDEO LAZY LOAD ---
 document.addEventListener("DOMContentLoaded", () => {
     const rootContainer = document.getElementById('project-2-video-container');
@@ -882,7 +918,7 @@ if(constellationContainer && pathfinderStar) {
         let progress = scrollDist / sectionHeight;
         
         // Calculate dynamic safe limit (stop ABOVE the Upcoming Box)
-        const lastProject = document.querySelector('[data-project="3"]');
+        const lastProject = document.querySelector('[data-project="4"]');
         let maxProgress = 1.0; // Default to full height if target is missing
         
         if(lastProject) {
