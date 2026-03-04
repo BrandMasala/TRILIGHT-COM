@@ -11,10 +11,10 @@ const scene = new THREE.Scene()
 
 // Device detection
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
-const count = isMobile ? 15000 : 105000;
+const count = isMobile ? 8000 : 105000;
 
 const params = {
-    size: isMobile ? 0.035 : 0.018,
+    size: isMobile ? 0.02 : 0.018,
     radius: 3.5,
     branches: 4,
     spin: 3,
@@ -82,6 +82,9 @@ window.addEventListener("mouseup", onMouseUp);
 window.addEventListener("touchmove", onTouchMove, { passive: true });
 window.addEventListener("touchend", onTouchEnd);
 canvas.style.pointerEvents = "auto";
+if (isMobile) {
+    canvas.style.touchAction = "pan-y";
+}
 
 /**
  * Star System
@@ -273,7 +276,7 @@ const tick = () => {
 
     // Camera: orbit + mouse influence + drag
     // Closer base distance for "larger" feel
-    const baseDist = 3 - smoothDisperse * 1.5; // Changed from 4 to 3
+    const baseDist = (isMobile ? 5 : 3) - smoothDisperse * 1.5; // Changed from 4 to 3
     const camDist = Math.max(baseDist, 1.2);
     const orbitSpeed = 0.05;
 
