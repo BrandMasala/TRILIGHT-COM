@@ -113,95 +113,95 @@ function raf(time) {
 
 requestAnimationFrame(raf);
 
-// --- PROJECT 2 VIDEO LAZY LOAD ---
-document.addEventListener("DOMContentLoaded", () => {
-    const rootContainer = document.getElementById('project-2-video-container');
-    const loader = document.getElementById('p2-loader');
+// // --- PROJECT 2 VIDEO LAZY LOAD ---
+// document.addEventListener("DOMContentLoaded", () => {
+//     const rootContainer = document.getElementById('project-2-video-container');
+//     const loader = document.getElementById('p2-loader');
     
-    // The actual "screen" container is the parent of the loader (the inner div with aspect-video)
-    // Fallback to rootContainer if loader structure changes, but loader.parentElement is safer for the specific layout
-    const videoContainer = loader ? loader.parentElement : rootContainer;
+//     // The actual "screen" container is the parent of the loader (the inner div with aspect-video)
+//     // Fallback to rootContainer if loader structure changes, but loader.parentElement is safer for the specific layout
+//     const videoContainer = loader ? loader.parentElement : rootContainer;
 
-    // Find the preview image within the container
-    const previewImage = videoContainer ? videoContainer.querySelector('img') : null;
+//     // Find the preview image within the container
+//     const previewImage = videoContainer ? videoContainer.querySelector('img') : null;
     
-    if(previewImage) {
-        previewImage.id = 'p2-preview';
-        previewImage.style.transition = 'opacity 0.8s ease-out';
-        previewImage.style.position = 'absolute';
-        previewImage.style.top = '0';
-        previewImage.style.left = '0';
-        previewImage.style.width = '100%';
-        previewImage.style.height = '100%';
-        previewImage.style.zIndex = '20'; // Stay on top initially
-        previewImage.style.objectFit = 'cover';
-    }
+//     if(previewImage) {
+//         previewImage.id = 'p2-preview';
+//         previewImage.style.transition = 'opacity 0.8s ease-out';
+//         previewImage.style.position = 'absolute';
+//         previewImage.style.top = '0';
+//         previewImage.style.left = '0';
+//         previewImage.style.width = '100%';
+//         previewImage.style.height = '100%';
+//         previewImage.style.zIndex = '20'; // Stay on top initially
+//         previewImage.style.objectFit = 'cover';
+//     }
 
-    let loaded = false;
+//     let loaded = false;
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && !loaded) {
-                loaded = true;
-                if(loader) loader.style.opacity = '1';
+//     const observer = new IntersectionObserver((entries) => {
+//         entries.forEach(entry => {
+//             if (entry.isIntersecting && !loaded) {
+//                 loaded = true;
+//                 if(loader) loader.style.opacity = '1';
                 
-                // Slight delay to ensure smooth entry before fetching
-                setTimeout(() => {
-                    if(!videoContainer) return;
+//                 // Slight delay to ensure smooth entry before fetching
+//                 setTimeout(() => {
+//                     if(!videoContainer) return;
                     
-                    // Create Wrapper
-                    const wrapper = document.createElement('div');
-                    // We want this wrapper to FILL the videoContainer (which is relative + aspect-video)
-                    wrapper.style.position = 'absolute';
-                    wrapper.style.top = '0';
-                    wrapper.style.left = '0';
-                    wrapper.style.width = '100%';
-                    wrapper.style.height = '100%';
-                    wrapper.style.zIndex = '10'; // Below preview initially
+//                     // Create Wrapper
+//                     const wrapper = document.createElement('div');
+//                     // We want this wrapper to FILL the videoContainer (which is relative + aspect-video)
+//                     wrapper.style.position = 'absolute';
+//                     wrapper.style.top = '0';
+//                     wrapper.style.left = '0';
+//                     wrapper.style.width = '100%';
+//                     wrapper.style.height = '100%';
+//                     wrapper.style.zIndex = '10'; // Below preview initially
 
-                    // Create Iframe
-                    const iframe = document.createElement('iframe');
-                    iframe.src = "https://player.vimeo.com/video/1164915625?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1&background=1&dnt=1&playsinline=1";
-                    iframe.frameBorder = "0";
-                    iframe.allow = "autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share";
-                    iframe.style.position = "absolute";
-                    iframe.style.top = "0";
-                    iframe.style.left = "0";
-                    iframe.style.width = "100%";
-                    iframe.style.height = "100%";
-                    iframe.title = "18TH HOUR SNIP 2";
+//                     // Create Iframe
+//                     const iframe = document.createElement('iframe');
+//                     iframe.src = "https://player.vimeo.com/video/1164915625?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1&background=1&dnt=1&playsinline=1";
+//                     iframe.frameBorder = "0";
+//                     iframe.allow = "autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share";
+//                     iframe.style.position = "absolute";
+//                     iframe.style.top = "0";
+//                     iframe.style.left = "0";
+//                     iframe.style.width = "100%";
+//                     iframe.style.height = "100%";
+//                     iframe.title = "18TH HOUR SNIP 2";
                     
-                    // Handle Load
-                    iframe.onload = () => {
-                        // Video loaded, fade out preview
-                        if(previewImage) {
-                            previewImage.style.opacity = '0';
-                            setTimeout(() => {
-                                previewImage.style.display = 'none';
-                            }, 800);
-                        }
-                        if(loader) loader.style.opacity = '0';
-                    };
+//                     // Handle Load
+//                     iframe.onload = () => {
+//                         // Video loaded, fade out preview
+//                         if(previewImage) {
+//                             previewImage.style.opacity = '0';
+//                             setTimeout(() => {
+//                                 previewImage.style.display = 'none';
+//                             }, 800);
+//                         }
+//                         if(loader) loader.style.opacity = '0';
+//                     };
 
-                    wrapper.appendChild(iframe);
+//                     wrapper.appendChild(iframe);
                     
-                    // Append script
-                    const script = document.createElement('script');
-                    script.src = "https://player.vimeo.com/api/player.js";
-                    wrapper.appendChild(script);
+//                     // Append script
+//                     const script = document.createElement('script');
+//                     script.src = "https://player.vimeo.com/api/player.js";
+//                     wrapper.appendChild(script);
 
-                    // Append to videoContainer (the inner div)
-                    videoContainer.appendChild(wrapper);
+//                     // Append to videoContainer (the inner div)
+//                     videoContainer.appendChild(wrapper);
 
-                }, 100); 
+//                 }, 100); 
                 
-                observer.unobserve(rootContainer); // Unobserve the root
-            }
-        });
-    }, { threshold: 0.25 }); // Trigger when 25% visible
+//                 observer.unobserve(rootContainer); // Unobserve the root
+//             }
+//         });
+//     }, { threshold: 0.25 }); // Trigger when 25% visible
 
-    if(rootContainer) observer.observe(rootContainer);
-});
+//     if(rootContainer) observer.observe(rootContainer);
+// });
 
 // --- JOURNAL SECTION SCRIPT ---
 (function() {
