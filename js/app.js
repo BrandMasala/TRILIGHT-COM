@@ -93,8 +93,10 @@ const lenis = new Lenis({
 // Handle Anchor Links for Lenis
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-        e.preventDefault();
         const targetId = this.getAttribute('href');
+        if (!targetId || !targetId.startsWith('#')) return;
+        
+        e.preventDefault();
         if (targetId === '#') {
             lenis.scrollTo(0);
         } else {

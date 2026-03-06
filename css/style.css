@@ -29,7 +29,7 @@ body {
 /* --- TIMELINE STYLES --- */
 .timeline-section {
     background-color: transparent; /* Use section background */
-    padding: 140px 20px;
+    padding: 140px 20px 30px 20px;
     position: relative;
 }
 
@@ -64,7 +64,7 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     position: relative;
-    padding: 20px 0 150px 0;
+    padding: 20px 0 50px 0;
     z-index: 1;
 }
 
@@ -143,7 +143,7 @@ body {
     top: -30px;
     line-height: 1;
     font-weight: 400;
-    z-index: -1;
+    z-index: 1;
     white-space: nowrap;
     transition: color 0.6s ease;
 }
@@ -255,10 +255,13 @@ body {
     .timeline-header h2 { font-size: 2.5rem; }
     .timeline-line, .timeline-line-fill { left: 20px; transform: translateX(0); }
     .timeline-item { flex-direction: column !important; align-items: flex-start; margin-bottom: 80px; padding-left: 50px; }
-    .timeline-item:nth-child(odd) .timeline-content, .timeline-item:nth-child(even) .timeline-content { margin: 0; width: 100%; text-align: left; transform: none; padding: 0 20px 0 0; }
-    .timeline-year { font-size: clamp(1rem, 4.5vw, 1.8rem); left: 0 !important; right: auto !important; top: -40px; opacity: 0.5; z-index: -1; white-space: nowrap; line-height: 1; }
-    .timeline-node { left: 20px; }
+    .timeline-item:nth-child(odd) .timeline-content, .timeline-item:nth-child(even) .timeline-content { margin: 0; width: 100%; text-align: left; transform: none; padding: 0 20px 0 0; position: relative; z-index: 10; }
+    .timeline-year { font-size: clamp(1rem, 4.5vw, 1.8rem); left: 0 !important; right: auto !important; top: -40px; opacity: 1; z-index: 10; white-space: nowrap; line-height: 1; }
+    .timeline-node { left: 20px; z-index: 12; }
     .timeline-connector { display: none; }
+    .timeline-item:last-child { margin-bottom: 0 !important; }
+    .timeline-section { padding: 80px 20px; }
+    .timeline-container { padding-bottom: 80px; }
 }
 
 
