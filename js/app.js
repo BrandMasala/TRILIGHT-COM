@@ -305,7 +305,7 @@ requestAnimationFrame(raf);
             {
             id: 101, // Start well above normal IDs
             type: 'journal',
-            category: 'Rise with 9',
+            category: 'The TrilightRise with 9',
             date: 'DEC, 2025',
             title: 'December Edition',
             excerpt: 'The next chapter of vertical living is taking shape. Discover the architectural vision behind Rise With 9 — where elevation becomes identity.',

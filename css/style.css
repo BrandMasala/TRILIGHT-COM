@@ -29,7 +29,7 @@ body {
 /* --- TIMELINE STYLES --- */
 .timeline-section {
     background-color: transparent; /* Use section background */
-    padding: 140px 20px 30px 20px;
+    padding: 60px 20px 30px 20px;
     position: relative;
 }
 
@@ -483,7 +483,7 @@ body {
 
 /* Custom Scrollbar for Journal */
 .journal-scroll::-webkit-scrollbar {
-    width: 1px;
+    width: 4px;
 }
 .journal-scroll::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.02);
@@ -1093,14 +1093,13 @@ transform: translateY(0);
 /* Number / Main Word */
 .usp-stat {
     font-family: var(--font-head);
-    font-size: 1.4rem; /* Slightly larger for better legibility */
+    font-size: 1rem; /* Further reduced to ensure single-line fit */
     font-weight: 300;
-    line-height: 1.1; /* Adjusted line height */
+    line-height: 1.2; 
     color: rgba(248, 250, 252, 0.95);
     transition: color 0.4s ease;
     letter-spacing: -0.01em;
-    /* PREVENT AWKWARD WRAPPING */
-    white-space: nowrap; 
+    white-space: nowrap; /* Force single line as requested */
 }
 
 .usp-item:hover .usp-stat {
