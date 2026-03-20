@@ -97,12 +97,26 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         if (!targetId || !targetId.startsWith('#')) return;
         
         e.preventDefault();
+
         if (targetId === '#') {
-            lenis.scrollTo(0);
+            if (this.classList.contains('menu-link-item') && typeof isMenuOpen !== 'undefined' && isMenuOpen) {
+                if (typeof toggleMenu === 'function') toggleMenu();
+            }
+            lenis.scrollTo(0, { force: true });
         } else {
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
-                lenis.scrollTo(targetElement);
+                // Pre-calculate exact Y offset before pushing any menu animations
+                const offsetTarget = targetElement.getBoundingClientRect().top + window.scrollY;
+                
+                if (this.classList.contains('menu-link-item') && typeof isMenuOpen !== 'undefined' && isMenuOpen) {
+                    if (typeof toggleMenu === 'function') toggleMenu();
+                }
+
+                // Force scroll to target Y
+                setTimeout(() => {
+                    lenis.scrollTo(offsetTarget, { offset: 0, duration: 1.5, force: true });
+                }, 50);
             }
         }
     });
@@ -1494,10 +1508,7 @@ menuLinks.forEach(link => {
         watermark.style.transform = 'translateX(0) scale(1)';
     });
     
-    // Close menu on click
-    link.addEventListener('click', () => {
-        if (isMenuOpen) toggleMenu();
-    });
+    // Closing menu is handled globally in the anchor click listener now
 });
 
 window.addEventListener('load', function() {

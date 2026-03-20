@@ -157,11 +157,11 @@ body {
 
 .timeline-title {
     font-family: var(--font-body);
-    font-size: 1.25rem;
+    font-size: 0.85rem;
     color: var(--c-gold);
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    /* margin-bottom: 65px; */
+    margin-top: 25px;
     display: block;
     font-weight: 500;
 }
@@ -630,6 +630,11 @@ transition: opacity 0.6s ease, transform 0.6s ease;
 .menu-open .menu-link-item {
 opacity: 1;
 transform: translateY(0);
+}
+
+.menu-link-item > span:first-child {
+min-width: 1.5rem;
+white-space: nowrap;
 }
 @media (max-width: 768px) {
 .grid-vertical-left { left: 1.5rem; }
