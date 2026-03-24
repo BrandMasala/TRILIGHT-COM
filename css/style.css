@@ -1,3 +1,9 @@
+/*
+Theme Name: Trilight
+*/
+
+
+
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&display=swap');
 
 :root {
@@ -252,6 +258,7 @@ body {
 }
 
 @media (max-width: 768px) {
+    .timeline-header { margin-bottom: 60px; }
     .timeline-header h2 { font-size: 2.5rem; }
     .timeline-line, .timeline-line-fill { left: 20px; transform: translateX(0); }
     .timeline-item { flex-direction: column !important; align-items: flex-start; margin-bottom: 80px; padding-left: 50px; }
@@ -1056,7 +1063,7 @@ white-space: nowrap;
 
 .usp-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 4 columns on desktop (4x2 layout for 8 items, or 4+2 for 6) */
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for better long text accommodation */
     gap: 25px 20px;
     width: 100%;
 }
@@ -1104,7 +1111,7 @@ white-space: nowrap;
     color: rgba(248, 250, 252, 0.95);
     transition: color 0.4s ease;
     letter-spacing: -0.01em;
-    white-space: nowrap; /* Force single line as requested */
+    white-space: normal; /* Allow text to wrap so it doesn't overlap adjacent columns */
 }
 
 .usp-item:hover .usp-stat {
@@ -1152,7 +1159,7 @@ white-space: nowrap;
 /* Responsive Adjustments */
 @media (max-width: 1024px) {
     .usp-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
@@ -1168,6 +1175,6 @@ white-space: nowrap;
         grid-template-columns: repeat(2, 1fr);
         gap: 15px 10px;
     }
-    .usp-stat { font-size: 1.2rem; }
-    .usp-label { font-size: 0.4rem; }
+    .usp-stat { font-size: 0.85rem; }
+    .usp-label { font-size: 0.35rem; }
 }
