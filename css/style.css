@@ -447,10 +447,12 @@ body {
 /* Utility Classes */
 .animate-scroll-up {
     animation: scrollUp linear infinite;
+    will-change: transform;
 }
 
 .animate-scroll-down {
     animation: scrollDown linear infinite;
+    will-change: transform;
 }
 
 .animate-pulse-slow {

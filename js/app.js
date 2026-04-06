@@ -512,7 +512,7 @@ requestAnimationFrame(raf);
 
     // --- 2. FORM INTERACTION LOGIC ---
     let currentStep = 1;
-    const totalSteps = 3;
+    const totalSteps = 4;
 
     // Re-init Icons for this section
     if(window.lucide) window.lucide.createIcons();
@@ -617,9 +617,10 @@ requestAnimationFrame(raf);
         const dots = document.getElementById('progress-dots');
         if(dots) dots.style.opacity = '0';
 
-        const currentEl = document.getElementById(`step-3`);
+        const currentEl = document.getElementById(`step-4`);
+        if (!currentEl) return; // guard against stale cached HTML
         
-        // Fade out step 3
+        // Fade out step 4
         const currentChildren = currentEl.children;
         for(let child of currentChildren) {
             child.classList.remove('opacity-100', 'translate-y-0');
