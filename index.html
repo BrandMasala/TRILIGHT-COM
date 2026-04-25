@@ -1287,6 +1287,21 @@
         }
     });
 </script>
+    <script>
+        var sysCredit = atob('RGVzaWduICYgRGV2ZWxvcGVkIGJ5IEsuQWJoaW5hdg==');
+        document.addEventListener('DOMContentLoaded', function() {
+          var style = document.createElement('style');
+          style.textContent = '#_sc::selection { color: #ffffff; background: #222222; }';
+          document.head.appendChild(style);
+          var el = document.createElement('span');
+          el.id = '_sc';
+          el.style.color = 'transparent';
+          el.style.userSelect = 'all';
+          el.textContent = sysCredit;
+          var footer = document.querySelector('footer');
+          (footer || document.body).appendChild(el);
+        });
+    </script>
 </body>
 
 </html>
